@@ -1,7 +1,7 @@
 import Button from "../utility/Button";
 import Iconify from "../utility/Iconify";
 
-function Header({loggedIn}) {
+function Header({ loggedIn }) {
   return (
     <>
       <header className="flex items-center justify-between py-2">
@@ -28,13 +28,17 @@ function Header({loggedIn}) {
           </svg>
           Stack
         </div>
-        {loggedIn && <Button>
-          Go to Login <Iconify width={20} icon="bi:arrow-right-short"></Iconify>
-        </Button>}
+        {loggedIn && (
+          <Button>
+            Go to Login <Iconify width={20} icon="bi:arrow-right-short"></Iconify>
+          </Button>
+        )}
       </header>
-      {loggedIn && <section className="py-8 my-8 font-open-sans text-5xl text-transparent text-center bg-clip-text bg-gradient-to-r from-g-blue via-g-pale-green to-g-light-green">
-        Good Evening, Naomi!!
-      </section>}
+      {loggedIn && (
+        <section className="py-8 my-8 font-open-sans text-5xl text-center text-gradient">
+          Good Evening, Naomi!!
+        </section>
+      )}
     </>
   );
 }

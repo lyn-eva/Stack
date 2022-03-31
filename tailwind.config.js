@@ -11,9 +11,13 @@ module.exports = {
         "g-blue": "#0047FF",
         "g-pale-green": "#39DBAA",
         "g-light-green": "#00FF29",
+        "text-gray": "#a6a6a6",
       },
       fontFamily: {
         "open-sans": ["Open Sans", "Roboto", "sans-serif"],
+      },
+      backgroundImage: {
+        "logo-watermark" : "url('/src/asset/welcome-watermark.svg')"
       },
     },
   },
