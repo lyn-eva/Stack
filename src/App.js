@@ -3,10 +3,10 @@ import Welcome from "./layout/Welcome";
 
 function App() {
   return (
-    <div className="App">
+    <>
       <Header loggedIn={false} />
       <Welcome />
-    </div>
+    </>
 
   );
 }
