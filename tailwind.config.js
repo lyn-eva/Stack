@@ -3,6 +3,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundColor: {
+        "bg-primary": "#202020",
         "bg-dark": "#171717",
         "bg-darker": "#262424",
         "bg-soft-gray": "#3a3a3a",

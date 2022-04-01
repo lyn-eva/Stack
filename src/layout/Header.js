@@ -30,7 +30,7 @@ function Header({ loggedIn }) {
         </div>
         {loggedIn && (
           <Button>
-            Go to Login <Iconify width={20} icon="bi:arrow-right-short"></Iconify>
+            Go to Login <Iconify data-width={20} data-icon="bi:arrow-right-short"></Iconify>
           </Button>
         )}
       </header>

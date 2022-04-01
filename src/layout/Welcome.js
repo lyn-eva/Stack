@@ -3,7 +3,7 @@ import Iconify from "../utility/Iconify";
 
 function Welcome() {
   return (
-    <main className="bg-logo-watermark bg-no-repeat bg-[right_center] bg-[length:400px] basis-full flex items-center">
+    <main className="py-10 bg-logo-watermark bg-no-repeat bg-[right_center] bg-[length:400px] basis-full flex items-center">
       <div>
         <h1 className="font-open-sans font-bold text-5xl text-gradient">
           NEVER FORGET TO REFACTOR YOUR CODE

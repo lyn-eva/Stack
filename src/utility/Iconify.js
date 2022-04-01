@@ -1,12 +1,8 @@
-import React from "react";
-
-function Iconify({ icon, width, style }) {
+function Iconify(props) {
   return (
     <i
       className="iconify !inline-block mb-[1px]"
-      data-width={width || undefined}
-      data-icon={icon}
-      style={style || undefined}
+      {...props}
     ></i>
   );
 }
