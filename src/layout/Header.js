@@ -35,7 +35,7 @@ function Header({ loggedIn }) {
         )}
       </header>
       {loggedIn && (
-        <section className="py-8 my-8 font-open-sans text-5xl text-center text-gradient">
+        <section className="my-8 font-open-sans text-5xl text-center text-gradient">
           Good Evening, Naomi!!
         </section>
       )}

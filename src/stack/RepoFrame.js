@@ -1,4 +1,5 @@
 import React from "react";
+import Wrapper from "../utility/Wrapper";
 
 const tags = ["HTML", "CSS", "BOOTSTRAP"];
 
@@ -12,14 +13,14 @@ const Tags = () => (
 
 function RepoFrame() {
   return (
-    <div className="bg-bg-soft-gray rounded-md overflow-hidden">
+    <Wrapper>
       <img
-        className="w-full"
+        className="w-full rounded-md"
         src="https://opengraph.githubassets.com/420b332eb627556905a9ddc13f97481a71d0a4972e834f43f79734558c/lyn-eva/lyn-eva"
         alt="github"
       />
       <Tags />
-    </div>
+    </Wrapper>
   );
 }
 

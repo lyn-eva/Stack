@@ -16,6 +16,8 @@ module.exports = {
       },
       fontFamily: {
         "open-sans": ["Open Sans", "Roboto", "sans-serif"],
+        "roboto": ["Roboto", "sans-serif"],
+        "lato": ["lato", "Roboto", "sans-serif"],
       },
       backgroundImage: {
         "logo-watermark" : "url('/src/asset/welcome-watermark.svg')"
