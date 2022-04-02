@@ -8,14 +8,14 @@ const iconifyData = { 'data-width':'14', style: {marginLeft: '.5rem'}};
 
 const stacks = [
   {no: 1, idea: "remove unused code", line: "46", file: "Sidebar.js"},
-  {no: 1, idea: "remove unused code", line: "46", file: "Sidebar.js"},
-  {no: 1, idea: "remove unused code", line: "46", file: "Sidebar.js"},
+  {no: 2, idea: "remove unused code", line: "46", file: "Sidebar.js"},
+  {no: 3, idea: "remove unused code", line: "46", file: "Sidebar.js"},
 ]
 
 function StackSection() {
   return (
     <section className='w-7/12'> 
-      <h2 className='font-lato text-white font-medium text-2xl mb-1'>Your stack</h2>
+      <h2 className='font-lato text-white font-medium text-2xl mb-2 leading-5'>Your stack</h2>
       <hr />
       <ul className='flex gap-4 mt-4'>
         <li><Button style={btnStyle}>new idea<Iconify data-icon='ant-design:plus-outlined' {...iconifyData}/></Button></li>
@@ -23,7 +23,7 @@ function StackSection() {
         <li><Button style={btnStyle}>sort<Iconify data-icon='cil:sort-descending' {...iconifyData}/></Button></li>
       </ul>
       <ul className='mt-4'>
-        {stacks.map((stack) => <Idea {...stack}/>)}
+        {stacks.map((stack) => <Idea key={stack.no} expand={stack.no === 2} {...stack}/>)}
       </ul>
     </section>
   )

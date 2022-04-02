@@ -22,15 +22,15 @@ function Welcome() {
           <span className="text-xl text-gradient bg-gradient-to-b font-roboto font-medium mr-8">
             Start from today
             <Iconify
-              icon="bi:arrow-right"
-              width={26}
+              data-icon="bi:arrow-right"
+              data-width={26}
               style={{ color: "#fff", marginLeft: "1.5rem" }}
             />
           </span>
           <Button>
             <Iconify
-              width={23}
-              icon="akar-icons:github-fill"
+              data-width={23}
+              data-icon="akar-icons:github-fill"
               style={{ marginRight: "1rem" }}
             />
             Login with GITHUB

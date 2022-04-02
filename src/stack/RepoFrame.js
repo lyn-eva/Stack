@@ -13,7 +13,7 @@ const Tags = () => (
 
 function RepoFrame() {
   return (
-    <Wrapper>
+    <Wrapper className='shadow-l2'>
       <img
         className="w-full rounded-md"
         src="https://opengraph.githubassets.com/420b332eb627556905a9ddc13f97481a71d0a4972e834f43f79734558c/lyn-eva/lyn-eva"
