@@ -16,11 +16,15 @@ module.exports = {
       },
       fontFamily: {
         "open-sans": ["Open Sans", "Roboto", "sans-serif"],
-        "roboto": ["Roboto", "sans-serif"],
-        "lato": ["lato", "Roboto", "sans-serif"],
+        roboto: ["Roboto", "sans-serif"],
+        lato: ["lato", "Roboto", "sans-serif"],
+        exo: ["exo", "Roboto", "sans-serif"],
       },
       backgroundImage: {
-        "logo-watermark" : "url('/src/asset/welcome-watermark.svg')"
+        "logo-watermark": "url('/src/asset/welcome-watermark.svg')",
+      },
+      boxShadow: {
+        l2: "0 4px 4px #00000020",
       },
     },
   },
