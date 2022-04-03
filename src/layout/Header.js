@@ -41,7 +41,7 @@ function Header({ loggedIn }) {
         {loggedIn && (
           <Button onClick={handleSingOut}>
             Go to Login{" "}
-            <Iconify data-width={20} data-icon="bi:arrow-right-short"></Iconify>
+            <Iconify data-width={20} data-icon="bi:arrow-right-short" />
           </Button>
         )}
       </header>
