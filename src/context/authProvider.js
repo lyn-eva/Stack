@@ -19,14 +19,6 @@ function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const auth = getAuth(app);
 
-  useEffect(() => {
-    if (!user) return;
-    fetch(`https://api.github.com/users/${user.reloadUserInfo.screenName}/repos`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
-  }, [user]);
   console.log(user)
 
   useEffect(() => {
@@ -48,7 +40,7 @@ function AuthProvider({ children }) {
     return signOut(auth);
   };
 
-  const value = { PopupSignIn, SignOut };
+  const value = { PopupSignIn, SignOut, user };
 
   return <authCtx.Provider value={value}>{children}</authCtx.Provider>;
 }
