@@ -1,7 +1,17 @@
+import { useNavigate } from "react-router";
+import { useAuth } from "../context/authProvider";
 import Button from "../utility/Button";
 import Iconify from "../utility/Iconify";
 
 function Header({ loggedIn }) {
+  const { SignOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSingOut = async() => {
+    await SignOut();
+    navigate('../');
+  }
+
   return (
     <>
       <header className="flex items-center justify-between py-2">
@@ -29,8 +39,9 @@ function Header({ loggedIn }) {
           Stack
         </div>
         {loggedIn && (
-          <Button>
-            Go to Login <Iconify data-width={20} data-icon="bi:arrow-right-short"></Iconify>
+          <Button onClick={handleSingOut}>
+            Go to Login{" "}
+            <Iconify data-width={20} data-icon="bi:arrow-right-short"></Iconify>
           </Button>
         )}
       </header>

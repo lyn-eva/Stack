@@ -1,4 +1,3 @@
-import React from "react";
 import Repo from "../stack/Repo";
 import Button from "../utility/Button";
 import Iconify from "../utility/Iconify";
