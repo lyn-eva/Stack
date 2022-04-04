@@ -1,25 +1,42 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "../context/authProvider";
 import Wrapper from "../utility/Wrapper";
 
 const tags = ["HTML", "CSS", "BOOTSTRAP"];
 
-const Tags = () => (
+const Tags = ({langs}) => (
   <div className="p-2 flex gap-3 items-center">
-    {tags.map((tag) => (
-      <span key={tag} className="bg-white px-2 rounded-sm">{tag}</span>
+    {langs?.map((lang) => (
+      <span key={lang} className="bg-white px-2 rounded-sm">
+        {lang}
+      </span>
     ))}
   </div>
 );
 
-function RepoFrame() {
+function RepoFrame({ name }) {
+  const [langs, setLangs] = useState([]);
+  const { user } = useAuth();
+  const username = user.reloadUserInfo.screenName;
+
+  useEffect(() => {
+    const fetchLanguages = async () => {
+      const raw = await fetch(`https://api.github.com/repos/${username}/${name}/languages`);
+      const languages = await raw.json();
+      console.log(languages)
+      setLangs(Object.keys(languages));
+    };
+    fetchLanguages();
+  }, []);
+
   return (
-    <Wrapper className='shadow-l2'>
+    <Wrapper className="shadow-l2">
       <img
         className="w-full rounded-md"
-        src="https://opengraph.githubassets.com/420b332eb627556905a9ddc13f97481a71d0a4972e834f43f79734558c/lyn-eva/lyn-eva"
-        alt="github"
+        src={`https://opengraph.githubassets.com/7f2ba92f5efee9acbcc467a61e76d8d741f235827a1c1d88da06297a17d175e6/${username}/${name}`}
+        alt={name}
       />
-      <Tags />
+      <Tags langs={langs}/>
     </Wrapper>
   );
 }

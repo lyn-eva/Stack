@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/authProvider";
+import { useDB } from "../context/dbProvider";
 import Button from "../utility/Button";
 import Iconify from "../utility/Iconify";
 import Wrapper from "../utility/Wrapper";
@@ -7,6 +8,7 @@ import Wrapper from "../utility/Wrapper";
 function BrowseRepo({ setBrowseRepo }) {
   const [repos, setRepos] = useState([]);
   const { getUser } = useAuth();
+  const { createStack } = useDB();
 
   useEffect(() => {
     const user = getUser();
@@ -21,7 +23,8 @@ function BrowseRepo({ setBrowseRepo }) {
     fetchRepo();
   }, []);
 
-  const handleAddRepo = () => {
+  const handleAddRepo = async (repo) => {
+    await createStack(repo);
     setBrowseRepo(false);
   };
 
@@ -51,7 +54,7 @@ function BrowseRepo({ setBrowseRepo }) {
                 added <Iconify data-icon="dashicons:yes-alt" />
               </span>
               <Button
-                onClick={handleAddRepo}
+                onClick={() => handleAddRepo(name)}
                 style={{ color: "#000", paddingBlock: "0", borderRadius: "4px" }}
               >
                 add

@@ -37,7 +37,7 @@ function AuthProvider({ children }) {
     return signOut(auth);
   };
 
-  const value = { PopupSignIn, SignOut, getUser };
+  const value = { PopupSignIn, SignOut, getUser, user };
 
   return <authCtx.Provider value={value}>{children}</authCtx.Provider>;
 }

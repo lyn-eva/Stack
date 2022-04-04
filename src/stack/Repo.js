@@ -20,10 +20,10 @@ const Dues = () => (
   </ul>
 );
 
-function Repo() {
+function Repo({name}) {
   return (
     <div className="bg-bg-dark w-[20rem] rounded-md">
-      <RepoFrame />
+      <RepoFrame name={name}/>
       <div className="p-6 text-white font-roboto">
         <h2 className="font-medium mb-1">Latest dues</h2>
         <hr />
