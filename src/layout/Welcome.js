@@ -1,14 +1,17 @@
 import { useNavigate } from "react-router";
 import { useAuth } from "../context/authProvider";
+import { useDB } from "../context/dbProvider";
 import Button from "../utility/Button";
 import Iconify from "../utility/Iconify";
 
 function Welcome() {
+  const { createUser } = useDB();
   const { PopupSignIn } = useAuth();
   const navigate = useNavigate();
 
   const handleGithubSignIn = async () => {
     await PopupSignIn();
+    await createUser();
     navigate("../home");
   };
 
