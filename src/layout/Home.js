@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { useDB } from "../context/dbProvider";
 import Repo from "../stack/Repo";
 import Button from "../utility/Button";
@@ -8,9 +9,10 @@ import BrowseRepo from "./BrowseRepo";
 
 function Home() {
   const [browseRepo, setBrowseRepo] = useState(false);
+  const [shrink, setShrink] = useState(false);
   const { stacks } = useDB();
 
-  console.log(stacks);
+  const navigate = useNavigate();
 
   return (
     <main className="mb-16">
@@ -28,7 +30,7 @@ function Home() {
           {browseRepo && <BrowseRepo setBrowseRepo={setBrowseRepo} />}
         </li>
         <li>
-          <Button>
+          <Button onClick={() => setShrink(prev => !prev)}>
             Shrink all
             <Iconify
               data-icon="lucide:shrink"
@@ -40,7 +42,7 @@ function Home() {
       </ul>
       <section className="mt-14 flex gap-5">
         {stacks?.map(({id, name}) => {
-          return <Repo key={id} id={id} name={name} />;
+          return <Repo onClick={() => navigate('../'+name)} key={id} id={id} name={name} shrink={shrink}/>;
         })}
       </section>
     </main>

@@ -12,24 +12,25 @@ const Tags = ({langs}) => (
   </div>
 );
 
-function RepoFrame({ name }) {
+function RepoFrame({ name, onClick }) {
   const [langs, setLangs] = useState([]);
   const { user } = useAuth();
-  const username = user.reloadUserInfo.screenName;
-
+  const username = user?.reloadUserInfo.screenName;
+  
   useEffect(() => {
-    const fetchLanguages = async () => {
+    if (!user) return;
+    (async () => { //IIFE
       const raw = await fetch(`https://api.github.com/repos/${username}/${name}/languages`);
       const languages = await raw.json();
       setLangs(Object.keys(languages));
-    };
-    fetchLanguages();
-  }, []);
+    })() 
+  }, [user]);
 
   return (
     <Wrapper className="shadow-l2">
       <img
-        className="w-full rounded-md"
+        onClick={onClick} 
+        className="w-full rounded-md cursor-pointer"
         src={`https://opengraph.githubassets.com/7f2ba92f5efee9acbcc467a61e76d8d741f235827a1c1d88da06297a17d175e6/${username}/${name}`}
         alt={name}
       />

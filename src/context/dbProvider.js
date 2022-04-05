@@ -13,6 +13,8 @@ function DbProvider({ children }) {
   const [stacks, setStacks] = useState([]);
   const [ideaList, setIdeaList] = useState({});
 
+  console.log(stacks)
+
   useEffect(() => {
     if (!user) return;
     const unsub = listenToStacksChange();
@@ -39,7 +41,7 @@ function DbProvider({ children }) {
     });
   };
 
-  const listenToIdeasChange = (stack) => {
+  const listenToIdeasChange = () => {
     let listeners = [];
     stacks.forEach(({ id: stackId }) => {
       const q = query(
