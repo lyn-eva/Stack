@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/authProvider";
 import Wrapper from "../utility/Wrapper";
 
-const tags = ["HTML", "CSS", "BOOTSTRAP"];
-
 const Tags = ({langs}) => (
   <div className="p-2 flex gap-3 items-center">
     {langs?.map((lang) => (
@@ -23,7 +21,6 @@ function RepoFrame({ name }) {
     const fetchLanguages = async () => {
       const raw = await fetch(`https://api.github.com/repos/${username}/${name}/languages`);
       const languages = await raw.json();
-      console.log(languages)
       setLangs(Object.keys(languages));
     };
     fetchLanguages();

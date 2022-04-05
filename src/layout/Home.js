@@ -3,6 +3,7 @@ import { useDB } from "../context/dbProvider";
 import Repo from "../stack/Repo";
 import Button from "../utility/Button";
 import Iconify from "../utility/Iconify";
+import LoadingSpinner from "../utility/LoadingSpinner";
 import BrowseRepo from "./BrowseRepo";
 
 function Home() {
@@ -39,9 +40,8 @@ function Home() {
       </ul>
       <section className="mt-14 flex gap-5">
         {stacks?.map(({id, name}) => {
-          return <Repo key={id} name={name} />;
+          return <Repo key={id} id={id} name={name} />;
         })}
-        {/* <Repo /> */}
       </section>
     </main>
   );

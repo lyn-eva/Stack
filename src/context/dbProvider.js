@@ -11,12 +11,23 @@ const db = getFirestore(app);
 function DbProvider({ children }) {
   const { getUser, user } = useAuth();
   const [stacks, setStacks] = useState([]);
+  const [ideaList, setIdeaList] = useState({});
 
   useEffect(() => {
     if (!user) return;
     const unsub = listenToStacksChange();
     return unsub;
   }, [user]);
+
+  useEffect(() => {
+    if (stacks.length === 0) return;
+    const listeners = listenToIdeasChange();
+    return () => {
+      listeners.forEach(cleanUp => {
+        cleanUp();
+      })
+    };
+  }, [stacks]);
   
   const listenToStacksChange = () => {
     const q = query(
@@ -26,6 +37,22 @@ function DbProvider({ children }) {
     return onSnapshot(q, (snapshot) => {
       setStacks(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
     });
+  };
+
+  const listenToIdeasChange = (stack) => {
+    let listeners = [];
+    stacks.forEach(({ id: stackId }) => {
+      const q = query(
+        collection(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, 'ideas'),
+        orderBy("created")
+      );
+      const unsub = onSnapshot(q, (snapshot) => {
+        const ideas = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setIdeaList(prev => ({...prev, [stackId]: ideas}))
+      });
+      listeners.push(unsub);
+    });
+    return listeners;
   };
 
   const createUser = async () => {
@@ -45,7 +72,7 @@ function DbProvider({ children }) {
     return addDoc(collection(db, path), { name: repo, ...metadata() });
   }
 
-  const value = { stacks, createUser, createStack };
+  const value = { stacks, ideaList, createUser, createStack };
   return <dbCtx.Provider value={value}>{children}</dbCtx.Provider>;
 }
 
