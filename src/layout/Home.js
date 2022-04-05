@@ -41,8 +41,8 @@ function Home() {
         </li>
       </ul>
       <section className="mt-14 flex gap-5">
-        {stacks?.map(({id, name}) => {
-          return <Repo onClick={() => navigate('../'+name)} key={id} id={id} name={name} shrink={shrink}/>;
+        {Object.values(stacks)?.map(({id, name}) => {
+          return <Repo onClick={() => navigate('../'+id)} key={id} id={id} name={name} shrink={shrink}/>;
         })}
       </section>
     </main>
