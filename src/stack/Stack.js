@@ -6,6 +6,8 @@ import MetaData from "./MetaData";
 import RepoFrame from "./RepoFrame";
 import StackSection from "./StackSection";
 
+const parseDate = (string) => new Date(Date.parse(string)).toString();
+
 function Stack() {
   const [repoDetail, setRepoDetail] = useState({});
   const location = useLocation();
@@ -14,23 +16,22 @@ function Stack() {
 
   const stackId = location.pathname.slice(1);
   const repoName = stacks[stackId]?.name;
+  const createdAt = stacks[stackId]?.created.toDate().toString();
+  const updatedAt = stacks[stackId]?.modified.toDate().toString();
 
   useEffect(() => {
-    if (!user) return;
+    if (!user || !repoName) return;
     const username = user.reloadUserInfo.screenName;
-    (async () => {//IIFE
+    (async () => {
       const raw = await fetch(`https://api.github.com/repos/${username}/${repoName}`);
       const details = await raw.json();
       setRepoDetail({
-        createdAt: Date(details.created_at),
-        updatedAt: Date(details.updated_at),
-        pushedAt: Date(details.pushed_at),
+        createdAt: parseDate(details.created_at),
+        updatedAt: parseDate(details.updated_at),
+        pushedAt: parseDate(details.pushed_at),
       });
-    })();
-  }, [user]);
-  
-  const createdAt = Date(stacks[stackId]?.created.seconds);
-  const updatedAt = Date(stacks[stackId]?.modified.seconds);
+    })();//IIFE
+  }, [user, repoName]);
 
   return (
     <main className="flex justify-between mb-8">
@@ -42,11 +43,7 @@ function Stack() {
           pushedAt={repoDetail.pushedAt}
           hdr="Repo Details"
         />
-        <MetaData
-          createdAt={createdAt}
-          updatedAt={updatedAt}
-          hdr="Stack Details"
-        />
+        <MetaData createdAt={createdAt} updatedAt={updatedAt} hdr="Stack Details" />
       </section>
       <StackSection />
     </main>

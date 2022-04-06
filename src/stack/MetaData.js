@@ -7,6 +7,7 @@ const getDate = (date) => {
 }
 
 function MetaData({ hdr, createdAt, updatedAt, pushedAt }) {
+  // console.log(createdAt, updatedAt, pushedAt)
   return (
     <Wrapper className="p-5 text-white mt-5 font-lato shadow-l2 relative group">
       <button className="absolute right-5 top-4 ml-4 opacity-0 group-hover:opacity-100">
