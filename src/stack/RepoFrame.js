@@ -3,7 +3,7 @@ import { useAuth } from "../context/authProvider";
 import Wrapper from "../utility/Wrapper";
 
 const Tags = ({ langs }) => (
-  <div className="p-2 flex gap-3 items-center">
+  <div className="p-2 flex gap-3 items-center text-black">
     {langs?.map((lang) => (
       <span key={lang} className="bg-white px-2 rounded-sm">
         {lang}

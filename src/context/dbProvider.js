@@ -81,10 +81,10 @@ function DbProvider({ children }) {
     });
   };
 
-  const createStack = async (repo) => {
+  const createStack = async (repo, url) => {
     const user = getUser(); //
     const path = "users/" + user.reloadUserInfo.screenName + "/stacks";
-    return addDoc(collection(db, path), { name: repo, ...metadata() });
+    return addDoc(collection(db, path), { name: repo, url: url, ...metadata() });
   };
 
   const value = { stacks, ideaList, createUser, createStack };

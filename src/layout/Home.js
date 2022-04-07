@@ -40,7 +40,8 @@ function Home() {
           </Button>
         </li>
       </ul>
-      <section className="mt-14 flex gap-5">
+      <section className="mt-14 flex gap-5 text-white">
+        {!Object.keys(stacks).length && "** no stack has been created **"}
         {Object.values(stacks)?.map(({id, name}) => {
           return <Repo onClick={() => navigate('../'+id)} key={id} id={id} name={name} shrink={shrink}/>;
         })}

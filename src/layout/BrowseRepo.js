@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/authProvider";
 import { useDB } from "../context/dbProvider";
-import Button from "../utility/Button";
-import Iconify from "../utility/Iconify";
 import LoadingSpinner from "../utility/LoadingSpinner";
 import Wrapper from "../utility/Wrapper";
+import RepoItem from "./RepoItem";
 
 function BrowseRepo({ setBrowseRepo }) {
   const [repos, setRepos] = useState([]);
@@ -14,19 +13,20 @@ function BrowseRepo({ setBrowseRepo }) {
   useEffect(() => {
     const user = getUser();
     if (!user) return;
-    const fetchRepo = async () => {
+    (async () => {
       const raw = await fetch(
         `https://api.github.com/users/${user.reloadUserInfo.screenName}/repos`
       );
       const repoList = await raw.json();
       setRepos(repoList.map(({ id, name, html_url }) => ({ id, name, html_url })));
-    };
-    fetchRepo();
+    })();
   }, []);
 
-  const handleAddRepo = async (repo) => {
-    await createStack(repo);
-    setBrowseRepo(false);
+  const handleAddRepo = (repo, url) => {
+    return async () => {
+      await createStack(repo, url);
+      setBrowseRepo(false);
+    };
   };
 
   return (
@@ -38,32 +38,13 @@ function BrowseRepo({ setBrowseRepo }) {
       {!repos.length && <LoadingSpinner />}
       <ul className="relative list-decimal list-outside list">
         {repos.length > 0 &&
-          repos.map(({ id, name }, idx) => (
-            <li
-              key={id}
-              className="list-decimal list-outside flex items-center justify-between pt-2 pb-1 mt-1 border-b-[1px] border-[#ffffff70]"
-            >
-              <p>
-                <span className="text-lg mr-2">{idx + 1}.</span>
-                <Iconify
-                  style={{ marginRight: ".8rem" }}
-                  data-width={23}
-                  data-icon="ri:git-repository-line"
-                />
-                {name}
-              </p>
-              <div>
-                <span className="mr-4 text-[11px] leading-6">
-                  added <Iconify data-icon="dashicons:yes-alt" />
-                </span>
-                <Button
-                  onClick={() => handleAddRepo(name)}
-                  style={{ color: "#000", paddingBlock: "0", borderRadius: "4px" }}
-                >
-                  add
-                </Button>
-              </div>
-            </li>
+          repos.map((repo, idx) => (
+            <RepoItem
+              key={repo.id}
+              {...repo}
+              idx={idx}
+              handleAddRepo={handleAddRepo(repo.name, repo.html_url)}
+            />
           ))}
       </ul>
     </Wrapper>
