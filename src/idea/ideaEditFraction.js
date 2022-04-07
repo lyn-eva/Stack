@@ -1,17 +1,34 @@
-import React from "react";
+import { useState } from "react";
 import Iconify from "../utility/Iconify";
 
 const btnStyle =
-  "font-normal text-[13px] tracking-wide underline underline-offset-1 px-2 rounded-sm";
+  "font-normal text-[13px] tracking-wide underline underline-offset-1 px-2 rounded-sm ";
+
+const options = [
+  { color: "bg-green-700", level: "trivial", selected: false },
+  { color: "bg-blue-700", level: "moderate", selected: false },
+  { color: "bg-red-700", level: "urgent", selected: false },
+];
 
 function IdeaEditFraction({ file, line, Location }) {
+  const [selected, setSelected] = useState("");
+
   return (
     <>
       <div className="font-exo flex justify-between items-center mt-5 mb-[5px]">
         <div className="flex gap-3 items">
-          <button className={btnStyle + " bg-green-600"}>trivial</button>
-          <button className={btnStyle + " bg-blue-600"}>moderate</button>
-          <button className={btnStyle + " bg-red-500"}>urgent</button>
+          {options.map((option) => {
+            return (
+              <button
+                key={option.level}
+                id={option.level}
+                onClick={(e) => setSelected(option.level)}
+                className={btnStyle + (selected === option.level ? option.color : "")}
+              >
+                {option.level}
+              </button>
+            );
+          })}
         </div>
         <div className="group flex gap-4">
           <button className="-mt-1 opacity-0 group-hover:opacity-100">

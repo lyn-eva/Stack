@@ -6,7 +6,7 @@ function Description() {
   const descrRef = useRef(null);
 
   const rename = () => {
-    descrRef.current.setRename(prev => !prev);
+    descrRef.current.setRename(true);
   }
 
   return (

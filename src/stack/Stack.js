@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { useAuth } from "../context/authProvider";
 import { useDB } from "../context/dbProvider";
+import Idea from "../idea/Idea";
 import MetaData from "./MetaData";
 import RepoFrame from "./RepoFrame";
 import StackSection from "./StackSection";
@@ -35,7 +36,7 @@ function Stack() {
 
   return (
     <main className="flex justify-between mb-8">
-      {/* <section className="w-[22rem]">
+      <section className="w-[22rem]">
         <RepoFrame name={repoName} />
         <MetaData
           createdAt={repoDetail.createdAt}
@@ -44,7 +45,7 @@ function Stack() {
           hdr="Repo Details"
         />
         <MetaData createdAt={createdAt} updatedAt={updatedAt} hdr="Stack Details" />
-      </section> */}
+      </section>
       <StackSection stackId={stackId}/>
     </main>
   );

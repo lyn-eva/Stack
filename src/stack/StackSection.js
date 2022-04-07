@@ -2,6 +2,7 @@ import { useDB } from '../context/dbProvider';
 import Button from '../utility/Button'
 import Iconify from '../utility/Iconify'
 import Idea from '../idea/Idea';
+import MoreDetail from '../idea/MoreDetail';
 
 const btnStyle = {fontSize: '14px', padding: '2px 8px', borderRadius: '4px', letterSpacing: '1px'}
 const iconifyData = { 'data-width':'14', style: {marginLeft: '.5rem'}};
