@@ -4,16 +4,16 @@ import React from "react";
 import Levels from "./Levels";
 import Location from "./Location";
 
-const bold = "font-exo font-semibold text-[1rem] tracking-wide mr-5";
+const bold = "font-exo font-semibold text-[1rem] tracking-wide mr-3";
 
-function Detail() {
+function Detail({initial = false}) {
   return (
-    <div className="pt-5 pb-1 px-6">
-      <Title bold={bold} />
-      <Description bold={bold} />
+    <div className="pt-5 pb-1 px-6 bg-bg-soft-gray rounded-md text-white">
+      <Title bold={bold} initial={initial}/>
+      <Description bold={bold} initial={initial}/>
       <div className="flex flex-wrap gap-4 justify-between items-center mt-4 mb-1">
-        <Levels />
-        <Location editable/>
+        <Levels initial={initial}/>
+        <Location editable initial={initial}/>
       </div>
       <hr />
       <div className="font-light text-[13px] flex justify-end gap-5 my-1">

@@ -1,30 +1,38 @@
 import { useState, useRef } from "react";
 import Iconify from "../utility/Iconify";
 
-function Title({ bold }) {
-  const [rename, setRename] = useState(false);
+function Title({ bold, initial }) {
+  const [rename, setRename] = useState(initial);
   const ref = useRef(null);
+  console.log(rename);
 
   const handleRename = () => {
     setRename((prev) => !prev);
     setTimeout(() => ref.current.focus(), 0);
   };
 
+  const handleBlur = () => {
+    if (initial) return;
+    setRename(false);
+  };
+
   return (
-    <div className="flex items-center mb-4 relative pr-6">
+    <div className="flex items-center mb-4 relative pr-6 group">
       <label className={bold + " pt-[3px]"}>Title: </label>
       <input
-        onBlur={() => setRename(false)}
+        onBlur={handleBlur}
         disabled={!rename}
         maxLength="34"
         type="text"
         ref={ref}
         placeholder="title"
-        className={`${rename ? "bg-white text-black" : "bg-transparent"} font-normal text-lg rounded-sm px-1 w-full text-md outline-none tracking-wide`}
+        className={`${
+          rename ? "bg-white text-black" : "bg-transparent"
+        } font-normal text-lg rounded-sm px-2 w-full text-md outline-none tracking-wide`}
       />
       <button
         onClick={handleRename}
-        className="absolute -top-[1px] right-0 ml-4 opacity- group-hover:opacity-100"
+        className="absolute -top-[1px] right-0 ml-4 opacity-0 group-hover:opacity-100"
       >
         <Iconify data-width={13} data-icon="fa6-solid:pencil" />
       </button>

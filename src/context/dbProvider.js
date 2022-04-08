@@ -12,6 +12,7 @@ import {
   setDoc,
   getDoc,
   addDoc,
+  updateDoc
 } from "firebase/firestore";
 const dbCtx = createContext({});
 export const useDB = () => useContext(dbCtx);
@@ -60,35 +61,46 @@ function DbProvider({ children }) {
       const q = query(
         collection( db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas"),
         orderBy("created")
-      );
-      const unsub = onSnapshot(q, (snapshot) => {
-        const ideas = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-        setIdeaList((prev) => ({ ...prev, [stackId]: ideas }));
+        );
+        const unsub = onSnapshot(q, (snapshot) => {
+          const ideas = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+          setIdeaList((prev) => ({ ...prev, [stackId]: ideas }));
+        });
+        listeners.push(unsub);
       });
-      listeners.push(unsub);
-    });
-    return listeners;
-  };
-
-  const createUser = async () => {
-    const user = getUser(); //
-    const path = "users/" + user.reloadUserInfo.screenName;
-    const alreadyExist = await getDoc(doc(db, path));
-    if (alreadyExist.exists()) return;
-    return setDoc(doc(db, path), {
-      username: user.displayName,
-      ...metadata(),
-    });
-  };
-
-  const createStack = async (repo, url) => {
-    const user = getUser(); //
-    const path = "users/" + user.reloadUserInfo.screenName + "/stacks";
-    return addDoc(collection(db, path), { name: repo, url: url, ...metadata() });
-  };
-
-  const value = { stacks, ideaList, createUser, createStack };
-  return <dbCtx.Provider value={value}>{children}</dbCtx.Provider>;
-}
-
-export default DbProvider;
+      return listeners;
+    };
+    
+    const createUser = async () => {
+      const user = getUser(); //
+      const path = "users/" + user.reloadUserInfo.screenName;
+      const alreadyExist = await getDoc(doc(db, path));
+      if (alreadyExist.exists()) return;
+      return setDoc(doc(db, path), {
+        username: user.displayName,
+        ...metadata(),
+      });
+    };
+    
+    const createStack = async (repo, url) => {
+      const user = getUser(); //
+      const path = "users/" + user.reloadUserInfo.screenName + "/stacks";
+      return addDoc(collection(db, path), { name: repo, url: url, ...metadata() });
+    };
+    
+    const createIdea = async (new_data, stackId) => {
+      const path = collection( db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas");
+      updateDoc(path, new_data);
+    }
+    
+    const updateIdea = async (new_data, stackId, id) => {
+      const path = doc( db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas", id);
+      updateDoc(path, new_data);
+    }
+    
+    
+    const value = { stacks, ideaList, createUser, createStack, createIdea, updateIdea };
+    return <dbCtx.Provider value={value}>{children}</dbCtx.Provider>;
+  }
+  
+  export default DbProvider;

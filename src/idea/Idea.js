@@ -5,7 +5,7 @@ import Detail from "./Detail";
 
 
 function Idea({ no, idea, line, file }) {
-  const [expand, setExpand] = useState(true);
+  const [expand, setExpand] = useState(false);
 
   return (
     <li className="bg-bg-soft-gray rounded-md text-white mb-3">

@@ -1,9 +1,9 @@
 import { useState, useRef } from "react";
 import Iconify from "../utility/Iconify";
 
-function Location({ editable }) {
+function Location({ editable, initial }) {
   const [data, setData] = useState({line : null, file : null});
-  const [rename, setRename] = useState(false);
+  const [rename, setRename] = useState(initial);
   const lineRef = useRef(null);
   const fileRef = useRef(null);
   
