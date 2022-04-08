@@ -1,8 +1,8 @@
 import { useState, useRef } from "react";
 import Iconify from "../utility/Iconify";
 
-function Location({ editable, initial }) {
-  const [data, setData] = useState({line : null, file : null});
+function Location({ editable, initial, dispatchForm }) {
+  const [location, setLocation] = useState({line : '', file : ''});
   const [rename, setRename] = useState(initial);
   const lineRef = useRef(null);
   const fileRef = useRef(null);
@@ -10,6 +10,13 @@ function Location({ editable, initial }) {
   const handleRename = () => {
     setRename(prev => !prev)
     setTimeout(() => lineRef.current.focus(), 0);
+  }
+
+  const handleChange = (e) => {
+    const newLocation = {...location, [e.target.name]: e.target.value};
+    setLocation(newLocation);
+    if (!dispatchForm) return;
+    dispatchForm({type: 'LOCATION', value: newLocation});
   }
 
   return (
@@ -26,6 +33,9 @@ function Location({ editable, initial }) {
         <>
           <label className="mr-3 font-medium">Line: </label>
           <input
+            onChange={handleChange}
+            value={location.line}
+            name='line'
             ref={lineRef}
             maxLength="5"
             type="number"
@@ -34,12 +44,15 @@ function Location({ editable, initial }) {
             />
           <label className="mx-3 font-medium">from: </label>
           <input
+            onChange={handleChange}
+            value={location.file}
+            name='file'
             ref={fileRef}
             maxLength="34"
             type="text"
             placeholder="CustomForm.js"
             className="text-black rounded-sm px-1 text-md outline-none w-[17rem] text-center"
-          />
+            />
         </>
       ) : (
         <p className="font-exo font-light text-sm ">

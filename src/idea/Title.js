@@ -1,10 +1,10 @@
 import { useState, useRef } from "react";
 import Iconify from "../utility/Iconify";
 
-function Title({ bold, initial }) {
+function Title({ bold, initial, dispatchForm }) {
+  const [title, setTitle] = useState(''); 
   const [rename, setRename] = useState(initial);
   const ref = useRef(null);
-  console.log(rename);
 
   const handleRename = () => {
     setRename((prev) => !prev);
@@ -16,12 +16,20 @@ function Title({ bold, initial }) {
     setRename(false);
   };
 
+  const handleChange = (e) => {
+    setTitle(e.target.value);
+    if (!dispatchForm) return;
+    dispatchForm({type: 'TITLE', value: e.target.value});
+  }
+
   return (
     <div className="flex items-center mb-4 relative pr-6 group">
       <label className={bold + " pt-[3px]"}>Title: </label>
       <input
+        onChange={handleChange}
         onBlur={handleBlur}
         disabled={!rename}
+        value={title}
         maxLength="34"
         type="text"
         ref={ref}

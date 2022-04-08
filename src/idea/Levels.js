@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const options = [
   { color: "bg-green-600", level: "trivial", selected: false },
@@ -6,21 +6,25 @@ const options = [
   { color: "bg-red-700", level: "urgent", selected: false },
 ];
 
-function Levels({initial}) {
-  console.log(initial)
-  const [selected, setSelected] = useState(initial ? 'trivial' : '');
+function Levels({initial, dispatchForm}) {
+  const [level, setLevel] = useState(initial ? 0 : null);
+
+  useEffect(() => {
+    dispatchForm({type: 'LEVEL', value: level})
+  }, [level])
+  
 
   return (
     <div className=" gap-3 flex items-center">
-      {options.map((option) => {
+      {options.map((option, i) => {
         return (
           <button
             key={option.level}
             id={option.level}
-            onClick={(e) => setSelected(option.level)}
+            onClick={() => setLevel(i)}
             className={
               "font-normal pb-[2px] text-[14px] tracking-wide underline underline-offset-1 px-2 rounded-sm " +
-              (selected === option.level ? option.color : "")
+              (i === level ? option.color : "")
             }
           >
             {option.level}

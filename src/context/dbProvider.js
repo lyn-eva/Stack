@@ -88,9 +88,9 @@ function DbProvider({ children }) {
       return addDoc(collection(db, path), { name: repo, url: url, ...metadata() });
     };
     
-    const createIdea = async (new_data, stackId) => {
+    const createIdea = (new_data, stackId) => {
       const path = collection( db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas");
-      updateDoc(path, new_data);
+      return addDoc(path, {...new_data, ...metadata()}); 
     }
     
     const updateIdea = async (new_data, stackId, id) => {

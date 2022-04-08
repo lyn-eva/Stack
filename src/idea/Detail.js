@@ -6,14 +6,14 @@ import Location from "./Location";
 
 const bold = "font-exo font-semibold text-[1rem] tracking-wide mr-3";
 
-function Detail({initial = false}) {
+function Detail({initial = false, dispatchForm}) {
   return (
     <div className="pt-5 pb-1 px-6 bg-bg-soft-gray rounded-md text-white">
-      <Title bold={bold} initial={initial}/>
-      <Description bold={bold} initial={initial}/>
+      <Title bold={bold} initial={initial}  dispatchForm={dispatchForm}/>
+      <Description bold={bold} initial={initial} dispatchForm={dispatchForm}/>
       <div className="flex flex-wrap gap-4 justify-between items-center mt-4 mb-1">
-        <Levels initial={initial}/>
-        <Location editable initial={initial}/>
+        <Levels initial={initial}  dispatchForm={dispatchForm}/>
+        <Location editable initial={initial}  dispatchForm={dispatchForm}/>
       </div>
       <hr />
       <div className="font-light text-[13px] flex justify-end gap-5 my-1">

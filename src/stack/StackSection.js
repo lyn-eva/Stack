@@ -1,10 +1,9 @@
+import { AddIdeaForm } from '../idea/AddIdeaForm';
 import { useState } from "react";
 import { useDB } from "../context/dbProvider";
 import Button from "../utility/Button";
 import Iconify from "../utility/Iconify";
 import Idea from "../idea/Idea";
-import MoreDetail from "../idea/MoreDetail";
-import Detail from "../idea/Detail";
 
 const btnStyle = {
   fontSize: "14px",
@@ -23,10 +22,6 @@ const ideas = [
 function StackSection({ stackId }) {
   const [addIdea, setAddIdea] = useState(false);
   const { stacks } = useDB();
-
-  const handleAddIdea = () => {
-    setAddIdea(false);
-  };
 
   return (
     <section className="w-full">
@@ -69,7 +64,8 @@ function StackSection({ stackId }) {
       <ul className="mt-4 flex flex-col gap-5">
         {addIdea && (
           <AddIdeaForm
-            handleAddIdea={handleAddIdea}
+            stackId={stackId}
+            setAddIdea={setAddIdea}
             btnStyle={btnStyle}
             iconifyData={iconifyData}
             setAddIdea={setAddIdea}
@@ -84,40 +80,3 @@ function StackSection({ stackId }) {
 }
 
 export default StackSection;
-
-function AddIdeaForm({ handleAddIdea, btnStyle, iconifyData, setAddIdea }) {
-  return (
-    <li>
-      <Detail initial={true}/>
-      <div className="mt-2">
-        <Button
-          onClick={handleAddIdea}
-          style={{
-            ...btnStyle,
-            backgroundColor: "#0000ff",
-            color: "#fff",
-            padding: "5px 1rem",
-            width: "7rem",
-          }}
-        >
-          Add
-          <Iconify data-icon="ant-design:plus-outlined" {...iconifyData} />
-        </Button>
-        <Button
-          onClick={() => setAddIdea(false)}
-          style={{
-            ...btnStyle,
-            backgroundColor: "#ff0000",
-            color: "#fff",
-            padding: "5px 1rem",
-            width: "7rem",
-            marginLeft: "1rem",
-          }}
-        >
-          Cancel
-          <Iconify data-icon="akar-icons:cross" {...iconifyData} />
-        </Button>
-      </div>
-    </li>
-  );
-}
