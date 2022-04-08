@@ -9,15 +9,15 @@ const iconifyData = { 'data-width':'14', style: {marginLeft: '.5rem'}};
 
 const ideas = [
   {no: 1, idea: "remove unused code", line: "46", file: "Sidebar.js"},
-  {no: 2, idea: "remove unused code", line: "46", file: "Sidebar.js"},
-  {no: 3, idea: "remove unused code", line: "46", file: "Sidebar.js"},
+  // {no: 2, idea: "remove unused code", line: "46", file: "Sidebar.js"},
+  // {no: 3, idea: "remove unused code", line: "46", file: "Sidebar.js"},
 ]
 
 function StackSection({stackId}) {
   const { stacks } = useDB();
 
   return (
-    <section className='w-7/12'> 
+    <section className='w-full'> 
       <h2 className='font-lato text-white font-medium text-2xl mb-2 leading-5'>Your stack</h2>
       <hr />
       <ul className='flex gap-4 mt-4'>

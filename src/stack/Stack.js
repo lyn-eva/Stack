@@ -35,8 +35,8 @@ function Stack() {
   }, [user, repoName]);
 
   return (
-    <main className="flex justify-between mb-8">
-      <section className="w-[22rem]">
+    <main className="flex justify-center mb-8">
+      {/* <section className="w-[22rem]">
         <RepoFrame name={repoName} />
         <MetaData
           createdAt={repoDetail.createdAt}
@@ -45,7 +45,7 @@ function Stack() {
           hdr="Repo Details"
         />
         <MetaData createdAt={createdAt} updatedAt={updatedAt} hdr="Stack Details" />
-      </section>
+      </section> */}
       <StackSection stackId={stackId}/>
     </main>
   );

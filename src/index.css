@@ -7,3 +7,15 @@
     @apply text-transparent bg-clip-text bg-gradient-to-r from-g-blue via-g-pale-green to-g-light-green
   }
 }
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
