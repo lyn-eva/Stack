@@ -5,7 +5,7 @@ const Dues = ({dues}) => (
   <ul className="text-black mt-3">
     {dues.length === 0 && <p className='text-center text-text-gray mt-5'>there's no due :)</p>}
     {dues.length > 0 && dues.map(({ description }) => (
-      <div key={description} className="bg-white mt-2 rounded-sm px-4 py-[5px] text-normal relative">
+      <div key={description} className="bg-white mt-2 rounded-sm px-4 py-[5px] text-normal relative truncate">
         {/* <span
           className="absolute top-0 left-0 rounded-sm rounded-bl-none h-[5px] w-24"
           style={{ backgroundColor: clr}}

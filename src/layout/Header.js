@@ -15,7 +15,7 @@ function Header({ loggedIn }) {
   return (
     <>
       <header className="flex items-center justify-between py-2">
-        <div className="text-white text-xl flex items-center gap-4">
+        <div onClick={() => navigate('../')} className="cursor-pointer text-white text-xl flex items-center gap-4">
           <svg
             width="40"
             height="42"

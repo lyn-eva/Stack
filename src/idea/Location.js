@@ -2,7 +2,7 @@ import Iconify from "../utility/Iconify";
 
 function Location({ editable, value, rename, Ref, handleChange, handleRename }) {
   return (
-    <div className="font-exo font-light text-sm pl-6 relative group">
+    <div className={`font-exo font-light text-sm pl-6 relative group ${!editable ? 'w-[30%]' : ''}`}>
       {editable && (
         <button
           onClick={handleRename}
@@ -36,9 +36,9 @@ function Location({ editable, value, rename, Ref, handleChange, handleRename }) 
           />
         </>
       ) : (
-        <p className="font-exo font-light text-sm ">
+        <p className="font-exo font-light text-sm flex text-left">
           line <span className="text-[#23dc41] mx-1">{value.line}</span>
-          at <span className="text-[#1BF9F9] mx-1">{value.file}</span>
+          at <span className="text-[#1BF9F9] mx-1 truncate">{value.file}</span>
         </p>
       )}
     </div>

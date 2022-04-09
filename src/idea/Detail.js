@@ -8,6 +8,8 @@ import Location from "./Location";
 import EnhancedFormField from "../hoc/EnhancedFormField";
 import Iconify from "../utility/Iconify";
 
+const getTime = (time) => time.toDate().toString().match(/\s{1}\d{1,2}(:\d{1,2}){2}\s{1}/g)[0];
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "TITLE":
@@ -41,7 +43,7 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
   };
 
   return (
-    <div className="pt-5 pb-2 px-6 bg-bg-soft-gray rounded-md text-white relative">
+    <div className="pt-4 pb-2 px-6 bg-bg-soft-gray rounded-md text-white relative">
       <EnhancedFormField
         Original={Title}
         initial={formState.title}
@@ -71,16 +73,16 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
       <hr />
       <div className="font-light text-[13px] flex justify-end gap-5 mt-2">
         <p>
-          last modified: <span className="font-normal">3 min ago</span>
+          last modified: <span className="font-medium">{getTime(idea.created)}</span>
         </p>
         <p>
-          created at: <span className="font-normal">12/27/2021</span>
+          created at: <span className="font-medium">{getTime(idea.created)}</span>
         </p>
       </div>
       <div className="flex gap-5 absolute left-8 bottom-[5px] text-[1.05rem]">
         <button onClick={handleSave} className="text-green-500">
-          save changes{" "}
-          <Iconify style={{ marginTop: "-3px" }} data-icon="ant-design:check-outlined" />
+          save changes {" "}
+          <Iconify style={{ marginTop: "-2px" }} data-icon="ant-design:check-outlined" />
         </button>
         <button onClick={handleExpand} className="text-red-500">
           cancel <Iconify style={{ marginTop: "-1px" }} data-icon="gridicons:cross" />

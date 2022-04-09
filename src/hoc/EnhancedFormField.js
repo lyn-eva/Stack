@@ -11,10 +11,7 @@ function EnhancedFormField({ Original, initial, isForm, dispatchForm, custom, ty
   };
 
   const handleChange = (e) => {
-    const result = custom
-      ? { ...value, [e.target.name]: e.target.value }
-      : e.target.value;
-
+    const result = custom? { ...value, [e.target.name]: e.target.value }: e.target.value;
     setValue(result);
     if (!dispatchForm) return;
     dispatchForm({ type: type, value: result });

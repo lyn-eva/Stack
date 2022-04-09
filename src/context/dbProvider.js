@@ -95,7 +95,7 @@ function DbProvider({ children }) {
     
     const updateIdea = async ( stackId, id, new_data) => {
       const path = doc( db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas", id);
-      return updateDoc(path, new_data);
+      return updateDoc(path, {...new_data, modified: serverTimestamp()});
     }
     
     

@@ -3,7 +3,7 @@ import Iconify from "../utility/Iconify";
 function Title({ value, rename, Ref, handleChange, handleRename }) {
 
   return (
-    <div className="flex items-center mb-4 relative pr-6 group">
+    <div className="flex items-center mb-2 relative pr-6 group">
       <label className={"font-exo font-semibold text-[1rem] tracking-wide mr-3 pt-[3px] text-gray-300"}>Title: </label>
       <input
         onChange={handleChange}

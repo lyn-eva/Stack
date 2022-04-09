@@ -18,7 +18,7 @@ function StackSection({ stackId }) {
   const { stacks, ideaList } = useDB();
 
   return (
-    <section className="w-full">
+    <section className="w-7/12">
       <h2 className="font-lato text-white font-medium text-2xl mb-2 leading-5">
         Your stack
       </h2>

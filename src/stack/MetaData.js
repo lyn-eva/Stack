@@ -15,13 +15,13 @@ function MetaData({ hdr, createdAt, updatedAt, pushedAt }) {
       </button>
       <h3 className="font-semibold mb-1">{hdr}</h3>
       <hr />
-      <p className="my-2 mt-4 font-semibold text-right">
+      <p className="my-2 mt-4 font-semibold">
         created at : <span className="font-normal ml-1">{getDate(createdAt)}</span>
       </p>
-      <p className="font-semibold text-right my-2">
+      <p className="font-semibold my-2">
         updated at : <span className="font-normal ml-1">{getDate(updatedAt)}</span>
       </p>
-      {pushedAt && <p className="font-semibold text-right">
+      {pushedAt && <p className="font-semibold">
         pushed at : <span className="font-normal ml-1">{getDate(pushedAt)}</span>
       </p>}
     </Wrapper>
