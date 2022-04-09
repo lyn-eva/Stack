@@ -29,7 +29,7 @@ const reducer = (state, action) => {
 export function AddIdeaForm({ stackId, setAddIdea, btnStyle, iconifyData }) {
   const [formState, dispatch] = useReducer(reducer, initialForm);
   const { createIdea } = useDB();
-
+console.log(formState)
   const handleIdeaForm = () => {
     createIdea(formState, stackId)
     setAddIdea(false);

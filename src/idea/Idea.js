@@ -16,7 +16,7 @@ function Idea({ no, idea, line, file }) {
         <p className="font-lighter text-lg tracking-wide">
           <span className="font-bold mr-4">{no}.</span> {idea}
         </p>
-        <Location file={file} line={line} />
+        <Location value={{file, line}} />
       </div>
       {expand && <Detail />}
     </li>

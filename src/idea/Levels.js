@@ -10,6 +10,7 @@ function Levels({initial, dispatchForm}) {
   const [level, setLevel] = useState(initial ? 0 : null);
 
   useEffect(() => {
+    if (!dispatchForm) return;
     dispatchForm({type: 'LEVEL', value: level})
   }, [level])
   

@@ -1,35 +1,21 @@
 import { useState, useRef } from "react";
 import Iconify from "../utility/Iconify";
 
-function Title({ bold, initial, dispatchForm }) {
-  const [title, setTitle] = useState(''); 
-  const [rename, setRename] = useState(initial);
-  const ref = useRef(null);
+function Title({ value, rename, ref, handleChange, handleRename }) {
 
-  const handleRename = () => {
-    setRename((prev) => !prev);
-    setTimeout(() => ref.current.focus(), 0);
-  };
-
-  const handleBlur = () => {
-    if (initial) return;
-    setRename(false);
-  };
-
-  const handleChange = (e) => {
-    setTitle(e.target.value);
-    if (!dispatchForm) return;
-    dispatchForm({type: 'TITLE', value: e.target.value});
-  }
+  // const handleBlur = () => {
+  //   if (initial) return;
+  //   setRename(false);
+  // };
 
   return (
     <div className="flex items-center mb-4 relative pr-6 group">
-      <label className={bold + " pt-[3px]"}>Title: </label>
+      <label className={"font-exo font-semibold text-[1rem] tracking-wide mr-3 pt-[3px]"}>Title: </label>
       <input
         onChange={handleChange}
-        onBlur={handleBlur}
+        // onBlur={handleBlur}
         disabled={!rename}
-        value={title}
+        value={value}
         maxLength="34"
         type="text"
         ref={ref}
