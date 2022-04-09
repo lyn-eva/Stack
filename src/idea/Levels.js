@@ -6,8 +6,8 @@ const options = [
   { color: "bg-red-700", level: "urgent", selected: false },
 ];
 
-function Levels({initial, dispatchForm}) {
-  const [level, setLevel] = useState(initial ? 0 : null);
+function Levels({initial, isForm, dispatchForm}) {
+  const [level, setLevel] = useState(isForm ? 0 : initial);
 
   useEffect(() => {
     if (!dispatchForm) return;

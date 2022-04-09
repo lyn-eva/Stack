@@ -4,6 +4,13 @@ import Button from "../utility/Button";
 import Iconify from "../utility/Iconify";
 import Detail from "./Detail";
 
+const actionStyle = {
+  color: "#fff",
+  padding: "5px 1rem",
+  width: "7rem",
+  marginRight: "1rem",
+};
+
 const initialForm = {
   title: "",
   description: "",
@@ -29,24 +36,22 @@ const reducer = (state, action) => {
 export function AddIdeaForm({ stackId, setAddIdea, btnStyle, iconifyData }) {
   const [formState, dispatch] = useReducer(reducer, initialForm);
   const { createIdea } = useDB();
-console.log(formState)
-  const handleIdeaForm = () => {
-    createIdea(formState, stackId)
+
+  const handleIdeaForm = async () => {
+    await createIdea(formState, stackId);
     setAddIdea(false);
   };
 
   return (
     <li>
-      <Detail initial={true} dispatchForm={dispatch} />
+      <Detail isForm={true} dispatchForm={dispatch} />
       <div className="mt-2">
         <Button
           onClick={handleIdeaForm}
           style={{
             ...btnStyle,
+            ...actionStyle,
             backgroundColor: "#0000ff",
-            color: "#fff",
-            padding: "5px 1rem",
-            width: "7rem",
           }}
         >
           Add
@@ -56,11 +61,8 @@ console.log(formState)
           onClick={() => setAddIdea(false)}
           style={{
             ...btnStyle,
+            ...actionStyle,
             backgroundColor: "#ff0000",
-            color: "#fff",
-            padding: "5px 1rem",
-            width: "7rem",
-            marginLeft: "1rem",
           }}
         >
           Cancel

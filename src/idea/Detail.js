@@ -5,14 +5,14 @@ import Levels from "./Levels";
 import Location from "./Location";
 import EnhancedFormField from "../hoc/EnhancedFormField";
 
-function Detail({initial = false, dispatchForm}) {
+function Detail({ title, description, level, location, created, modified, dispatchForm, isForm = false}) {
   return (
     <div className="pt-5 pb-1 px-6 bg-bg-soft-gray rounded-md text-white">
-      <EnhancedFormField Original={Title} type='TITLE' initial={initial} dispatchForm={dispatchForm}/>
-      <EnhancedFormField Original={Description} type='DESCRIPTION' initial={initial} dispatchForm={dispatchForm}/>
+      <EnhancedFormField Original={Title} initial={title} type='TITLE' isForm={isForm} dispatchForm={dispatchForm}/>
+      <EnhancedFormField Original={Description} initial={description} type='DESCRIPTION' isForm={isForm} dispatchForm={dispatchForm}/>
       <div className="flex flex-wrap gap-4 justify-between items-center mt-4 mb-1">
-        <Levels initial={initial}  dispatchForm={dispatchForm}/>
-        <EnhancedFormField Original={Location} type='LOCATION' editable custom={true} initial={initial}  dispatchForm={dispatchForm}/>
+        <Levels isForm={isForm} initial={level} dispatchForm={dispatchForm}/>
+        <EnhancedFormField Original={Location} initial={location} type='LOCATION' editable custom={true} isForm={isForm}  dispatchForm={dispatchForm}/>
       </div>
       <hr />
       <div className="font-light text-[13px] flex justify-end gap-5 my-1">

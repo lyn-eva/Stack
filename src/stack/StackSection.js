@@ -21,7 +21,9 @@ const ideas = [
 
 function StackSection({ stackId }) {
   const [addIdea, setAddIdea] = useState(false);
-  const { stacks } = useDB();
+  const { stacks, ideaList } = useDB();
+
+  console.log(ideaList);
 
   return (
     <section className="w-full">
@@ -61,18 +63,16 @@ function StackSection({ stackId }) {
           </Button>
         </li>
       </ul>
-      <ul className="mt-4 flex flex-col gap-5">
+      <ul className="mt-4 flex flex-col gap-4">
         {addIdea && (
           <AddIdeaForm
             stackId={stackId}
             setAddIdea={setAddIdea}
-            btnStyle={btnStyle}
             iconifyData={iconifyData}
-            setAddIdea={setAddIdea}
           />
         )}
-        {ideas.map((stack) => (
-          <Idea key={stack.no} {...stack} />
+        {ideaList[stackId]?.map((idea, i) => (
+          <Idea key={idea.id} {...idea} />
         ))}
       </ul>
     </section>

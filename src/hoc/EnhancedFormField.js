@@ -1,8 +1,8 @@
 import { useState, useRef } from "react";
 
-function EnhancedFormField({ Original, initial, dispatchForm, custom, type, editable = false }) {
-  const [value, setValue] = useState(custom ?? "");
-  const [rename, setRename] = useState(initial);
+function EnhancedFormField({ Original, initial, isForm, dispatchForm, custom, type, editable = false }) {
+  const [value, setValue] = useState(initial);
+  const [rename, setRename] = useState(isForm);
   const ref = useRef(null);
 
   const handleRename = () => {
