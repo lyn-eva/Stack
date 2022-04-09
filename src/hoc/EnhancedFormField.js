@@ -25,6 +25,7 @@ function EnhancedFormField({ Original, initial, isForm, dispatchForm, custom, ty
       editable={editable}
       value={value}
       rename={rename}
+      Ref={ref}
       handleRename={handleRename}
       handleChange={handleChange}
     />

@@ -1,9 +1,9 @@
-import { AddIdeaForm } from '../idea/AddIdeaForm';
 import { useState } from "react";
 import { useDB } from "../context/dbProvider";
 import Button from "../utility/Button";
 import Iconify from "../utility/Iconify";
 import Idea from "../idea/Idea";
+import Detail from '../idea/Detail';
 
 const btnStyle = {
   fontSize: "14px",
@@ -13,17 +13,9 @@ const btnStyle = {
 };
 const iconifyData = { "data-width": "14", style: { marginLeft: ".5rem" } };
 
-const ideas = [
-  { no: 1, idea: "remove unused code", line: "46", file: "Sidebar.js" },
-  // {no: 2, idea: "remove unused code", line: "46", file: "Sidebar.js"},
-  // {no: 3, idea: "remove unused code", line: "46", file: "Sidebar.js"},
-];
-
 function StackSection({ stackId }) {
   const [addIdea, setAddIdea] = useState(false);
   const { stacks, ideaList } = useDB();
-
-  console.log(ideaList);
 
   return (
     <section className="w-full">
@@ -64,15 +56,9 @@ function StackSection({ stackId }) {
         </li>
       </ul>
       <ul className="mt-4 flex flex-col gap-4">
-        {addIdea && (
-          <AddIdeaForm
-            stackId={stackId}
-            setAddIdea={setAddIdea}
-            iconifyData={iconifyData}
-          />
-        )}
+        {addIdea && <Detail isForm stackId={stackId} handleExpand={() => setAddIdea(false)}/>}
         {ideaList[stackId]?.map((idea, i) => (
-          <Idea key={idea.id} {...idea} />
+          <Idea key={idea.id} stackId={stackId} idea={idea} />
         ))}
       </ul>
     </section>

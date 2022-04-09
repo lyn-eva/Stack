@@ -2,7 +2,7 @@ import Location from "./Location";
 import { useState } from "react";
 import Detail from "./Detail";
 
-function Idea(idea) {
+function Idea({idea, stackId}) {
   const [expand, setExpand] = useState(false);
 
   return (
@@ -14,7 +14,7 @@ function Idea(idea) {
         <p className="font-lighter text-lg tracking-wide pl-4">{idea.title}</p>
         <Location value={idea.location} />
       </div>
-      {expand && <Detail {...idea}/>}
+      {expand && <Detail stackId={stackId} idea={idea} handleExpand={() => setExpand(false)}/>}
     </li>
   );
 }

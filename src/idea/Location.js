@@ -1,6 +1,6 @@
 import Iconify from "../utility/Iconify";
 
-function Location({ editable, value, rename, ref, handleChange, handleRename }) {
+function Location({ editable, value, rename, Ref, handleChange, handleRename }) {
   return (
     <div className="font-exo font-light text-sm pl-6 relative group">
       {editable && (
@@ -18,7 +18,7 @@ function Location({ editable, value, rename, ref, handleChange, handleRename }) 
             onChange={handleChange}
             value={value.line ?? ""}
             name="line"
-            ref={ref}
+            ref={Ref}
             maxLength="5"
             type="number"
             placeholder="69"

@@ -1,19 +1,18 @@
 import { useState, useEffect } from "react";
 
 const options = [
-  { color: "bg-green-600", level: "trivial", selected: false },
-  { color: "bg-blue-700", level: "moderate", selected: false },
-  { color: "bg-red-700", level: "urgent", selected: false },
+  { color: "bg-green-600", level: "trivial" },
+  { color: "bg-blue-700", level: "moderate" },
+  { color: "bg-red-700", level: "urgent" },
 ];
 
-function Levels({initial, isForm, dispatchForm}) {
-  const [level, setLevel] = useState(isForm ? 0 : initial);
+function Levels({ initial, dispatchForm }) {
+  const [level, setLevel] = useState(initial);
 
   useEffect(() => {
     if (!dispatchForm) return;
-    dispatchForm({type: 'LEVEL', value: level})
-  }, [level])
-  
+    dispatchForm({ type: "LEVEL", value: level });
+  }, [level]);
 
   return (
     <div className=" gap-3 flex items-center">

@@ -88,14 +88,14 @@ function DbProvider({ children }) {
       return addDoc(collection(db, path), { name: repo, url: url, ...metadata() });
     };
     
-    const createIdea = (new_data, stackId) => {
+    const createIdea = ( stackId, new_data) => {
       const path = collection( db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas");
       return addDoc(path, {...new_data, ...metadata()}); 
     }
     
-    const updateIdea = async (new_data, stackId, id) => {
+    const updateIdea = async ( stackId, id, new_data) => {
       const path = doc( db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas", id);
-      updateDoc(path, new_data);
+      return updateDoc(path, new_data);
     }
     
     
