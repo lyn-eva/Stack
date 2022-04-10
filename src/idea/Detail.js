@@ -26,7 +26,6 @@ const reducer = (state, action) => {
 };
 
 function Detail({ idea, handleExpand, stackId, isForm = false }) {
-
   const initialForm = {
     title: idea?.title ?? "",
     description: idea?.description ?? "",

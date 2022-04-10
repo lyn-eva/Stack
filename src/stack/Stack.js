@@ -5,7 +5,7 @@ import { useDB } from "../context/dbProvider";
 import Idea from "../idea/Idea";
 import MetaData from "./MetaData";
 import RepoFrame from "./RepoFrame";
-import StackSection from "./StackSection";
+import StackIdea from "./StackIdeas";
 
 const parseDate = (string) => new Date(Date.parse(string)).toString();
 
@@ -46,7 +46,7 @@ function Stack() {
         />
         <MetaData createdAt={createdAt} updatedAt={updatedAt} hdr="Stack Details" />
       </section>
-      <StackSection stackId={stackId}/>
+      <StackIdea stackId={stackId}/>
     </main>
   );
 }

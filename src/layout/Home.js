@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useDB } from "../context/dbProvider";
+import { useAuth } from "../context/authProvider";
 import Repo from "../stack/Repo";
 import Button from "../utility/Button";
 import Iconify from "../utility/Iconify";
@@ -9,10 +10,19 @@ import BrowseRepo from "./BrowseRepo";
 
 function Home() {
   const [browseRepo, setBrowseRepo] = useState(false);
+  const [stacks, setStacks] = useState(null);
   const [shrink, setShrink] = useState(false);
-  const { stacks } = useDB();
-
+  const { listenToStacks } = useDB();
+  const { user } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) return;
+    const unsub = listenToStacks(setStacks);
+    return unsub;
+  }, [user]);
+
+  console.log(stacks);
 
   return (
     <main className="mb-16">
@@ -30,7 +40,7 @@ function Home() {
           {browseRepo && <BrowseRepo setBrowseRepo={setBrowseRepo} />}
         </li>
         <li>
-          <Button onClick={() => setShrink(prev => !prev)}>
+          <Button onClick={() => setShrink((prev) => !prev)}>
             Shrink all
             <Iconify
               data-icon="lucide:shrink"
@@ -41,9 +51,17 @@ function Home() {
         </li>
       </ul>
       <section className="mt-14 flex gap-5 text-white">
-        {!Object.keys(stacks).length && "** no stack has been created **"}
-        {Object.values(stacks)?.map(({id, name}) => {
-          return <Repo onClick={() => navigate('../'+id)} key={id} id={id} name={name} shrink={shrink}/>;
+        {/* {!Object.keys(stacks).length && "** no stack has been created **"} */}
+        {stacks?.map(({ id, name }) => {
+          return (
+            <Repo
+              onClick={() => navigate("../" + id)}
+              key={id}
+              stackId={id}
+              name={name}
+              shrink={shrink}
+            />
+          );
         })}
       </section>
     </main>
