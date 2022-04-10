@@ -30,6 +30,14 @@ function DbProvider({ children }) {
       setStacks(ideas);
     })
   };
+  
+  const listenToStack = (stackId, setStack) => {
+    const q = doc(db, "users", user.reloadUserInfo.screenName, "stacks", stackId);
+    return onSnapshot(q, (snapshot) => {
+      const stack = { id: snapshot.id, ...snapshot.data() };
+      setStack(stack);
+    });
+  };
 
   const listenToIdeas = (stackId, setIdeas) => {
     const q = query(collection(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas"), orderBy("created"));
@@ -57,31 +65,16 @@ function DbProvider({ children }) {
   };
 
   const createIdea = (stackId, new_data) => {
-    const path = collection(
-      db,
-      "users",
-      user.reloadUserInfo.screenName,
-      "stacks",
-      stackId,
-      "ideas"
-    );
+    const path = collection(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas");
     return addDoc(path, { ...new_data, ...metadata() });
   };
 
   const updateIdea = async (stackId, id, new_data) => {
-    const path = doc(
-      db,
-      "users",
-      user.reloadUserInfo.screenName,
-      "stacks",
-      stackId,
-      "ideas",
-      id
-    );
+    const path = doc(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas", id);
     return updateDoc(path, { ...new_data, modified: serverTimestamp() });
   };
 
-  const value = { createUser, createStack, createIdea, updateIdea, listenToStacks, listenToIdeas };
+  const value = { createUser, createStack, createIdea, updateIdea, listenToStacks, listenToIdeas, listenToStack };
   return <dbCtx.Provider value={value}>{children}</dbCtx.Provider>;
 }
 

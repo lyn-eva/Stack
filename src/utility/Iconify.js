@@ -1,9 +1,9 @@
 function Iconify(props) {
   return (
-    <i
+    <span
       className="iconify !inline-block mb-[1px]"
       {...props}
-    ></i>
+    ></span>
   );
 }
 

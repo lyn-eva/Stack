@@ -14,10 +14,10 @@ const btnStyle = {
 };
 const iconifyData = { "data-width": "14", style: { marginLeft: ".5rem" } };
 
-function StackIdea({ stackId }) {
+function StackIdea({ stackId, repoUrl }) {
   const [addIdea, setAddIdea] = useState(false);
   const [ideas, setIdeas] = useState(null);
-  const { stacks, listenToIdeas } = useDB();
+  const { listenToIdeas } = useDB();
   const { user } = useAuth();
 
   useEffect(() => {
@@ -25,8 +25,6 @@ function StackIdea({ stackId }) {
     const unsub = listenToIdeas(stackId, setIdeas);
     return () => unsub;
   }, [user]);
-
-  console.log(ideas)
 
   return (
     <section className="w-7/12">
@@ -39,7 +37,7 @@ function StackIdea({ stackId }) {
           <a
             target="_blank"
             rel="noreferrer"
-            href={stacks[stackId]?.url}
+            href={repoUrl}
             className="bg-white inline-block font-roboto font-medium"
             style={btnStyle}
           >

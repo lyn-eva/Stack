@@ -5,7 +5,6 @@ import { useAuth } from "../context/authProvider";
 import Repo from "../stack/Repo";
 import Button from "../utility/Button";
 import Iconify from "../utility/Iconify";
-import LoadingSpinner from "../utility/LoadingSpinner";
 import BrowseRepo from "./BrowseRepo";
 
 function Home() {
@@ -21,8 +20,6 @@ function Home() {
     const unsub = listenToStacks(setStacks);
     return unsub;
   }, [user]);
-
-  console.log(stacks);
 
   return (
     <main className="mb-16">
@@ -51,7 +48,7 @@ function Home() {
         </li>
       </ul>
       <section className="mt-14 flex gap-5 text-white">
-        {/* {!Object.keys(stacks).length && "** no stack has been created **"} */}
+        {!stacks?.length && "** no stack has been created **"}
         {stacks?.map(({ id, name }) => {
           return (
             <Repo
