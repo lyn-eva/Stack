@@ -28,17 +28,17 @@ function StackIdea({ stackId, repoUrl }) {
 
   return (
     <section className="w-7/12">
-      <h2 className="font-lato text-white font-medium text-2xl mb-2 leading-5">
+      <h2 className="mb-2 font-lato text-2xl font-medium leading-5 text-white">
         Your stack
       </h2>
       <hr />
-      <ul className="flex gap-4 mt-4">
+      <ul className="mt-4 flex gap-4">
         <li>
           <a
             target="_blank"
             rel="noreferrer"
             href={repoUrl}
-            className="bg-white inline-block font-roboto font-medium"
+            className="inline-block bg-white font-roboto font-medium"
             style={btnStyle}
           >
             go to repo
@@ -64,12 +64,13 @@ function StackIdea({ stackId, repoUrl }) {
           </Button>
         </li>
       </ul>
+
       <ul className="mt-4 flex flex-col gap-4">
         {addIdea && (
           <Detail isForm stackId={stackId} handleExpand={() => setAddIdea(false)} />
         )}
         {ideas?.map((idea, i) => (
-          <Idea key={idea.id} no={i} stackId={stackId} idea={idea} />
+          <Idea key={idea.id} idx={i} stackId={stackId} idea={idea} />
         ))}
       </ul>
     </section>

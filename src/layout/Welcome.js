@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+import { motion, animate } from "framer-motion";
 import { useAuth } from "../context/authProvider";
 import { useDB } from "../context/dbProvider";
 import Button from "../utility/Button";
@@ -16,23 +17,43 @@ function Welcome() {
   };
 
   return (
-    <main className="py-10 bg-logo-watermark bg-no-repeat bg-[right_center] bg-[length:400px] grow flex items-center">
+    <main className="flex grow items-center overflow-hidden bg-logo-watermark bg-[length:400px] bg-[right_center] bg-no-repeat py-10">
       <div>
-        <h1 className="font-open-sans font-bold text-5xl text-gradient">
+        <motion.h1
+          initial={{ y: -300 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 1 }}
+          className="text-gradient font-open-sans text-5xl font-bold"
+        >
           NEVER FORGET TO REFACTOR YOUR CODE
-        </h1>
-        <h2 className="font-roboto font-medium text-2xl text-white tracking-wide leading-9 mt-8 w-2/3">
+        </motion.h1>
+        <motion.h2
+          initial={{ y: 500 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 1 }}
+          className="mt-8 w-2/3 font-roboto text-2xl font-medium leading-9 tracking-wide text-white"
+        >
           Have you ever been in a situation where you got an idea to modify a certain
           piece of code which is not worth a commit? <br />
           The next day you woke up and forgot that awesome idea. <br />
           It’s not too good. RIGHT?
-        </h2>
-        <h3 className="font-roboto font-medium text-xl text-text-gray w-1/2 mt-4">
+        </motion.h2>
+        <motion.h3
+          initial={{ y: 500 }}
+          animate={{ y: 0 }}
+          transition={{ duration: 1 }}
+          className="mt-4 w-1/2 font-roboto text-xl font-medium text-text-gray"
+        >
           Stack trys to solve this. It let you take note for changes you might want to do
           for each repository.
-        </h3>
-        <div className="mt-24">
-          <span className="text-xl text-gradient bg-gradient-to-b font-roboto font-medium mr-8">
+        </motion.h3>
+        <motion.div
+          initial={{ x: -500, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: .4, duration: 1 }}
+          className="mt-24"
+        >
+          <span className="text-gradient mr-8 bg-gradient-to-b font-roboto text-xl font-medium">
             Start from today
             <Iconify
               data-icon="bi:arrow-right"
@@ -48,7 +69,7 @@ function Welcome() {
             />
             Login with GITHUB
           </Button>
-        </div>
+        </motion.div>
       </div>
     </main>
   );

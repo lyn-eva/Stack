@@ -8,7 +8,7 @@ import Location from "./Location";
 import EnhancedFormField from "../hoc/EnhancedFormField";
 import Iconify from "../utility/Iconify";
 
-const getTime = (time) => time.toDate().toString().match(/\s{1}\d{1,2}(:\d{1,2}){2}\s{1}/g)[0];
+const getTime = (time) => time?.toDate().toString().match(/\s{1}\d{1,2}(:\d{1,2}){2}\s{1}/g)[0];
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -72,10 +72,10 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
       <hr />
       <div className="font-light text-[13px] flex justify-end gap-5 mt-2">
         <p>
-          last modified: <span className="font-medium">{getTime(idea.created)}</span>
+          last modified: <span className="font-medium">{getTime(idea?.created)}</span>
         </p>
         <p>
-          created at: <span className="font-medium">{getTime(idea.created)}</span>
+          created at: <span className="font-medium">{getTime(idea?.created)}</span>
         </p>
       </div>
       <div className="flex gap-5 absolute left-8 bottom-[5px] text-[1.05rem]">
