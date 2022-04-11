@@ -39,8 +39,8 @@ function DbProvider({ children }) {
     });
   };
 
-  const listenToIdeas = (stackId, setIdeas) => {
-    const q = query(collection(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas"), orderBy("created"));
+  const listenToIdeas = (stackId, setIdeas, order) => {
+    const q = query(collection(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas"), orderBy(order));
     return onSnapshot(q, snapshot => {
       const ideas = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setIdeas(ideas);

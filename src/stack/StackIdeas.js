@@ -1,30 +1,21 @@
 import { useState, useEffect } from "react";
 import { useDB } from "../context/dbProvider";
 import { useAuth } from "../context/authProvider";
-import Button from "../utility/Button";
-import Iconify from "../utility/Iconify";
 import Idea from "../idea/Idea";
 import Detail from "../idea/Detail";
-
-const btnStyle = {
-  fontSize: "14px",
-  padding: "2px 8px",
-  borderRadius: "4px",
-  letterSpacing: "1px",
-};
-const iconifyData = { "data-width": "14", style: { marginLeft: ".5rem" } };
+import StackActions from "./StackActions";
 
 function StackIdea({ stackId, repoUrl }) {
   const [addIdea, setAddIdea] = useState(false);
+  const [order, setOrder] = useState('created');
   const [ideas, setIdeas] = useState(null);
   const { listenToIdeas } = useDB();
   const { user } = useAuth();
-
   useEffect(() => {
     if (!user) return;
-    const unsub = listenToIdeas(stackId, setIdeas);
+    const unsub = listenToIdeas(stackId, setIdeas, order);
     return () => unsub;
-  }, [user]);
+  }, [user, order]);
 
   return (
     <section className="w-7/12">
@@ -32,38 +23,7 @@ function StackIdea({ stackId, repoUrl }) {
         Your stack
       </h2>
       <hr />
-      <ul className="mt-4 flex gap-4">
-        <li>
-          <a
-            target="_blank"
-            rel="noreferrer"
-            href={repoUrl}
-            className="inline-block bg-white font-roboto font-medium"
-            style={btnStyle}
-          >
-            go to repo
-            <Iconify data-icon="ri:git-repository-line" {...iconifyData} />
-          </a>
-        </li>
-        <li>
-          <Button onClick={() => setAddIdea(true)} style={btnStyle}>
-            new idea
-            <Iconify data-icon="ant-design:plus-outlined" {...iconifyData} />
-          </Button>
-        </li>
-        <li>
-          <Button style={btnStyle}>
-            filter
-            <Iconify data-icon="bytesize:filter" {...iconifyData} />
-          </Button>
-        </li>
-        <li>
-          <Button style={btnStyle}>
-            sort
-            <Iconify data-icon="cil:sort-descending" {...iconifyData} />
-          </Button>
-        </li>
-      </ul>
+      <StackActions repoUrl={repoUrl} setAddIdea={setAddIdea} setOrder={setOrder}/>
 
       <ul className="mt-4 flex flex-col gap-4">
         {addIdea && (
