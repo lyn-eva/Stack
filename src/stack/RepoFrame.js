@@ -32,7 +32,7 @@ function RepoFrame({ name, onClick }) {
   return (
     <>
       {name && username && (
-        <Wrapper className="shadow-l2">
+        <Wrapper className="shadow-l2 w-[21.5rem]">
           <img
             onClick={onClick}
             className="w-full rounded-md cursor-pointer"

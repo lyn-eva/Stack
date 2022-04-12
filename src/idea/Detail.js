@@ -8,7 +8,11 @@ import Location from "./Location";
 import EnhancedFormField from "../hoc/EnhancedFormField";
 import Iconify from "../utility/Iconify";
 
-const getTime = (time) => time?.toDate().toString().match(/\s{1}\d{1,2}(:\d{1,2}){2}\s{1}/g)[0];
+const getTime = (time) =>
+  time
+    ?.toDate()
+    .toString()
+    .match(/\s{1}\d{1,2}(:\d{1,2}){2}\s{1}/g)[0];
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -28,22 +32,26 @@ const reducer = (state, action) => {
 function Detail({ idea, handleExpand, stackId, isForm = false }) {
   const initialForm = {
     title: idea?.title ?? "",
-    title_i: idea?.title.toUpperCase() ?? '',
+    title_i: idea?.title.toUpperCase() ?? "",
     description: idea?.description ?? "",
     level: idea?.level ?? 0,
     location: idea?.location ?? {},
   };
-  
+
   const [formState, dispatch] = useReducer(reducer, initialForm);
-  const { createIdea, updateIdea } = useDB();
+  const { createIdea, updateIdea, deleteIdea } = useDB();
 
   const handleSave = () => {
     isForm ? createIdea(stackId, formState) : updateIdea(stackId, idea.id, formState);
     handleExpand(); // set to false
   };
 
+  const handleDelete = () => {
+    deleteIdea(stackId, idea.id);
+  };
+
   return (
-    <div className="pt-4 pb-2 px-6 bg-bg-soft-gray rounded-md text-white relative">
+    <>
       <EnhancedFormField
         Original={Title}
         initial={formState.title}
@@ -58,7 +66,7 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
         isForm={isForm}
         dispatchForm={dispatch}
       />
-      <div className="flex flex-wrap gap-4 justify-between items-center mt-4 mb-1">
+      <div className="mt-4 mb-1 flex flex-wrap items-center justify-between gap-4">
         <Levels isForm={isForm} initial={formState.level} dispatchForm={dispatch} />
         <EnhancedFormField
           Original={Location}
@@ -71,7 +79,7 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
         />
       </div>
       <hr />
-      <div className="font-light text-[13px] flex justify-end gap-5 mt-2">
+      <div className="mt-2 flex justify-end gap-5 text-[13px] font-light">
         <p>
           last modified: <span className="font-medium">{getTime(idea?.created)}</span>
         </p>
@@ -79,16 +87,16 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
           created at: <span className="font-medium">{getTime(idea?.created)}</span>
         </p>
       </div>
-      <div className="flex gap-5 absolute left-8 bottom-[5px] text-[1.05rem]">
+      <div className="absolute left-8 bottom-[5px] flex gap-5 text-[1.05rem]">
         <button onClick={handleSave} className="text-green-500">
-          save changes {" "}
+          save changes{" "}
           <Iconify style={{ marginTop: "-2px" }} data-icon="ant-design:check-outlined" />
         </button>
-        <button onClick={handleExpand} className="text-red-500">
-          cancel <Iconify style={{ marginTop: "-1px" }} data-icon="gridicons:cross" />
+        <button onClick={handleDelete} className="text-red-500">
+          Delete <Iconify style={{ marginTop: "-1px" }} data-icon="ion:trash-outline" />
         </button>
       </div>
-    </div>
+    </>
   );
 }
 

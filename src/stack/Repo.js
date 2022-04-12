@@ -9,10 +9,11 @@ const options = ["bg-green-600", "bg-blue-700", "bg-red-700"];
 const variant = {
   expand: {
     height: 'auto',
+    padding: '1.5rem'
   },
   shrink: {
     height: 0,
-    paddingBlock: 0
+    padding: '0 1.5rem'
   }
 }
 
@@ -41,9 +42,9 @@ function Repo({name, stackId, shrink, onClick}) {
   }, [user])
 
   return (
-    <div className=" bg-bg-dark w-[20rem] rounded-md self-start">
+    <div className=" bg-bg-dark rounded-md self-start">
       <RepoFrame onClick={onClick} name={name}/>
-      <motion.div variants={variant} initial={shrink ? "shrink" : "expand"} animate={shrink ? "expand" : "shrink"} className="!px-6 text-white font-roboto overflow-hidden">
+      <motion.div variants={variant} animate={shrink ? "shrink" : "expand"} initial={shrink ? "expand" : "shrink"} className=" text-white font-roboto overflow-hidden">
         <h2 className="font-medium mb-1">Latest dues</h2>
         <hr />
         <Dues dues={ideas}/>

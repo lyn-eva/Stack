@@ -25,6 +25,11 @@ function StackActions({ repoUrl, setAddIdea, setOrder, setFilter }) {
     fn((prev) => !prev);
   };
 
+  const handleClick = () => {
+    setSortIsOpen(false);
+    setFilterIsOpen(false);
+  }
+
   return (
     <ul className="mt-4 flex gap-4">
       <li>
@@ -51,10 +56,11 @@ function StackActions({ repoUrl, setAddIdea, setOrder, setFilter }) {
           <Iconify data-icon="bytesize:filter" {...iconifyStyle} />
         </Button>
         <ul
+          onClick={handleClick}
           className={`${
-            filterIsOpen ? "opacity-100" : "opacity-0"
-          } absolute top-8 z-10 whitespace-nowrap rounded-sm bg-white py-1  shadow-md`}
-        >
+            filterIsOpen ? "opacity-100 z-10" : "opacity-0 -z-50"
+          } absolute top-8 whitespace-nowrap rounded-sm bg-white py-1  shadow-md`}
+          >
           <li onClick={() => setFilter(2)} {...optionAttr}> urgent </li>
           <li onClick={() => setFilter(1)} {...optionAttr}> moderate </li>
           <li onClick={() => setFilter(0)} {...optionAttr}> trivial </li>
@@ -67,9 +73,10 @@ function StackActions({ repoUrl, setAddIdea, setOrder, setFilter }) {
           <Iconify data-icon="cil:sort-descending" {...iconifyStyle} />
         </Button>
         <ul
+          onClick={handleClick}
           className={`${
-            sortIsOpen ? "opacity-100" : "opacity-0"
-          } absolute top-8 z-10 rounded-sm bg-white py-1 shadow-md`}
+            sortIsOpen ? "opacity-100 z-10" : "opacity-0 -z-50"
+          } absolute top-8 rounded-sm bg-white py-1 shadow-md`}
         >
           <li onClick={() => setOrder("level")} {...optionAttr}> level </li>
           <li onClick={() => setOrder("created")} {...optionAttr}> latest </li>

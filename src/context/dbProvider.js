@@ -14,6 +14,7 @@ import {
   getDoc,
   addDoc,
   updateDoc,
+  deleteDoc
 } from "firebase/firestore";
 const dbCtx = createContext({});
 export const useDB = () => useContext(dbCtx);
@@ -75,8 +76,13 @@ function DbProvider({ children }) {
     const path = doc(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas", id);
     return updateDoc(path, { ...new_data, modified: serverTimestamp() });
   };
+  
+  const deleteIdea = async (stackId, id) => {
+    const path = doc(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas", id);
+    return deleteDoc(path);
+  }
 
-  const value = { createUser, createStack, createIdea, updateIdea, listenToStacks, listenToIdeas, listenToStack };
+  const value = { createUser, createStack, createIdea, updateIdea, deleteIdea, listenToStacks, listenToIdeas, listenToStack };
   return <dbCtx.Provider value={value}>{children}</dbCtx.Provider>;
 }
 

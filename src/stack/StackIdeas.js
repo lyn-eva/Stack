@@ -4,7 +4,6 @@ import { useAuth } from "../context/authProvider";
 import Idea from "../idea/Idea";
 import Detail from "../idea/Detail";
 import StackActions from "./StackActions";
-import { motion } from "framer-motion";
 
 function StackIdea({ stackId, repoUrl }) {
   const [addIdea, setAddIdea] = useState(false);
@@ -28,14 +27,14 @@ function StackIdea({ stackId, repoUrl }) {
       <hr />
       <StackActions repoUrl={repoUrl} setAddIdea={setAddIdea} setOrder={setOrder} setFilter={setFilter}/>
 
-      <motion.ul layout className="mt-4 flex flex-col gap-4">
+      <ul className="mt-4 flex flex-col gap-4">
         {addIdea && (
           <Detail isForm stackId={stackId} handleExpand={() => setAddIdea(false)} />
         )}
         {ideas?.map((idea, i) => (
           <Idea key={idea.id} idx={i} stackId={stackId} idea={idea} />
         ))}
-      </motion.ul>
+      </ul>
     </section>
   );
 }
