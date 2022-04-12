@@ -57,7 +57,7 @@ function Welcome() {
         <motion.div
           initial={{ x: -500, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.4, duration: .7 }}
+          transition={{ delay: 0.3, duration: .7 }}
           className="mt-24"
         >
           <motion.span

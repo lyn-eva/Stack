@@ -8,14 +8,16 @@ import StackActions from "./StackActions";
 function StackIdea({ stackId, repoUrl }) {
   const [addIdea, setAddIdea] = useState(false);
   const [order, setOrder] = useState('created');
+  const [filter, setFilter] = useState(-1);
   const [ideas, setIdeas] = useState(null);
   const { listenToIdeas } = useDB();
   const { user } = useAuth();
+
   useEffect(() => {
     if (!user) return;
-    const unsub = listenToIdeas(stackId, setIdeas, order);
+    const unsub = listenToIdeas(stackId, setIdeas, order, filter);
     return () => unsub;
-  }, [user, order]);
+  }, [user, order, filter]);
 
   return (
     <section className="w-7/12">
@@ -23,7 +25,7 @@ function StackIdea({ stackId, repoUrl }) {
         Your stack
       </h2>
       <hr />
-      <StackActions repoUrl={repoUrl} setAddIdea={setAddIdea} setOrder={setOrder}/>
+      <StackActions repoUrl={repoUrl} setAddIdea={setAddIdea} setOrder={setOrder} setFilter={setFilter}/>
 
       <ul className="mt-4 flex flex-col gap-4">
         {addIdea && (

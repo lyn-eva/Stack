@@ -8,12 +8,12 @@ const options = ["bg-green-600", "bg-blue-700", "bg-red-700"];
 const Dues = ({dues}) => (
   <ul className="text-black mt-3">
     {!dues?.length && <p className='text-center text-text-gray mt-5'>there's no due :)</p>}
-    {dues?.map(({ description, level }) => (
-      <div key={description} className="bg-white mt-2 rounded-sm px-4 py-[5px] text-normal relative truncate">
+    {dues?.map(({ id, level, title }) => (
+      <div key={id} className="bg-white mt-2 rounded-sm px-4 py-[5px] text-normal relative truncate">
         <span
           className={`${options[level]} absolute top-0 right-0 rounded-tr-sm h-[5px] w-24`}
         ></span>
-        {description}
+        {title}
       </div>
     ))}
   </ul>

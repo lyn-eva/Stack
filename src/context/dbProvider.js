@@ -9,6 +9,7 @@ import {
   collection,
   query,
   orderBy,
+  where,
   setDoc,
   getDoc,
   addDoc,
@@ -39,9 +40,10 @@ function DbProvider({ children }) {
     });
   };
 
-  const listenToIdeas = (stackId, setIdeas, order) => {
+  const listenToIdeas = (stackId, setIdeas, order = 'created', filter = -1) => {
     const q = query(collection(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas"), orderBy(order));
-    return onSnapshot(q, snapshot => {
+    const q_filter = query(collection(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas"), where('level', '==', filter));
+    return onSnapshot((filter >= 0 ? q_filter : q), snapshot => {
       const ideas = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setIdeas(ideas);
     })

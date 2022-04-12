@@ -20,7 +20,7 @@ function Home() {
     const unsub = listenToStacks(setStacks);
     return unsub;
   }, [user]);
-
+  console.log(stacks)
   return (
     <main className="mb-16">
       <ul className="flex gap-4">

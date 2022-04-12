@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import Button from "../utility/Button";
 import Iconify from "../utility/Iconify";
 
@@ -11,7 +11,20 @@ const btnStyle = {
   letterSpacing: "1px",
 };
 
-function StackActions({ setAddIdea, setOrder, repoUrl }) {
+const optionAttr = {
+  tabIndex: 1,
+  className: "cursor-pointer px-3 py-1 outline-1 hover:bg-blue-100 focus:outline",
+};
+
+function StackActions({ repoUrl, setAddIdea, setOrder, setFilter }) {
+  const [sortIsOpen, setSortIsOpen] = useState(false);
+  const [filterIsOpen, setFilterIsOpen] = useState(false);
+
+  const closeAll = (type, fn) => {
+    type === "filter" ? setSortIsOpen(false) : setFilterIsOpen(false);
+    fn((prev) => !prev);
+  };
+
   return (
     <ul className="mt-4 flex gap-4">
       <li>
@@ -32,36 +45,35 @@ function StackActions({ setAddIdea, setOrder, repoUrl }) {
           <Iconify data-icon="ant-design:plus-outlined" {...iconifyStyle} />
         </Button>
       </li>
-      <li>
-        <Button style={btnStyle}>
+      <li className="relative">
+        <Button onClick={() => closeAll("filter", setFilterIsOpen)} style={btnStyle}>
           filter
           <Iconify data-icon="bytesize:filter" {...iconifyStyle} />
         </Button>
+        <ul
+          className={`${
+            filterIsOpen ? "opacity-100" : "opacity-0"
+          } absolute top-8 z-10 whitespace-nowrap rounded-sm bg-white py-1  shadow-md`}
+        >
+          <li onClick={() => setFilter(2)} {...optionAttr}> urgent </li>
+          <li onClick={() => setFilter(1)} {...optionAttr}> moderate </li>
+          <li onClick={() => setFilter(0)} {...optionAttr}> trivial </li>
+          <li onClick={() => setFilter(-1)} {...optionAttr}> remove filter</li>
+        </ul>
       </li>
-      <li className="group relative">
-        <Button style={btnStyle}>
+      <li className="relative">
+        <Button onClick={() => closeAll("sort", setSortIsOpen)} style={btnStyle}>
           sort
           <Iconify data-icon="cil:sort-descending" {...iconifyStyle} />
         </Button>
-        <ul className="absolute top-8 -z-10 rounded-sm bg-white py-1 opacity-0 shadow-md group-focus-within:z-10 duration-[600ms] group-focus-within:opacity-100">
-          <li
-            onClick={() => setOrder("level")}
-            className="cursor-pointer px-3 py-1 hover:bg-blue-100"
-          >
-            level
-          </li>
-          <li
-            onClick={() => setOrder("created")}
-            className="cursor-pointer px-3 py-1 hover:bg-blue-100"
-          >
-            latest
-          </li>
-          <li
-            onClick={() => setOrder("title_i")}
-            className="cursor-pointer px-3 py-1 hover:bg-blue-100"
-          >
-            alphabetically
-          </li>
+        <ul
+          className={`${
+            sortIsOpen ? "opacity-100" : "opacity-0"
+          } absolute top-8 z-10 rounded-sm bg-white py-1 shadow-md`}
+        >
+          <li onClick={() => setOrder("level")} {...optionAttr}> level </li>
+          <li onClick={() => setOrder("created")} {...optionAttr}> latest </li>
+          <li onClick={() => setOrder("title_i")} {...optionAttr}> alphabetically </li>
         </ul>
       </li>
     </ul>
