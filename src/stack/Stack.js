@@ -36,7 +36,7 @@ function Stack() {
         createdAt: parseDate(details.created_at),
         updatedAt: parseDate(details.updated_at),
         pushedAt: parseDate(details.pushed_at),
-        repoUrl: details.url,
+        repoUrl: details.html_url,
       });
     })(); //IIFE
   }, [user, repoName]);

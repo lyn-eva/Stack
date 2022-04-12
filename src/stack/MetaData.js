@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import Iconify from "../utility/Iconify";
 import Wrapper from "../utility/Wrapper";
 
@@ -6,35 +7,52 @@ const getDate = (date) => {
   return date?.match(/.+(?=GMT)/g)[0];
 };
 
+const variant = {
+  expand: {
+    height: 'auto'
+  },
+  shrink: {
+    height: 0
+  }
+}
+
 function MetaData({ hdr, createdAt, updatedAt, pushedAt }) {
   const [expand, setExpand] = useState(true);
 
   return (
-    <Wrapper className={`${expand ? 'p-5' : 'p-4 pb-3'} text-white mt-5 font-lato shadow-l2 relative group`}>
+    <Wrapper
+      className='group p-4 pb-3 relative mt-5 font-lato text-white shadow-l2'
+    >
       <button
         onClick={() => setExpand((prev) => !prev)}
-        className="absolute right-5 top-4 ml-4 opacity-0 group-hover:opacity-100"
+        className="absolute right-5 top-5 ml-4 opacity-0 group-hover:opacity-100"
       >
-        <Iconify data-width={19} data-icon={expand ? 'icomoon-free:shrink2' : 'fa:expand'} />
+        <Iconify
+          data-width={19}
+          data-icon={expand ? "icomoon-free:shrink2" : "fa:expand"}
+        />
       </button>
-      <h3 className="font-semibold mb-1">{hdr}</h3>
+      <h3 className="mb-2 font-semibold">{hdr}</h3>
 
-      {expand && (
-        <>
-          <hr />
-          <p className="my-2 mt-4 font-semibold">
-            created at : <span className="font-normal ml-1">{getDate(createdAt)}</span>
+      <motion.div
+        initial={expand ? "shrink" : "expand"}
+        animate={expand ? "expand" : "shrink"}
+        variants={variant}
+        className="overflow-hidden"
+      >
+        <hr />
+        <p className="my-2 mt-4 font-semibold">
+          created at : <span className="ml-1 font-normal">{getDate(createdAt)}</span>
+        </p>
+        <p className="my-2 font-semibold">
+          updated at : <span className="ml-1 font-normal">{getDate(updatedAt)}</span>
+        </p>
+        {pushedAt && (
+          <p className="font-semibold">
+            pushed at : <span className="ml-1 font-normal">{getDate(pushedAt)}</span>
           </p>
-          <p className="font-semibold my-2">
-            updated at : <span className="font-normal ml-1">{getDate(updatedAt)}</span>
-          </p>
-          {pushedAt && (
-            <p className="font-semibold">
-              pushed at : <span className="font-normal ml-1">{getDate(pushedAt)}</span>
-            </p>
-          )}
-        </>
-      )}
+        )}
+      </motion.div>
     </Wrapper>
   );
 }

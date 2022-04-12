@@ -24,7 +24,7 @@ module.exports = {
         "logo-watermark": "url('/src/asset/welcome-watermark.svg')",
       },
       boxShadow: {
-        l2: "0 2px #ffffff10",
+        l2: "0 2px #00000020",
       },
     },
   },

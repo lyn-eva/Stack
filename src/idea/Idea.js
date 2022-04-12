@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Location from "./Location";
 import Detail from "./Detail";
+import { motion } from "framer-motion";
 
 const options = ["bg-green-600", "bg-blue-700", "bg-red-700"];
 
@@ -8,7 +9,7 @@ function Idea({ idx, idea, stackId }) {
   const [expand, setExpand] = useState(false);
 
   return (
-    <li className="rounded-md bg-bg-soft-gray text-white">
+    <motion.li layout className="rounded-md bg-bg-soft-gray text-white">
       <div
         onClick={() => setExpand((prev) => !prev)}
         className="relative flex cursor-pointer items-center justify-between rounded-md bg-bg-darker py-3 font-lato shadow-l2"
@@ -27,7 +28,7 @@ function Idea({ idx, idea, stackId }) {
       {expand && (
         <Detail stackId={stackId} idea={idea} handleExpand={() => setExpand(false)} />
       )}
-    </li>
+    </motion.li>
   );
 }
 
