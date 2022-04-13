@@ -31,7 +31,7 @@ function StackActions({ repoUrl, setAddIdea, setOrder, setFilter }) {
   }
 
   return (
-    <ul className="mt-4 flex gap-4">
+    <ul className="my-4 flex gap-4">
       <li>
         <a
           target="_blank"
@@ -45,7 +45,7 @@ function StackActions({ repoUrl, setAddIdea, setOrder, setFilter }) {
         </a>
       </li>
       <li>
-        <Button onClick={() => setAddIdea(true)} style={btnStyle}>
+        <Button onClick={() => setAddIdea(prev => !prev)} style={btnStyle}>
           new idea
           <Iconify data-icon="ant-design:plus-outlined" {...iconifyStyle} />
         </Button>

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { useAuth } from "../context/authProvider";
 import { useDB } from "../context/dbProvider";
-import Modal from "../idea/Modal";
 import MetaData from "./MetaData";
 import RepoFrame from "./RepoFrame";
 import StackIdea from "./StackIdeas";
@@ -44,7 +43,6 @@ function Stack() {
 
   return (
     <main className="flex justify-between mb-8">
-      <Modal />
       <section className="w-[21.5rem]">
         <RepoFrame name={repoName} />
         <MetaData

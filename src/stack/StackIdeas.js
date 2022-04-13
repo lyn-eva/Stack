@@ -4,10 +4,11 @@ import { useAuth } from "../context/authProvider";
 import Idea from "../idea/Idea";
 import Detail from "../idea/Detail";
 import StackActions from "./StackActions";
+import { AnimatePresence } from "framer-motion";
 
 function StackIdea({ stackId, repoUrl }) {
   const [addIdea, setAddIdea] = useState(false);
-  const [order, setOrder] = useState('created');
+  const [order, setOrder] = useState("created");
   const [filter, setFilter] = useState(-1);
   const [ideas, setIdeas] = useState(null);
   const { listenToIdeas } = useDB();
@@ -25,15 +26,22 @@ function StackIdea({ stackId, repoUrl }) {
         Your stack
       </h2>
       <hr />
-      <StackActions repoUrl={repoUrl} setAddIdea={setAddIdea} setOrder={setOrder} setFilter={setFilter}/>
+      <StackActions
+        repoUrl={repoUrl}
+        setAddIdea={setAddIdea}
+        setOrder={setOrder}
+        setFilter={setFilter}
+      />
 
-      <ul className="mt-4 flex flex-col gap-4">
+      <ul className="">
+        <AnimatePresence>
         {addIdea && (
           <Detail isForm stackId={stackId} handleExpand={() => setAddIdea(false)} />
         )}
-        {ideas?.map((idea, i) => (
-          <Idea key={idea.id} idx={i} stackId={stackId} idea={idea} />
-        ))}
+          {ideas?.map((idea, i) => (
+            <Idea key={idea.id} idx={i} stackId={stackId} idea={idea} />
+          ))}
+        </AnimatePresence>
       </ul>
     </section>
   );
