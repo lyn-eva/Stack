@@ -21,19 +21,20 @@ function StackIdea({ stackId, repoUrl }) {
   }, [user, order, filter]);
 
   return (
-    <section className="w-7/12">
+    <section className="w-7/12 overflow-hidden">
       <h2 className="mb-2 font-lato text-2xl font-medium leading-5 text-white">
         Your stack
       </h2>
       <hr />
       <StackActions
         repoUrl={repoUrl}
+        stackId={stackId}
         setAddIdea={setAddIdea}
         setOrder={setOrder}
         setFilter={setFilter}
       />
 
-      <ul className="">
+      <ul>
         <AnimatePresence>
         {addIdea && (
           <Detail isForm stackId={stackId} handleExpand={() => setAddIdea(false)} />

@@ -5,20 +5,21 @@ import LoadingSpinner from "../utility/LoadingSpinner";
 import Wrapper from "../utility/Wrapper";
 import RepoItem from "./RepoItem";
 
-function BrowseRepo({ setBrowseRepo }) {
+function BrowseRepo({ stackId, setBrowseRepo }) {
   const [repos, setRepos] = useState([]);
+  const [existingStacks, setExistingStacks] = useState([]);
   const { getUser } = useAuth();
-  const { createStack } = useDB();
+  const { createStack, getStacks } = useDB();
 
   useEffect(() => {
     const user = getUser();
     if (!user) return;
     (async () => {
-      const raw = await fetch(
-        `https://api.github.com/users/${user.reloadUserInfo.screenName}/repos`
-      );
-      const repoList = await raw.json();
+      const fetchRepo = fetch(`https://api.github.com/users/${user.reloadUserInfo.screenName}/repos`);
+      const [raw_repo, added_stacks] = await Promise.all([fetchRepo, getStacks()]);
+      const repoList = await raw_repo.json();
       setRepos(repoList.map(({ id, name, html_url }) => ({ id, name, html_url })));
+      setExistingStacks(added_stacks.docs.map(stack => stack.data().name));
     })();
   }, []);
 
@@ -43,6 +44,7 @@ function BrowseRepo({ setBrowseRepo }) {
               key={repo.id}
               {...repo}
               idx={idx}
+              added={existingStacks.indexOf(repo.name) !== -1}
               handleAddRepo={handleAddRepo(repo.name, repo.html_url)}
             />
           ))}

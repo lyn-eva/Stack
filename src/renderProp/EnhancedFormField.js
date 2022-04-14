@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 
-function EnhancedFormField({ Original, initial, isForm, dispatchForm, custom, type, editable = false }) {
+function EnhancedFormField({ Render, initial, isForm, dispatchForm, custom, type, editable = false }) {
   const [value, setValue] = useState(initial);
   const [rename, setRename] = useState(isForm);
   const ref = useRef(null);
@@ -18,7 +18,7 @@ function EnhancedFormField({ Original, initial, isForm, dispatchForm, custom, ty
   };
 
   return (
-    <Original
+    <Render
       editable={editable}
       value={value}
       rename={rename}

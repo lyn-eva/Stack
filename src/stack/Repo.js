@@ -42,7 +42,7 @@ function Repo({name, stackId, shrink, onClick}) {
   }, [user])
 
   return (
-    <div className=" bg-bg-dark rounded-md self-start">
+    <div className=" bg-bg-dark rounded-md self-start max-w-[21.5rem]">
       <RepoFrame onClick={onClick} name={name}/>
       <motion.div variants={variant} animate={shrink ? "shrink" : "expand"} initial={shrink ? "expand" : "shrink"} className=" text-white font-roboto overflow-hidden">
         <h2 className="font-medium mb-1">Latest dues</h2>

@@ -1,6 +1,10 @@
 import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router";
+import { useDB } from "../context/dbProvider";
 import Button from "../utility/Button";
 import Iconify from "../utility/Iconify";
+import Modal from "../utility/Modal";
 
 const iconifyStyle = { "data-width": "14", style: { marginLeft: ".5rem" } };
 
@@ -16,9 +20,12 @@ const optionAttr = {
   className: "cursor-pointer px-3 py-1 outline-1 hover:bg-blue-100 focus:outline",
 };
 
-function StackActions({ repoUrl, setAddIdea, setOrder, setFilter }) {
+function StackActions({ repoUrl, stackId, setAddIdea, setOrder, setFilter }) {
   const [sortIsOpen, setSortIsOpen] = useState(false);
   const [filterIsOpen, setFilterIsOpen] = useState(false);
+  const [toggleDelete, setToggleDelete] = useState(false);
+  const navigate = useNavigate();
+  const { deleteStack } = useDB();
 
   const closeAll = (type, fn) => {
     type === "filter" ? setSortIsOpen(false) : setFilterIsOpen(false);
@@ -28,62 +35,98 @@ function StackActions({ repoUrl, setAddIdea, setOrder, setFilter }) {
   const handleClick = () => {
     setSortIsOpen(false);
     setFilterIsOpen(false);
-  }
+  };
+
+  const handleDelete = async () => {
+    await deleteStack(stackId)
+    navigate(-1);
+  };
 
   return (
-    <ul className="my-4 flex gap-4">
-      <li>
-        <a
-          target="_blank"
-          rel="noreferrer"
-          href={repoUrl}
-          className="inline-block bg-white font-roboto font-medium"
-          style={btnStyle}
-        >
-          go to repo
-          <Iconify data-icon="ri:git-repository-line" {...iconifyStyle} />
-        </a>
-      </li>
-      <li>
-        <Button onClick={() => setAddIdea(prev => !prev)} style={btnStyle}>
-          new idea
-          <Iconify data-icon="ant-design:plus-outlined" {...iconifyStyle} />
-        </Button>
-      </li>
-      <li className="relative">
-        <Button onClick={() => closeAll("filter", setFilterIsOpen)} style={btnStyle}>
-          filter
-          <Iconify data-icon="bytesize:filter" {...iconifyStyle} />
-        </Button>
-        <ul
-          onClick={handleClick}
-          className={`${
-            filterIsOpen ? "opacity-100 z-10" : "opacity-0 -z-50"
-          } absolute top-8 whitespace-nowrap rounded-sm bg-white py-1  shadow-md`}
+    <>
+      <ul className="mt-4 mb-8 flex gap-4">
+        <li>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href={repoUrl}
+            className="inline-block bg-white font-roboto font-medium"
+            style={btnStyle}
           >
-          <li onClick={() => setFilter(2)} {...optionAttr}> urgent </li>
-          <li onClick={() => setFilter(1)} {...optionAttr}> moderate </li>
-          <li onClick={() => setFilter(0)} {...optionAttr}> trivial </li>
-          <li onClick={() => setFilter(-1)} {...optionAttr}> remove filter</li>
-        </ul>
-      </li>
-      <li className="relative">
-        <Button onClick={() => closeAll("sort", setSortIsOpen)} style={btnStyle}>
-          sort
-          <Iconify data-icon="cil:sort-descending" {...iconifyStyle} />
-        </Button>
-        <ul
-          onClick={handleClick}
-          className={`${
-            sortIsOpen ? "opacity-100 z-10" : "opacity-0 -z-50"
-          } absolute top-8 rounded-sm bg-white py-1 shadow-md`}
-        >
-          <li onClick={() => setOrder("level")} {...optionAttr}> level </li>
-          <li onClick={() => setOrder("created")} {...optionAttr}> latest </li>
-          <li onClick={() => setOrder("title_i")} {...optionAttr}> alphabetically </li>
-        </ul>
-      </li>
-    </ul>
+            go to repo
+            <Iconify data-icon="ri:git-repository-line" {...iconifyStyle} />
+          </a>
+        </li>
+        <li>
+          <Button onClick={() => setAddIdea((prev) => !prev)} style={btnStyle}>
+            new idea
+            <Iconify data-icon="ant-design:plus-outlined" {...iconifyStyle} />
+          </Button>
+        </li>
+        <li className="relative">
+          <Button onClick={() => closeAll("filter", setFilterIsOpen)} style={btnStyle}>
+            filter
+            <Iconify data-icon="bytesize:filter" {...iconifyStyle} />
+          </Button>
+          <ul
+            onClick={handleClick}
+            className={`${
+              filterIsOpen ? "z-10 opacity-100" : "-z-50 opacity-0"
+            } absolute top-8 whitespace-nowrap rounded-sm bg-white py-1  shadow-md`}
+          >
+            <li onClick={() => setFilter(2)} {...optionAttr}>
+              {" "}
+              urgent{" "}
+            </li>
+            <li onClick={() => setFilter(1)} {...optionAttr}>
+              {" "}
+              moderate{" "}
+            </li>
+            <li onClick={() => setFilter(0)} {...optionAttr}>
+              {" "}
+              trivial{" "}
+            </li>
+            <li onClick={() => setFilter(-1)} {...optionAttr}>
+              {" "}
+              remove filter
+            </li>
+          </ul>
+        </li>
+        <li className="relative">
+          <Button onClick={() => closeAll("sort", setSortIsOpen)} style={btnStyle}>
+            sort
+            <Iconify data-icon="cil:sort-descending" {...iconifyStyle} />
+          </Button>
+          <ul
+            onClick={handleClick}
+            className={`${
+              sortIsOpen ? "z-10 opacity-100" : "-z-50 opacity-0"
+            } absolute top-8 rounded-sm bg-white py-1 shadow-md`}
+          >
+            <li onClick={() => setOrder("level")} {...optionAttr}>
+              level
+            </li>
+            <li onClick={() => setOrder("created")} {...optionAttr}>
+              latest
+            </li>
+            <li onClick={() => setOrder("title_i")} {...optionAttr}>
+              alphabetically
+            </li>
+          </ul>
+        </li>
+        <li className="ml-auto">
+          <Button
+            onClick={() => setToggleDelete(true)}
+            style={{ ...btnStyle, backgroundColor: "#f00", color: "#fff" }}
+          >
+            Delete <Iconify style={{ marginTop: "-1px" }} data-icon="ion:trash-outline" />
+          </Button>
+        </li>
+      </ul>
+      <AnimatePresence>
+        {toggleDelete && <Modal handleDelete={handleDelete} handleToggle={() => setToggleDelete(false)} />}
+      </AnimatePresence>
+    </>
   );
 }
 

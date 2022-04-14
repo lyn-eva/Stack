@@ -15,7 +15,7 @@ const Modal = ({ handleToggle, handleDelete }) => {
           key="modal"
           className="fixed top-1/2 left-1/2 z-20 rounded-md bg-white px-12 py-8 text-black"
         >
-          Are you sure to delete
+          Are you sure to delete?
           <div className="mt-5 flex gap-6 text-white">
             <Button onClick={handleDelete} style={{ backgroundColor: "#f00" }}>Delete</Button>
             <Button onClick={handleToggle} style={{ backgroundColor: "#00f" }}>

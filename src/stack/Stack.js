@@ -23,8 +23,8 @@ function Stack() {
   }, [user]);
 
   const repoName = stack?.name;
-  const createdAt = stack?.created.toDate().toString();
-  const updatedAt = stack?.modified.toDate().toString();
+  const createdAt = stack?.created?.toDate().toString();
+  const updatedAt = stack?.modified?.toDate().toString();
 
   useEffect(() => {
     if (!user || !repoName) return;

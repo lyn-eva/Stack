@@ -6,7 +6,7 @@ import Title from "./Title";
 import React from "react";
 import Levels from "./Levels";
 import Location from "./Location";
-import EnhancedFormField from "../hoc/EnhancedFormField";
+import EnhancedFormField from "../renderProp/EnhancedFormField";
 import Iconify from "../utility/Iconify";
 import Modal from "../utility/Modal";
 
@@ -15,13 +15,13 @@ const variant = {
     height: "auto",
     opacity: 1,
     paddingBlock: ".8rem",
-    transition: { bounce: 0, duration: 1 },
+    transition: { bounce: 0, duration: .5 },
   },
   shrink: {
     height: 0,
     opacity: 0,
     paddingBlock: 0,
-    transition: { bounce: 0, duration: 1 },
+    transition: { bounce: 0, duration: .5 },
   },
 };
 
@@ -88,14 +88,14 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
         className="!mb-4 relative overflow-hidden rounded-md bg-bg-soft-gray px-6 text-white"
       >
         <EnhancedFormField
-          Original={Title}
+          Render={Title}
           initial={formState.title}
           type="TITLE"
           isForm={isForm}
           dispatchForm={dispatch}
         />
         <EnhancedFormField
-          Original={Description}
+          Render={Description}
           initial={formState.description}
           type="DESCRIPTION"
           isForm={isForm}
@@ -104,7 +104,7 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
         <div className="mt-4 mb-1 flex flex-wrap items-center justify-between gap-4">
           <Levels isForm={isForm} initial={formState.level} dispatchForm={dispatch} />
           <EnhancedFormField
-            Original={Location}
+            Render={Location}
             initial={formState.location}
             type="LOCATION"
             editable
