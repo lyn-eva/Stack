@@ -1,6 +1,6 @@
 import Iconify from "../utility/Iconify";
 
-function Description({ value, rename, Ref, handleRename, handleChange }) {
+function Description({ value, rename, Ref, handleRename, handleChange, handleKeyDown }) {
 
   return (
     <div className="relative group">
@@ -13,12 +13,13 @@ function Description({ value, rename, Ref, handleRename, handleChange }) {
         </button>
       <hr />
       <textarea
+        onKeyDown={handleKeyDown}
         onChange={handleChange}
         value={value}
         disabled={!rename}
         ref={Ref}
         placeholder="description"
-        className={`${rename ? 'bg-white text-black' : 'bg-transparent'} text-[1.1rem] block mt-3 w-full h-24 rounded-sm px-1 outline-none`}
+        className={`${rename ? 'bg-white text-black' : 'bg-transparent'} text-[1.1rem] block mt-3 w-full h-auto rounded-sm px-1 outline-none`}
       />
     </div>
   );

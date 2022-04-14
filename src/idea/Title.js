@@ -4,14 +4,15 @@ function Title({ value, rename, Ref, handleChange, handleRename }) {
 
   return (
     <div className="flex items-center mb-2 relative pr-6 group">
-      <label className={"font-exo font-semibold text-[1rem] tracking-wide mr-3 pt-[3px] text-gray-300"}>Title: </label>
-      <input
+      <label className={"font-exo self-start font-semibold text-[1rem] tracking-wide mr-3 pt-[3px] text-gray-300"}>Title: </label>
+      <textarea
         onChange={handleChange}
         disabled={!rename}
         value={value}
         type="text"
         ref={Ref}
         placeholder="title"
+        rows='1'
         className={`${
           rename ? "bg-white text-black" : "bg-transparent"
         } font-normal text-lg rounded-sm px-2 w-full text-md outline-none tracking-wide`}

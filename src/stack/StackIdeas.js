@@ -17,7 +17,7 @@ function StackIdea({ stackId, repoUrl }) {
   useEffect(() => {
     if (!user) return;
     const unsub = listenToIdeas(stackId, setIdeas, order, filter);
-    return () => unsub;
+    return unsub;
   }, [user, order, filter]);
 
   return (

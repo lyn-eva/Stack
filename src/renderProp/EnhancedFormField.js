@@ -1,13 +1,22 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import autosize from "autosize";
 
 function EnhancedFormField({ Render, initial, isForm, dispatchForm, custom, type, editable = false }) {
   const [value, setValue] = useState(initial);
   const [rename, setRename] = useState(isForm);
   const ref = useRef(null);
 
+  useEffect(() => {
+    autosize(ref.current)
+  }, [])
+
+  const handleKeyDown = () => {
+    autosize.update(ref.current);
+  }
+
   const handleRename = () => {
     setRename((prev) => !prev);
-    setTimeout(() => ref.current.focus(), 0);
+    setTimeout(() => ref.current?.focus(), 0);
   };
 
   const handleChange = (e) => {
@@ -25,6 +34,7 @@ function EnhancedFormField({ Render, initial, isForm, dispatchForm, custom, type
       Ref={ref}
       handleRename={handleRename}
       handleChange={handleChange}
+      handleKeyDown={handleKeyDown}
     />
   );
 }
