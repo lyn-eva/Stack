@@ -28,7 +28,7 @@ const variant = {
 const reducer = (state, action) => {
   switch (action.type) {
     case "TITLE":
-      return { ...state, title: action.value };
+      return { ...state, title: action.value, title_uppercase: action.value.toUpperCase() };
     case "DESCRIPTION":
       return { ...state, description: action.value };
     case "LEVEL":
@@ -43,7 +43,7 @@ const reducer = (state, action) => {
 function Detail({ idea, handleExpand, stackId, isForm = false }) {
   const initialForm = {
     title: idea?.title ?? "",
-    title_i: idea?.title.toUpperCase() ?? "",
+    title_uppercase: idea?.title.toUpperCase() ?? "",
     description: idea?.description ?? "",
     level: idea?.level ?? 0,
     location: idea?.location ?? {},

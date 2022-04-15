@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router";
 import { useDB } from "../context/dbProvider";
 import Button from "../utility/Button";
@@ -14,6 +14,11 @@ const btnStyle = {
   borderRadius: "4px",
   letterSpacing: "1px",
 };
+
+const variant = {
+  shrink: {scaleY: 0, opacity: 0, zIndex: -50, originY: 0},
+  expand: {scaleY: 1, opacity: 1, zIndex: 10, originY: 0},
+}
 
 const optionAttr = {
   tabIndex: 1,
@@ -52,67 +57,45 @@ function StackActions({ repoUrl, stackId, setAddIdea, setOrder, setFilter }) {
             href={repoUrl}
             className="inline-block bg-white font-roboto font-medium"
             style={btnStyle}
-          >
-            go to repo
-            <Iconify data-icon="ri:git-repository-line" {...iconifyStyle} />
-          </a>
+          >go to repo<Iconify data-icon="ri:git-repository-line" {...iconifyStyle} /></a>
         </li>
         <li>
-          <Button onClick={() => setAddIdea((prev) => !prev)} style={btnStyle}>
-            new idea
-            <Iconify data-icon="ant-design:plus-outlined" {...iconifyStyle} />
-          </Button>
+          <Button onClick={() => setAddIdea((prev) => !prev)} style={btnStyle}>new idea<Iconify data-icon="ant-design:plus-outlined" {...iconifyStyle} /></Button>
         </li>
         <li className="relative">
           <Button onClick={() => closeAll("filter", setFilterIsOpen)} style={btnStyle}>
             filter
             <Iconify data-icon="bytesize:filter" {...iconifyStyle} />
           </Button>
-          <ul
+          <motion.ul
+            variants={variant}
+            initial='shrink'
+            animate={filterIsOpen ? 'expand': 'shrink'}
             onClick={handleClick}
-            className={`${
-              filterIsOpen ? "z-10 opacity-100" : "-z-50 opacity-0"
-            } absolute top-8 whitespace-nowrap rounded-sm bg-white py-1  shadow-md`}
+            className='absolute top-8 whitespace-nowrap rounded-sm bg-white py-1  shadow-md'
           >
-            <li onClick={() => setFilter(2)} {...optionAttr}>
-              {" "}
-              urgent{" "}
-            </li>
-            <li onClick={() => setFilter(1)} {...optionAttr}>
-              {" "}
-              moderate{" "}
-            </li>
-            <li onClick={() => setFilter(0)} {...optionAttr}>
-              {" "}
-              trivial{" "}
-            </li>
-            <li onClick={() => setFilter(-1)} {...optionAttr}>
-              {" "}
-              remove filter
-            </li>
-          </ul>
+            <li onClick={() => setFilter(2)} {...optionAttr}>urgent</li>
+            <li onClick={() => setFilter(1)} {...optionAttr}>moderate</li>
+            <li onClick={() => setFilter(0)} {...optionAttr}>trivial</li>
+            <li onClick={() => setFilter(-1)} {...optionAttr}>remove filter</li>
+          </motion.ul>
         </li>
         <li className="relative">
           <Button onClick={() => closeAll("sort", setSortIsOpen)} style={btnStyle}>
             sort
             <Iconify data-icon="cil:sort-descending" {...iconifyStyle} />
           </Button>
-          <ul
+          <motion.ul
+            variants={variant}
+            initial='shrink'
+            animate={sortIsOpen ? 'expand': 'shrink'}
             onClick={handleClick}
-            className={`${
-              sortIsOpen ? "z-10 opacity-100" : "-z-50 opacity-0"
-            } absolute top-8 rounded-sm bg-white py-1 shadow-md`}
+            className='absolute top-8 rounded-sm bg-white py-1 shadow-md'
           >
-            <li onClick={() => setOrder("level")} {...optionAttr}>
-              level
-            </li>
-            <li onClick={() => setOrder("created")} {...optionAttr}>
-              latest
-            </li>
-            <li onClick={() => setOrder("title_i")} {...optionAttr}>
-              alphabetically
-            </li>
-          </ul>
+            <li onClick={() => setOrder("level")} {...optionAttr}>level</li>
+            <li onClick={() => setOrder("created")} {...optionAttr}>latest</li>
+            <li onClick={() => setOrder("title_uppercase")} {...optionAttr}>alphabetically</li>
+          </motion.ul>
         </li>
         <li className="ml-auto">
           <Button

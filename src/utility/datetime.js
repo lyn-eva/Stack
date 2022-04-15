@@ -17,7 +17,7 @@ const getLastModified = (milli) => {
     return formatMsg(min, 'min');
   }
   else {
-    return formatMsg(sec, 'sec');
+    return formatMsg(sec < 1 ? 1 : sec, 'sec');
   }
 }
 

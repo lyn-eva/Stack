@@ -47,7 +47,7 @@ function Stack() {
           pushedAt={repoDetail.pushedAt}
           hdr="Repo Details"
         />
-        <MetaData createdAt={stack?.created.toMillis()} updatedAt={stack?.modified.toMillis()} hdr="Stack Details" />
+        <MetaData createdAt={stack?.created?.toMillis()} updatedAt={stack?.modified?.toMillis()} hdr="Stack Details" />
       </section>
       <StackIdea stackId={stackId} repoUrl={repoDetail.repoUrl}/>
     </main>

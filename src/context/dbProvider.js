@@ -68,7 +68,6 @@ function DbProvider({ children }) {
   };
 
   const createStack = async (repo, url) => {
-    const user = getUser(); //
     const path = collection(db, "users", user.reloadUserInfo.screenName, "stacks");
     return addDoc(path, { name: repo, url: url, ...metadata() });
   };

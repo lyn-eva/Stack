@@ -22,7 +22,7 @@ function Home() {
   }, [user]);
   
   return (
-    <main className='mb-8'>
+    <main className='mb-8 overflow-hidden'>
       <ul className="flex gap-4">
         <li className="relative">
           <Button onClick={() => setBrowseRepo((prev) => !prev)}>
@@ -47,7 +47,7 @@ function Home() {
           </Button>
         </li>
       </ul>
-      <section className="mt-14 flex gap-5 text-white">
+      <section className="mt-14 grid grid-cols-3 gap-y-8 pb-8 text-white overflow-x-auto">
         {!stacks?.length && "** no stack has been created **"}
         {stacks?.map(({ id, name }) => {
           return (

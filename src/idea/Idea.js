@@ -14,7 +14,7 @@ function Idea({ idx, idea, stackId }) {
       initial={{ height: 0, opacity: 0 }}
       animate={{ height: "auto", opacity: 1 }}
       exit={{ height: 0, opacity: 0, margin: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.3 }}
       className="mb-4 rounded-md bg-bg-soft-gray text-white"
     >
       <div
