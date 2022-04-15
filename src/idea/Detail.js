@@ -1,9 +1,9 @@
 import { useReducer, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { getLastModified } from "../utility/datetime";
 import { useDB } from "../context/dbProvider";
 import Description from "./Description";
 import Title from "./Title";
-import React from "react";
 import Levels from "./Levels";
 import Location from "./Location";
 import EnhancedFormField from "../renderProp/EnhancedFormField";
@@ -15,21 +15,15 @@ const variant = {
     height: "auto",
     opacity: 1,
     paddingBlock: ".8rem",
-    transition: { bounce: 0, duration: .5 },
+    transition: { type: 'tween'},
   },
   shrink: {
     height: 0,
     opacity: 0,
     paddingBlock: 0,
-    transition: { bounce: 0, duration: .5 },
+    transition: { type: 'tween' },
   },
 };
-
-const getTime = (time) =>
-  time
-    ?.toDate()
-    .toString()
-    .match(/\s{1}\d{1,2}(:\d{1,2}){2}\s{1}/g)[0];
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -59,6 +53,9 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
   const { createIdea, updateIdea, deleteIdea } = useDB();
   const [onDelete, setOnDelete] = useState(false);
 
+  const modified = getLastModified(idea?.modified.toMillis());
+  const created = getLastModified(idea?.created.toMillis());
+
   const handleSave = () => {
     isForm ? createIdea(stackId, formState) : updateIdea(stackId, idea.id, formState);
     handleExpand(); // set to false
@@ -79,13 +76,13 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
           <Modal handleToggle={() => setOnDelete(false)} handleDelete={confirmDelete} />
         )}
       </AnimatePresence>
-
       <motion.div
         variants={variant}
         initial={"shrink"}
         animate={"expand"}
         exit={"shrink"}
-        className="!mb-4 relative overflow-hidden rounded-md bg-bg-soft-gray px-6 text-white"
+        transition={{duration: .5}}
+        className="!mb-4 relative overflow-hidden rounded-md bg-bg-soft-gray px-7 text-white"
       >
         <EnhancedFormField
           Render={Title}
@@ -124,22 +121,23 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
               />
             </button>
             <button
-              onClick={isForm ? handleExpand : handleDelete}
+              onClick={handleExpand}
               className="text-red-500"
             >
-              {isForm ? "cancel" : "Delete"}{" "}
-              <Iconify style={{ marginTop: "-1px" }} data-icon="ion:trash-outline" />
+              cancel{" "}
+              <Iconify style={{ marginTop: "-1px" }} data-icon="akar-icons:cross" />
             </button>
           </div>
           <div className="flex gap-5 text-[13px] font-light">
             <p>
-              last modified: <span className="font-medium">{getTime(idea?.created)}</span>
+              last modified: <span className="font-medium">{modified}</span>
             </p>
             <p>
-              created at: <span className="font-medium">{getTime(idea?.created)}</span>
+              created at: <span className="font-medium tracking-wide">{created}</span>
             </p>
           </div>
         </div>
+        <button onClick={handleDelete} className='absolute top-3 right-5 text-[#f00]'><Iconify data-icon='fa6-solid:trash-can'/></button>
       </motion.div>
     </>
   );

@@ -9,7 +9,8 @@ const options = ["bg-green-600", "bg-blue-700", "bg-red-700"];
 const variant = {
   expand: {
     height: 'auto',
-    padding: '1.5rem'
+    padding: '1.5rem',
+    transition: {type: 'tween' },
   },
   shrink: {
     height: 0,

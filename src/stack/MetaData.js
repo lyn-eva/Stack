@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { getLastModified } from "../utility/datetime";
 import Iconify from "../utility/Iconify";
 import Wrapper from "../utility/Wrapper";
-
-const getDate = (date) => {
-  return date?.match(/.+(?=GMT)/g)[0];
-};
 
 const variant = {
   expand: {
@@ -38,18 +35,18 @@ function MetaData({ hdr, createdAt, updatedAt, pushedAt }) {
         initial={expand ? "shrink" : "expand"}
         animate={expand ? "expand" : "shrink"}
         variants={variant}
-        className="overflow-hidden"
+        className="overflow-hidden tracking-wide"
       >
         <hr />
         <p className="my-2 mt-4 font-semibold">
-          created at : <span className="ml-1 font-normal">{getDate(createdAt)}</span>
+          created at : <span className="ml-1 font-normal">{getLastModified(createdAt)}</span>
         </p>
         <p className="my-2 font-semibold">
-          updated at : <span className="ml-1 font-normal">{getDate(updatedAt)}</span>
+          updated at : <span className="ml-1 font-normal">{getLastModified(updatedAt)}</span>
         </p>
         {pushedAt && (
           <p className="font-semibold">
-            pushed at : <span className="ml-1 font-normal">{getDate(pushedAt)}</span>
+            pushed at : <span className="ml-1 font-normal">{getLastModified(pushedAt)}</span>
           </p>
         )}
       </motion.div>

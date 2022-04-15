@@ -25,7 +25,7 @@ const metadata = () => ({ created: serverTimestamp(), modified: serverTimestamp(
 const db = getFirestore(app);
 
 function DbProvider({ children }) {
-  const { getUser, user } = useAuth();
+  const { getUser, user, token } = useAuth();
 
   const listenToStacks = (setStacks) => {
     const q = query(collection(db, "users", user.reloadUserInfo.screenName, "stacks"), orderBy("created"));
@@ -72,6 +72,11 @@ function DbProvider({ children }) {
     const path = collection(db, "users", user.reloadUserInfo.screenName, "stacks");
     return addDoc(path, { name: repo, url: url, ...metadata() });
   };
+
+  const updateStack = (stackId, new_data) => {
+    const path = doc(db, "users", user.reloadUserInfo.screenName, "stacks", stackId);
+    return updateDoc(path, new_data);
+  };
   
   const createIdea = (stackId, new_data) => {
     const path = collection(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas");
@@ -80,11 +85,14 @@ function DbProvider({ children }) {
   
   const updateIdea = async (stackId, id, new_data) => {
     const path = doc(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas", id);
-    return updateDoc(path, { ...new_data, modified: serverTimestamp() });
+    const updated_idea = updateDoc(path, { ...new_data, modified: serverTimestamp() });
+    await updateStack(stackId, { modified: serverTimestamp() })
+    return updated_idea;
   };
   
   const deleteIdea = async (stackId, id) => {
     const path = doc(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas", id);
+    await updateStack(stackId, { modified: serverTimestamp() })
     return deleteDoc(path);
   }
   
@@ -93,6 +101,7 @@ function DbProvider({ children }) {
     const ideas = await getDocs(collection(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas"));
     ideas.forEach(idea => batch.delete(doc(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas", idea.id))); //delete nested ideas
     batch.delete(doc(db, "users", user.reloadUserInfo.screenName, "stacks", stackId)) // delete stack root path
+    await updateStack(stackId, { modified: serverTimestamp() })
     return rootBatch ? null : batch.commit();
   }
   

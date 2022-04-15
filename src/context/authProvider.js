@@ -13,11 +13,11 @@ export const useAuth = () => useContext(authCtx);
 console.log("rendered");
 const getUser = () => getAuth().currentUser;
 const provider = new GithubAuthProvider();
-// console.log(provider);
 
 const auth = getAuth(app);
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (res) => {
@@ -30,14 +30,17 @@ function AuthProvider({ children }) {
   const PopupSignIn = async () => {
     const result = await signInWithPopup(auth, provider);
     const credential = GithubAuthProvider.credentialFromResult(result);
+    console.log(credential)
+    setToken(credential.accessToken)
     return credential; // fix
   };
+
 
   const SignOut = () => {
     return signOut(auth);
   };
 
-  const value = { PopupSignIn, SignOut, getUser, user };
+  const value = { PopupSignIn, SignOut, getUser, user, token };
 
   return <authCtx.Provider value={value}>{children}</authCtx.Provider>;
 }

@@ -19,3 +19,21 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+::-webkit-scrollbar {
+  width: .5rem;
+  /* background: violet; */
+  /* display: none; */
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  margin: .4rem 0;
+}
+
+::-webkit-scrollbar-thumb {
+  /* opacity: 0; */
+  background-color: transparent;
+  background-color: rgb(98, 98, 105);
+  border-radius: 1rem;
+}

@@ -22,7 +22,7 @@ function Home() {
   }, [user]);
   
   return (
-    <main className="mb-16">
+    <main className='mb-8'>
       <ul className="flex gap-4">
         <li className="relative">
           <Button onClick={() => setBrowseRepo((prev) => !prev)}>

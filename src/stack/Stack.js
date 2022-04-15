@@ -6,8 +6,6 @@ import MetaData from "./MetaData";
 import RepoFrame from "./RepoFrame";
 import StackIdea from "./StackIdeas";
 
-const parseDate = (string) => new Date(Date.parse(string)).toString();
-
 function Stack() {
   const [repoDetail, setRepoDetail] = useState({});
   const [stack, setStack] = useState(null)
@@ -23,8 +21,6 @@ function Stack() {
   }, [user]);
 
   const repoName = stack?.name;
-  const createdAt = stack?.created?.toDate().toString();
-  const updatedAt = stack?.modified?.toDate().toString();
 
   useEffect(() => {
     if (!user || !repoName) return;
@@ -33,16 +29,16 @@ function Stack() {
       const raw = await fetch(`https://api.github.com/repos/${username}/${repoName}`);
       const details = await raw.json();
       setRepoDetail({
-        createdAt: parseDate(details.created_at),
-        updatedAt: parseDate(details.updated_at),
-        pushedAt: parseDate(details.pushed_at),
+        createdAt: new Date(details.created_at).getTime(),
+        updatedAt: new Date(details.updated_at).getTime(),
+        pushedAt: new Date(details.pushed_at).getTime(),
         repoUrl: details.html_url,
       });
     })(); //IIFE
   }, [user, repoName]);
 
   return (
-    <main className="flex justify-between mb-8">
+    <main className="flex justify-between mb-8 mt-16">
       <section className="w-[21.5rem]">
         <RepoFrame name={repoName} />
         <MetaData
@@ -51,7 +47,7 @@ function Stack() {
           pushedAt={repoDetail.pushedAt}
           hdr="Repo Details"
         />
-        <MetaData createdAt={createdAt} updatedAt={updatedAt} hdr="Stack Details" />
+        <MetaData createdAt={stack?.created.toMillis()} updatedAt={stack?.modified.toMillis()} hdr="Stack Details" />
       </section>
       <StackIdea stackId={stackId} repoUrl={repoDetail.repoUrl}/>
     </main>

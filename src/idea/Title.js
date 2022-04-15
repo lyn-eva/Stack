@@ -19,7 +19,7 @@ function Title({ value, rename, Ref, handleChange, handleRename }) {
       />
       <button
         onClick={handleRename}
-        className="absolute -top-[1px] right-0 ml-4 opacity-0 group-hover:opacity-100"
+        className="absolute -top-[1px] -left-9 ml-4 opacity-0 group-hover:opacity-100"
       >
         <Iconify data-width={13} data-icon="fa6-solid:pencil" />
       </button>

@@ -38,8 +38,8 @@ function Welcome() {
           variants={middle}
           className="mt-8 w-2/3 font-roboto text-2xl font-medium leading-9 tracking-wide text-white"
         >
-          Have you ever been in a situation where you got an idea to modify a certain
-          piece of code which is not worth a commit? <br />
+          Have you ever been in a situation where you got an idea to refactor a certain
+          piece of code from an old repository which is not worth a commit? <br />
           The next day you woke up and forgot that awesome idea. <br />
           It’s not too good. RIGHT?
         </motion.h2>
@@ -49,7 +49,7 @@ function Welcome() {
           variants={middle}
           className="mt-4 w-1/2 font-roboto text-xl font-medium text-text-gray"
         >
-          Stack trys to solve this. It let you take note for changes you might want to do
+          Stack trys to solve this. It let you keep your idea you might want to do
           for each repository.
         </motion.h3>
         <motion.div

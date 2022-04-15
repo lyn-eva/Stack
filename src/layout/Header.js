@@ -1,10 +1,11 @@
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import { useAuth } from "../context/authProvider";
 import Button from "../utility/Button";
 import Iconify from "../utility/Iconify";
 
 function Header({ loggedIn }) {
   const { SignOut } = useAuth();
+  const location = useLocation();
   const navigate = useNavigate();
 
   const handleSingOut = async() => {
@@ -45,7 +46,7 @@ function Header({ loggedIn }) {
           </Button>
         )}
       </header>
-      {loggedIn && (
+      {loggedIn && /\/home$/.test(location.pathname) && (
         <section className="my-8 mb-12 font-open-sans text-5xl text-center text-gradient">
           Good Evening, Naomi!!
         </section>
