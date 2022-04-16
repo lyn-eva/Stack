@@ -22,10 +22,10 @@ const dbCtx = createContext({});
 export const useDB = () => useContext(dbCtx);
 
 const metadata = () => ({ created: serverTimestamp(), modified: serverTimestamp() });
-const db = getFirestore(app);
+
 
 function DbProvider({ children }) {
-  const { getUser, user, token } = useAuth();
+  const { getUser, user, db } = useAuth();
 
   const listenToStacks = (setStacks) => {
     const q = query(collection(db, "users", user.reloadUserInfo.screenName, "stacks"), orderBy("created"));
@@ -58,14 +58,19 @@ function DbProvider({ children }) {
 
   const createUser = async () => {
     const user = getUser(); //
-    const path = "users/" + user.reloadUserInfo.screenName;
-    const alreadyExist = await getDoc(doc(db, path));
+    const path = doc(db, "users", user.reloadUserInfo.screenName);
+    const alreadyExist = await getDoc(path);
     if (alreadyExist.exists()) return;
     return setDoc(doc(db, path), {
       username: user.displayName,
       ...metadata(),
     });
   };
+
+  const getUserInfo = () => {
+    const path = doc(db, 'users', user.reloadUserInfo.screenName);
+    return getDoc(path)
+  }
 
   const createStack = async (repo, url) => {
     const path = collection(db, "users", user.reloadUserInfo.screenName, "stacks");
@@ -112,7 +117,7 @@ function DbProvider({ children }) {
     return batch.commit();
   }
 
-  const value = { createUser, createStack, createIdea, updateIdea, deleteIdea, listenToStacks, listenToIdeas, listenToStack, deleteStack, deleteUser, getStacks };
+  const value = { createUser, getUserInfo, createStack, createIdea, updateIdea, deleteIdea, listenToStacks, listenToIdeas, listenToStack, deleteStack, deleteUser, getStacks };
   return <dbCtx.Provider value={value}>{children}</dbCtx.Provider>;
 }
 

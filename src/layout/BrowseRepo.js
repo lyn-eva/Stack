@@ -8,14 +8,22 @@ import RepoItem from "./RepoItem";
 function BrowseRepo({ stackId, setBrowseRepo }) {
   const [repos, setRepos] = useState([]);
   const [existingStacks, setExistingStacks] = useState([]);
-  const { getUser } = useAuth();
-  const { createStack, getStacks } = useDB();
-
+  const { user, token } = useAuth();
+  const { createStack, getStacks, getUserInfo } = useDB();
+  
   useEffect(() => {
-    const user = getUser();
     if (!user) return;
     (async () => {
-      const fetchRepo = fetch(`https://api.github.com/users/${user.reloadUserInfo.screenName}/repos` );
+      const userInfo = await getUserInfo();
+      const fetchRepo = fetch(
+        `https://api.github.com/user/repos`,
+        {
+          headers: {
+            authorization: `token ${userInfo.data().token}`,
+            Accept: "application/vnd.github.v3+json"
+          },
+        }
+      );
       const [raw_repo, added_stacks] = await Promise.all([fetchRepo, getStacks()]);
       const repoList = await raw_repo.json();
       setRepos(repoList.map(({ id, name, html_url }) => ({ id, name, html_url })));

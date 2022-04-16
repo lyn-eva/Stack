@@ -5,7 +5,7 @@ function Button({ children, style, onClick }) {
     <motion.button
       whileHover={{scale: 1.03}}
       onClick={onClick}
-      className="rounded-md bg-white px-4 py-[6px] font-roboto font-medium"
+      className="text-sm py-1 rounded-md bg-white px-4 lg:py-[6px] font-roboto font-medium"
       style={style || {}}
     >
       {children}
