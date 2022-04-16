@@ -30,13 +30,14 @@ module.exports = {
         l2: "0 2px #00000020",
       },
       fontSize: {
+        't-u-sm': '10px',
         't-sm': '12px',
         't-md': '14px',
         't-lg': '16px',
         't-ultra' : '18px',
         't-xl': '20px',
         't-2xl': '22px',
-        't-3xl': '24px',
+        't-3xl': '28px',
         't-4xl': '48px',
       }
     },

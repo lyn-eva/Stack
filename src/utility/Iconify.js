@@ -1,5 +1,5 @@
 function Iconify(props) {
-  return <i className="iconify mb-[1px] !inline-block" {...props}></i>;
+  return <i {...props} className="iconify mb-[1px] !inline-block text-sm"></i>;
 }
 
 export default Iconify;

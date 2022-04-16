@@ -29,7 +29,7 @@ function Home() {
             Browse Repo
             <Iconify
               data-icon="fe:search"
-              data-width="20"
+              // data-width="20"
               data-flip="horizontal"
               style={{ marginLeft: ".5rem" }}
             />
@@ -41,13 +41,13 @@ function Home() {
             Shrink all
             <Iconify
               data-icon="lucide:shrink"
-              data-width="20"
+              // data-width="20"
               style={{ marginLeft: ".5rem" }}
             />
           </Button>
         </li>
       </ul>
-      <section className="mt-14 grid grid-cols-3 gap-y-8 pb-8 text-white overflow-x-auto">
+      <section className="mt-8 lg:mt-14 grid grid-cols-1 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 gap-y-8 pb-8 text-white overflow-x-auto">
         {!stacks?.length && "** no stack has been created **"}
         {stacks?.map(({ id, name }) => {
           return (

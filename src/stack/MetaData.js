@@ -18,21 +18,20 @@ function MetaData({ hdr, createdAt, updatedAt, pushedAt }) {
 
   return (
     <Wrapper
-      className='group p-4 pb-3 relative mt-5 font-lato text-white shadow-l2'
+      onClick={() => setExpand((prev) => !prev)}
+      className='group p-4 pb-3 relative mb-5 font-lato text-white shadow-l2'
     >
       <button
-        onClick={() => setExpand((prev) => !prev)}
-        className="absolute right-5 top-5 ml-4 opacity-0 group-hover:opacity-100"
+        className="absolute right-5 top-4 ml-4 opacity-0 group-hover:opacity-100"
       >
         <Iconify
-          data-width={19}
           data-icon={expand ? "icomoon-free:shrink2" : "fa:expand"}
         />
       </button>
-      <h3 className="mb-2 font-semibold">{hdr}</h3>
+      <h3 className="mb-2 font-semibold text-center sm:text-left">{hdr}</h3>
 
       <motion.div
-        initial={expand ? "shrink" : "expand"}
+        initial='shrink'
         animate={expand ? "expand" : "shrink"}
         variants={variant}
         className="overflow-hidden tracking-wide"
