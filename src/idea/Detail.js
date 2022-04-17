@@ -82,7 +82,7 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
         animate={"expand"}
         exit={"shrink"}
         transition={{duration: .5}}
-        className="!mb-4 relative overflow-hidden rounded-md bg-bg-soft-gray px-7 text-white"
+        className="!mb-4 relative overflow-hidden rounded-md bg-bg-soft-gray px-5 sm:px-7 text-white"
       >
         <EnhancedFormField
           Render={Title}
@@ -98,7 +98,7 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
           isForm={isForm}
           dispatchForm={dispatch}
         />
-        <div className="mt-4 mb-1 flex flex-wrap items-center justify-between gap-4">
+        <div className="mt-4 mb-1 sm:flex flex-wrap items-center justify-between gap-4">
           <Levels isForm={isForm} initial={formState.level} dispatchForm={dispatch} />
           <EnhancedFormField
             Render={Location}
@@ -111,8 +111,8 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
           />
         </div>
         <hr />
-        <div className='flex justify-between items-center mt-2'>
-          <div className="flex gap-5 text-[1rem]">
+        <div className='flex flex-col-reverse sm:flex-row justify-between sm:items-center mt-2'>
+          <div className="flex gap-5 sm:text-t-lg mt-2 sm:mt-0">
             <button onClick={handleSave} className="text-green-500">
               save changes{" "}
               <Iconify
@@ -128,7 +128,7 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
               <Iconify style={{ marginTop: "-1px" }} data-icon="akar-icons:cross" />
             </button>
           </div>
-          <div className="flex gap-5 text-[13px] font-light">
+          <div className="sm:flex gap-5 text-[13px] font-light">
             <p>
               last modified: <span className="font-medium">{modified}</span>
             </p>

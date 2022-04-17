@@ -21,8 +21,8 @@ function StackIdea({ stackId, repoUrl }) {
   }, [user, order, filter]);
 
   return (
-    <section className="sm:mt-12 lg:w-7/12 overflow-hidden">
-      <h2 className="mb-2 font-lato text-2xl font-medium leading-5 text-white">
+    <section className="mt-6 sm:mt-12 lg:w-7/12 overflow-hidden">
+      <h2 className="mb-2 font-lato text-t-xl sm:text-2xl font-medium leading-5 text-white">
         Your stack
       </h2>
       <hr />
@@ -34,7 +34,7 @@ function StackIdea({ stackId, repoUrl }) {
         setFilter={setFilter}
       />
 
-      <ul>
+      <ul className='min-h-[7.5rem]'>
         <AnimatePresence>
         {addIdea && (
           <Detail isForm stackId={stackId} handleExpand={() => setAddIdea(false)} />

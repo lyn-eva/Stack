@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useAuth } from "../context/authProvider";
 import { useDB } from "../context/dbProvider";
 import Iconify from "../utility/Iconify";
@@ -51,14 +51,14 @@ function Stack() {
   }, [user, repoName]);
 
   return (
-    <main className="mb-8 mt-16 justify-between lg:flex">
-      <section className="sm:flex sm:w-[21.5rem] sm:gap-6">
+    <main className="mb-8 mt-10 justify-between sm:mt-16 lg:flex">
+      <section className="sm:flex lg:w-[21.5rem] sm:gap-6">
         <Wrapper
           onClick={() => setExpand((prev) => !prev)}
           className="relative self-start sm:w-1/2"
         >
           {expand || (
-            <motion.h1 className="truncate px-12 py-3 text-lg text-white">
+            <motion.h1 className="truncate px-8 py-2 sm:py-3 text-center text-white sm:text-lg">
               {repoName}
             </motion.h1>
           )}
@@ -70,11 +70,13 @@ function Stack() {
           >
             <RepoFrame name={repoName} />
           </motion.div>
-          <button className={`absolute ${expand ? 'bottom-2' : 'bottom-4'} right-4 text-white`}>
+          <button
+            className={`absolute bottom-2 right-4 text-white ${expand? '' : 'sm:bottom-4'}`}
+          >
             <Iconify data-icon={"icomoon-free:shrink2"} />
           </button>
         </Wrapper>
-        <div className="mt-6 sm:mt-0 sm:w-1/2">
+        <div className="mt-3 sm:mt-0 sm:w-1/2">
           <MetaData
             createdAt={repoDetail.createdAt}
             updatedAt={repoDetail.updatedAt}

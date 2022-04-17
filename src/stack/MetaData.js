@@ -6,12 +6,12 @@ import Wrapper from "../utility/Wrapper";
 
 const variant = {
   expand: {
-    height: 'auto'
+    height: "auto",
   },
   shrink: {
-    height: 0
-  }
-}
+    height: 0,
+  },
+};
 
 function MetaData({ hdr, createdAt, updatedAt, pushedAt }) {
   const [expand, setExpand] = useState(true);
@@ -19,33 +19,34 @@ function MetaData({ hdr, createdAt, updatedAt, pushedAt }) {
   return (
     <Wrapper
       onClick={() => setExpand((prev) => !prev)}
-      className='group p-4 pb-3 relative mb-5 font-lato text-white shadow-l2'
+      className={`${expand ? 'pb-3' : ''} group relative mb-3 px-4 pt-2 font-lato text-white shadow-l2 sm:mb-5 sm:p-4 sm:pb-2`}
     >
-      <button
-        className="absolute right-5 top-4 ml-4 opacity-0 group-hover:opacity-100"
-      >
-        <Iconify
-          data-icon={expand ? "icomoon-free:shrink2" : "fa:expand"}
-        />
+      <button className="absolute right-5 top-1 ml-4 opacity-0 group-hover:opacity-100 sm:top-4">
+        <Iconify data-icon={expand ? "icomoon-free:shrink2" : "fa:expand"} />
       </button>
-      <h3 className="mb-2 font-semibold text-center sm:text-left">{hdr}</h3>
+      <h3 className="mb-2 text-center font-open-sans text-t-md font-medium tracking-wide sm:text-left sm:font-semibold">
+        {hdr}
+      </h3>
 
       <motion.div
-        initial='shrink'
+        initial="shrink"
         animate={expand ? "expand" : "shrink"}
         variants={variant}
         className="overflow-hidden tracking-wide"
       >
         <hr />
         <p className="my-2 mt-4 font-semibold">
-          created at : <span className="ml-1 font-normal">{getLastModified(createdAt)}</span>
+          created at :{" "}
+          <span className="ml-1 font-normal">{getLastModified(createdAt)}</span>
         </p>
         <p className="my-2 font-semibold">
-          updated at : <span className="ml-1 font-normal">{getLastModified(updatedAt)}</span>
+          updated at :{" "}
+          <span className="ml-1 font-normal">{getLastModified(updatedAt)}</span>
         </p>
         {pushedAt && (
           <p className="font-semibold">
-            pushed at : <span className="ml-1 font-normal">{getLastModified(pushedAt)}</span>
+            pushed at :{" "}
+            <span className="ml-1 font-normal">{getLastModified(pushedAt)}</span>
           </p>
         )}
       </motion.div>

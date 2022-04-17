@@ -15,7 +15,7 @@ function Levels({ initial, dispatchForm }) {
   }, [level]);
 
   return (
-    <div className=" gap-3 flex items-center">
+    <div className="mb-3 sm:mb-0 gap-3 flex items-center">
       {options.map((option, i) => {
         return (
           <button
@@ -23,7 +23,7 @@ function Levels({ initial, dispatchForm }) {
             id={option.level}
             onClick={() => setLevel(i)}
             className={
-              "font-normal pb-[2px] text-[14px] tracking-wide underline underline-offset-1 px-2 rounded-sm " +
+              "font-light sm:font-normal pb-[2px] text-t-sm sm:text-t-md tracking-wide underline underline-offset-1 px-1 sm:px-2 rounded-sm " +
               (i === level ? option.color : "")
             }
           >

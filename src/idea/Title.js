@@ -1,10 +1,15 @@
 import Iconify from "../utility/Iconify";
 
 function Title({ value, rename, Ref, handleChange, handleRename }) {
-
   return (
-    <div className="flex items-center mb-2 relative pr-6 group">
-      <label className={"font-exo self-start font-semibold text-[1rem] tracking-wide mr-3 pt-[3px] text-gray-300"}>Title: </label>
+    <div className="group relative mb-2 flex items-center pr-6">
+      <label
+        className={
+          "self-start pt-[2px] font-exo text-t-md font-semibold tracking-wide text-gray-300 sm:mr-3 sm:text-t-lg"
+        }
+      >
+        Title:
+      </label>
       <textarea
         onChange={handleChange}
         disabled={!rename}
@@ -12,14 +17,14 @@ function Title({ value, rename, Ref, handleChange, handleRename }) {
         type="text"
         ref={Ref}
         placeholder="title"
-        rows='1'
+        rows="1"
         className={`${
           rename ? "bg-white text-black" : "bg-transparent"
-        } font-normal text-lg rounded-sm px-2 w-full text-md outline-none tracking-wide`}
+        } w-full rounded-sm px-2 text-t-md font-light leading-5 tracking-wide outline-none sm:text-lg sm:font-normal sm:leading-none`}
       />
       <button
         onClick={handleRename}
-        className="absolute -top-[1px] -left-9 ml-4 opacity-0 group-hover:opacity-100"
+        className="absolute -left-8 ml-4 text-t-sm sm:-top-[1px] sm:-left-9  sm:opacity-0 sm:group-hover:opacity-100"
       >
         <Iconify data-width={13} data-icon="fa6-solid:pencil" />
       </button>
