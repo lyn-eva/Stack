@@ -3,7 +3,7 @@ import Iconify from "../utility/Iconify";
 function Location({ editable, value, rename, Ref, handleChange, handleRename }) {
   return (
     <div
-      className={`group relative font-exo text-sm font-light sm:mt-0 sm:pl-6 ${
+      className={`group mr-1 relative font-exo text-sm font-light sm:mt-0 sm:flex sm:items-center sm:pl-6 ${
         !editable ? "w-[30%]" : ""
       }`}
     >
@@ -17,19 +17,21 @@ function Location({ editable, value, rename, Ref, handleChange, handleRename }) 
       )}
       {rename ? (
         <>
-          <label className="mr-1 font-normal sm:mr-3 sm:font-medium">Line: </label>
-          <input
-            onChange={handleChange}
-            value={value.line ?? ""}
-            name="line"
-            ref={Ref}
-            maxLength="5"
-            type="number"
-            placeholder="69"
-            className="text-md w-8 rounded-sm px-1 text-center text-black outline-none sm:w-14"
-          />
-          <div className='sm:mt-0 mt-3 inline sm:block ml-2'>
-            <label className="font-medium mr-1 sm:mx-3">from: </label>
+          <div className='inline sm:block'>
+            <label className="mr-1 font-normal sm:mr-3 sm:font-medium">Line: </label>
+            <input
+              onChange={handleChange}
+              value={value.line ?? ""}
+              name="line"
+              ref={Ref}
+              maxLength="5"
+              type="number"
+              placeholder="69"
+              className="text-md w-8 rounded-sm px-1 text-center text-black outline-none sm:w-14"
+            />
+          </div>
+          <div className="mt-3 ml-2 inline sm:mt-0 sm:block">
+            <label className="mr-1 font-medium sm:mx-3">from: </label>
             <input
               onChange={handleChange}
               value={value.file ?? ""}
@@ -37,7 +39,7 @@ function Location({ editable, value, rename, Ref, handleChange, handleRename }) 
               maxLength="34"
               type="text"
               placeholder="CustomForm.js"
-              className="text-md w-5/12 rounded-sm px-1 text-center text-black outline-none sm:w-[17rem]"
+              className="text-md w-5/12 rounded-sm px-1 text-center text-black outline-none sm:w-[72%] sm:max-w-[17rem]"
             />
           </div>
         </>

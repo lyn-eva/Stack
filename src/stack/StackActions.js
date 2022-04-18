@@ -22,7 +22,7 @@ const variant = {
 const optionProps = {
   tabIndex: 1,
   className:
-    "cursor-pointer px-3 text-t-md py-[2px] sm:py-1 outline-1 hover:bg-blue-100 focus:outline",
+    "cursor-pointer px-3 text-t-md py-[2px] sm:py-1 sm:text-t-lg sm:font-normal outline-1 hover:bg-blue-100 focus:outline",
 };
 
 const reducer = (state, action) => {

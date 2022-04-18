@@ -15,7 +15,7 @@ export const useAuth = () => useContext(authCtx);
 const getUser = () => getAuth().currentUser;
 const provider = new GithubAuthProvider();
 // provider.addScope('user');
-provider.addScope('repo');
+provider.addScope("repo");
 const auth = getAuth(app);
 const db = getFirestore(app);
 
@@ -23,17 +23,16 @@ function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (res) => {
-      setUser(res);
-      console.log("listen");
-    });
+    const unsub = onAuthStateChanged(auth, (res) => setUser(res));
     return unsub();
   }, []);
-  
+
   const PopupSignIn = async () => {
     const result = await signInWithPopup(auth, provider);
     const credential = GithubAuthProvider.credentialFromResult(result);
-    return updateDoc(doc(db, 'users', result.user.reloadUserInfo.screenName), {token: credential.accessToken}) // update github access token
+    return updateDoc(doc(db, "users", result.user.reloadUserInfo.screenName), {
+      token: credential.accessToken,
+    }); // update github access token
   };
 
   const SignOut = () => {

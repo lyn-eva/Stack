@@ -42,3 +42,7 @@ input[type=number] {
 #stack-actions::-webkit-scrollbar {
   height: .2rem;
 }
+
+input[type='checkbox'] {
+  -webkit-appearance: none;
+}
