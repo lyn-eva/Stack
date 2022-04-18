@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router";
 import { useDB } from "../context/dbProvider";
@@ -9,7 +9,6 @@ import Modal from "../utility/Modal";
 const iconifyStyle = { "data-width": "14", style: { marginLeft: ".5rem" } };
 
 const btnStyle = {
-  // fontSize: "14px",
   padding: "2px 8px",
   borderRadius: "4px",
   letterSpacing: "1px",
@@ -20,27 +19,29 @@ const variant = {
   expand: { scaleY: 1, opacity: 1, zIndex: 20, originY: 0 },
 };
 
-const optionAttr = {
+const optionProps = {
   tabIndex: 1,
-  className: "cursor-pointer px-3 text-t-md py-[2px] sm:py-1 outline-1 hover:bg-blue-100 focus:outline",
+  className:
+    "cursor-pointer px-3 text-t-md py-[2px] sm:py-1 outline-1 hover:bg-blue-100 focus:outline",
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "SORT":
+      return { ...state, filterIsActive: false, sortIsActive: !state.sortIsActive };
+    case "FILTER":
+      return { ...state, sortIsActive: false, filterIsActive: !state.filterIsActive };
+    case "DELETE":
+      return { ...state, deleteIsActive: !state.deleteIsActive }; 
+    default:
+      return state;
+  }
 };
 
 function StackActions({ repoUrl, stackId, setAddIdea, setOrder, setFilter }) {
-  const [sortIsOpen, setSortIsOpen] = useState(false);
-  const [filterIsOpen, setFilterIsOpen] = useState(false);
-  const [toggleDelete, setToggleDelete] = useState(false);
+  const [state, dispatch] = useReducer(reducer, {});
   const navigate = useNavigate();
   const { deleteStack } = useDB();
-
-  const closeAll = (type, fn) => {
-    type === "filter" ? setSortIsOpen(false) : setFilterIsOpen(false);
-    fn((prev) => !prev);
-  };
-
-  const handleClick = () => {
-    setSortIsOpen(false);
-    setFilterIsOpen(false);
-  };
 
   const handleDelete = async () => {
     await deleteStack(stackId);
@@ -49,16 +50,13 @@ function StackActions({ repoUrl, stackId, setAddIdea, setOrder, setFilter }) {
 
   return (
     <>
-      <ul
-        id="stack-actions"
-        className="mb-6 mt-4 flex gap-1 sm:gap-4 sm:mb-8 flex-wrap"
-      >
+      <ul id="stack-actions" className="mb-6 mt-4 flex flex-wrap gap-1 sm:mb-8 sm:gap-4">
         <li className="shrink-0">
           <a
             target="_blank"
             rel="noreferrer"
             href={repoUrl}
-            className="sm:text-t-md inline-block bg-white font-roboto text-t-sm font-medium"
+            className="inline-block bg-white font-roboto text-t-sm font-medium sm:text-t-md lg:text-t-lg"
             style={btnStyle}
           >
             go to repo
@@ -72,68 +70,69 @@ function StackActions({ repoUrl, stackId, setAddIdea, setOrder, setFilter }) {
           </Button>
         </li>
         <li className="relative shrink-0">
-          <Button onClick={() => closeAll("filter", setFilterIsOpen)} style={btnStyle}>
+          <Button onClick={() => dispatch({type: 'FILTER', })} style={btnStyle}>
             filter
             <Iconify data-icon="bytesize:filter" {...iconifyStyle} />
           </Button>
           <motion.ul
             variants={variant}
             initial="shrink"
-            animate={filterIsOpen ? "expand" : "shrink"}
-            onClick={handleClick}
+            animate={state.filterIsActive ? "expand" : "shrink"}
+            onClick={() => dispatch({type: 'FILTER'})}
             className="absolute top-8 whitespace-nowrap rounded-sm bg-white py-1  shadow-md"
           >
-            <li onClick={() => setFilter(2)} {...optionAttr}>
+            <li onClick={() => setFilter(2)} {...optionProps}>
               urgent
             </li>
-            <li onClick={() => setFilter(1)} {...optionAttr}>
+            <li onClick={() => setFilter(1)} {...optionProps}>
               moderate
             </li>
-            <li onClick={() => setFilter(0)} {...optionAttr}>
+            <li onClick={() => setFilter(0)} {...optionProps}>
               trivial
             </li>
-            <li onClick={() => setFilter(-1)} {...optionAttr}>
+            <li onClick={() => setFilter(-1)} {...optionProps}>
               remove filter
             </li>
           </motion.ul>
         </li>
         <li className="relative shrink-0">
-          <Button onClick={() => closeAll("sort", setSortIsOpen)} style={btnStyle}>
+          <Button onClick={() => dispatch({type: 'SORT'})} style={btnStyle}>
             sort
             <Iconify data-icon="cil:sort-descending" {...iconifyStyle} />
           </Button>
           <motion.ul
             variants={variant}
             initial="shrink"
-            animate={sortIsOpen ? "expand" : "shrink"}
-            onClick={handleClick}
+            animate={state.sortIsActive ? "expand" : "shrink"}
+            onClick={() => dispatch({type: 'SORT'})}
             className="absolute top-8 rounded-sm bg-white py-1 shadow-md"
           >
-            <li onClick={() => setOrder("level")} {...optionAttr}>
+            <li onClick={() => setOrder("level")} {...optionProps}>
               level
             </li>
-            <li onClick={() => setOrder("created")} {...optionAttr}>
+            <li onClick={() => setOrder("created")} {...optionProps}>
               latest
             </li>
-            <li onClick={() => setOrder("title_uppercase")} {...optionAttr}>
+            <li onClick={() => setOrder("title_uppercase")} {...optionProps}>
               alphabetically
             </li>
           </motion.ul>
         </li>
-        <li className="sm:ml-auto  shrink-0">
+        <li className="shrink-0  sm:ml-auto">
           <Button
-            onClick={() => setToggleDelete(true)}
+            onClick={() =>  dispatch({type: 'DELETE'})}
             style={{ ...btnStyle, backgroundColor: "#f00", color: "#fff" }}
           >
-            <span className='hidden sm:inline'>Delete</span> <Iconify style={{ marginTop: "-1px" }} data-icon="ion:trash-outline" />
+            <span className="hidden sm:inline">Delete</span>{" "}
+            <Iconify style={{ marginTop: "-1px" }} data-icon="ion:trash-outline" />
           </Button>
         </li>
       </ul>
       <AnimatePresence>
-        {toggleDelete && (
+        {state.deleteIsActive && (
           <Modal
             handleDelete={handleDelete}
-            handleToggle={() => setToggleDelete(false)}
+            handleToggle={() =>  dispatch({type: 'DELETE'})}
           />
         )}
       </AnimatePresence>

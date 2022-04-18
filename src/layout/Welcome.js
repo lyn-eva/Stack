@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { motion, animate } from "framer-motion";
+import { motion } from "framer-motion";
 import { useAuth } from "../context/authProvider";
 import { useDB } from "../context/dbProvider";
 import Button from "../utility/Button";

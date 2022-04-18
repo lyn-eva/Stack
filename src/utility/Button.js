@@ -1,4 +1,4 @@
-import { motion, whileHover } from "framer-motion";
+import { motion } from "framer-motion";
 
 function Button({ children, style, onClick }) {
   return (
