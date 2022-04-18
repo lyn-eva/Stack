@@ -21,7 +21,7 @@ function StackIdea({ stackId, repoUrl }) {
   }, [user, order, filter]);
 
   return (
-    <section className="mt-6 sm:mt-12 lg:w-7/12 overflow-hidden">
+    <section className="mt-6 sm:mt-12 lg:mt-0 lg:w-8/12 max-w-[50rem] overflow-hidden">
       <h2 className="mb-2 font-lato text-t-xl sm:text-2xl font-medium leading-5 text-white">
         Your stack
       </h2>

@@ -13,7 +13,7 @@ function Description({ value, rename, Ref, handleRename, handleChange, handleKey
         disabled={!rename}
         ref={Ref}
         placeholder="description"
-        className={`${rename ? 'bg-white text-black' : 'bg-transparent'} leading-5 text-t-md sm:text-[1.1rem] font-light block mt-2 sm:mt-3 w-full h-auto rounded-sm px-1 outline-none`}
+        className={`${rename ? 'bg-white text-black' : 'bg-transparent'} leading-5 sm:leading-6 text-t-md sm:text-[1.1rem] font-light block mt-2 sm:mt-3 w-full h-auto rounded-sm px-1 outline-none`}
       />
       <button
           onClick={handleRename}

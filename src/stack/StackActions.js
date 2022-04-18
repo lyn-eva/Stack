@@ -51,7 +51,7 @@ function StackActions({ repoUrl, stackId, setAddIdea, setOrder, setFilter }) {
     <>
       <ul
         id="stack-actions"
-        className="mb-6 mt-4 flex gap-2 sm:gap-4 sm:mb-8 flex-wrap"
+        className="mb-6 mt-4 flex gap-1 sm:gap-4 sm:mb-8 flex-wrap"
       >
         <li className="shrink-0">
           <a
@@ -120,12 +120,12 @@ function StackActions({ repoUrl, stackId, setAddIdea, setOrder, setFilter }) {
             </li>
           </motion.ul>
         </li>
-        <li className="ml-auto shrink-0">
+        <li className="sm:ml-auto  shrink-0">
           <Button
             onClick={() => setToggleDelete(true)}
             style={{ ...btnStyle, backgroundColor: "#f00", color: "#fff" }}
           >
-            Delete <Iconify style={{ marginTop: "-1px" }} data-icon="ion:trash-outline" />
+            <span className='hidden sm:inline'>Delete</span> <Iconify style={{ marginTop: "-1px" }} data-icon="ion:trash-outline" />
           </Button>
         </li>
       </ul>

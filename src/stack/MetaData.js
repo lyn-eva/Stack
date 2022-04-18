@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import useDevice from "../custom-hook/useDevice";
 import { getLastModified } from "../utility/datetime";
 import Iconify from "../utility/Iconify";
 import Wrapper from "../utility/Wrapper";
@@ -13,13 +14,22 @@ const variant = {
   },
 };
 
+const shouldExpand = (device) => (device === "mobile" ? false : true);
+
 function MetaData({ hdr, createdAt, updatedAt, pushedAt }) {
-  const [expand, setExpand] = useState(true);
+  const device = useDevice();
+  const [expand, setExpand] = useState(shouldExpand(device));
+
+  useEffect(() => {
+    setExpand(shouldExpand(device));
+  }, [device]);
 
   return (
     <Wrapper
       onClick={() => setExpand((prev) => !prev)}
-      className={`${expand ? 'pb-3' : ''} group relative mb-3 px-4 pt-2 font-lato text-white shadow-l2 sm:mb-5 sm:p-4 sm:pb-2`}
+      className={`${
+        expand ? "pb-3" : ""
+      } group relative mb-3 px-4 pt-2 font-lato text-white shadow-l2 sm:mb-5 sm:p-4 sm:pb-2`}
     >
       <button className="absolute right-5 top-1 ml-4 opacity-0 group-hover:opacity-100 sm:top-4">
         <Iconify data-icon={expand ? "icomoon-free:shrink2" : "fa:expand"} />

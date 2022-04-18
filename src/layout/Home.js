@@ -47,7 +47,7 @@ function Home() {
           </Button>
         </li>
       </ul>
-      <section className="mt-8 lg:mt-14 grid grid-cols-1 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 gap-y-8 pb-8 text-white overflow-x-auto">
+      <section className="mt-8 lg:mt-14 grid grid-cols-1 sm:grid-cols-2 sm:gap-6 md:gap-[5vw] lg:gap-6 lg:grid-cols-3 xl:grid-cols-4 gap-y-8 pb-8 text-white overflow-x-auto">
         {!stacks?.length && "** no stack has been created **"}
         {stacks?.map(({ id, name }) => {
           return (
