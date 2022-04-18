@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { useAuth } from "../context/authProvider";
 import { useDB } from "../context/dbProvider";
+import EnhancedDetailCard from "../render-props/EnhancedDetailCard";
 import MetaData from "./MetaData";
 import StackIdea from "./StackIdeas";
 
@@ -41,18 +42,31 @@ function Stack() {
   return (
     <main className="mb-8 mt-10 justify-between sm:mt-16 lg:mt-[5vw] lg:flex lg:gap-6">
       <section className="sm:flex sm:gap-6 lg:block lg:max-w-[21.5rem]">
-        <RepoCard repoName={repoName} />
+        <EnhancedDetailCard
+          Render={(props) => <RepoCard repoName={repoName} {...props}/>}
+          className="relative self-start sm:w-1/2 lg:w-full"
+        />
         <div className="mt-3 sm:mt-0 sm:w-1/2 lg:mt-6 lg:w-full">
-          <MetaData
-            createdAt={repoDetail.createdAt}
-            updatedAt={repoDetail.updatedAt}
-            pushedAt={repoDetail.pushedAt}
-            hdr="Repo Details"
+          <EnhancedDetailCard
+            Render={(props) => (
+              <MetaData
+                createdAt={repoDetail.createdAt}
+                updatedAt={repoDetail.updatedAt}
+                pushedAt={repoDetail.pushedAt}
+                hdr="Repo Details"
+                {...props}
+              />
+            )}
           />
-          <MetaData
-            createdAt={stack?.created?.toMillis()}
-            updatedAt={stack?.modified?.toMillis()}
-            hdr="Stack Details"
+          <EnhancedDetailCard
+            Render={(props) => (
+              <MetaData
+                createdAt={stack?.created?.toMillis()}
+                updatedAt={stack?.modified?.toMillis()}
+                hdr="Stack Details"
+                {...props}
+              />
+            )}
           />
         </div>
       </section>

@@ -6,7 +6,7 @@ import Description from "./Description";
 import Title from "./Title";
 import Levels from "./Levels";
 import Location from "./Location";
-import EnhancedFormField from "../renderProp/EnhancedFormField";
+import EnhancedFormField from "../hoc/EnhancedFormField";
 import Iconify from "../utility/Iconify";
 import Modal from "../utility/Modal";
 
