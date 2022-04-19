@@ -39,8 +39,8 @@ const reducer = (state, action) => {
   }
 };
 
-function StackActions({ stackId, setAddIdea, setOrder, setFilter }) {
-  const [state, dispatch] = useReducer(reducer, {});
+function StackActions({ stackId, setAddIdea, dispatch }) {
+  const [toggleStates, dispatchToggle] = useReducer(reducer, {});
   const navigate = useNavigate();
   const { deleteStack } = useDB();
   const {repoUrl} = useRepo(); //
@@ -49,6 +49,19 @@ function StackActions({ stackId, setAddIdea, setOrder, setFilter }) {
     await deleteStack(stackId);
     navigate(-1);
   };
+
+  const addSort = (value) => {
+    return () => {
+      dispatch({type: 'SORT', value: value})
+    }
+  }
+
+  const addFilter = (value, type='level') => {
+    return () => {
+      console.log(type, value)
+      dispatch({type: 'FILTER', value: {key: type, value: value}})
+    }
+  }
 
   return (
     <>
@@ -72,57 +85,60 @@ function StackActions({ stackId, setAddIdea, setOrder, setFilter }) {
           </Button>
         </li>
         <li className="relative shrink-0">
-          <Button onClick={() => dispatch({type: 'FILTER', })} style={btnStyle}>
+          <Button onClick={() => dispatchToggle({type: 'FILTER', })} style={btnStyle}>
             filter
             <Iconify data-icon="bytesize:filter" {...iconifyStyle} />
           </Button>
           <motion.ul
             variants={variant}
             initial="shrink"
-            animate={state.filterIsActive ? "expand" : "shrink"}
-            onClick={() => dispatch({type: 'FILTER'})}
+            animate={toggleStates.filterIsActive ? "expand" : "shrink"}
+            onClick={() => dispatchToggle({type: 'FILTER'})}
             className="absolute top-8 whitespace-nowrap rounded-sm bg-white py-1  shadow-md"
           >
-            <li onClick={() => setFilter(2)} {...optionProps}>
+            <li onClick={addFilter(2)} {...optionProps}>
               urgent
             </li>
-            <li onClick={() => setFilter(1)} {...optionProps}>
+            <li onClick={addFilter(1)} {...optionProps}>
               moderate
             </li>
-            <li onClick={() => setFilter(0)} {...optionProps}>
+            <li onClick={addFilter(0)} {...optionProps}>
               trivial
             </li>
-            <li onClick={() => setFilter(-1)} {...optionProps}>
+            <li onClick={addFilter(true, 'checked')} {...optionProps}>
+              completed
+            </li>
+            <li onClick={addFilter(-1)} {...optionProps}>
               remove filter
             </li>
           </motion.ul>
         </li>
         <li className="relative shrink-0">
-          <Button onClick={() => dispatch({type: 'SORT'})} style={btnStyle}>
+          <Button onClick={() => dispatchToggle({type: 'SORT'})} style={btnStyle}>
             sort
             <Iconify data-icon="cil:sort-descending" {...iconifyStyle} />
           </Button>
           <motion.ul
             variants={variant}
             initial="shrink"
-            animate={state.sortIsActive ? "expand" : "shrink"}
-            onClick={() => dispatch({type: 'SORT'})}
+            animate={toggleStates.sortIsActive ? "expand" : "shrink"}
+            onClick={() => dispatchToggle({type: 'SORT'})}
             className="absolute top-8 rounded-sm bg-white py-1 shadow-md"
           >
-            <li onClick={() => setOrder("level")} {...optionProps}>
+            <li onClick={addSort("level")} {...optionProps}>
               level
             </li>
-            <li onClick={() => setOrder("created")} {...optionProps}>
+            <li onClick={addSort("created")} {...optionProps}>
               latest
             </li>
-            <li onClick={() => setOrder("title_uppercase")} {...optionProps}>
+            <li onClick={addSort("title_uppercase")} {...optionProps}>
               alphabetically
             </li>
           </motion.ul>
         </li>
         <li className="shrink-0  sm:ml-auto">
           <Button
-            onClick={() =>  dispatch({type: 'DELETE'})}
+            onClick={() =>  dispatchToggle({type: 'DELETE'})}
             style={{ ...btnStyle, backgroundColor: "#f00", color: "#fff" }}
           >
             <span className="hidden sm:inline">Delete</span>{" "}
@@ -131,10 +147,10 @@ function StackActions({ stackId, setAddIdea, setOrder, setFilter }) {
         </li>
       </ul>
       <AnimatePresence>
-        {state.deleteIsActive && (
+        {toggleStates.deleteIsActive && (
           <Modal
             handleDelete={handleDelete}
-            handleToggle={() =>  dispatch({type: 'DELETE'})}
+            handleToggle={() =>  dispatchToggle({type: 'DELETE'})}
           />
         )}
       </AnimatePresence>

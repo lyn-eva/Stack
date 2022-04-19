@@ -43,13 +43,17 @@ function DbProvider({ children }) {
     });
   };
 
-  const listenToIdeas = (stackId, setIdeas, order = 'created', filter = -1) => {
-    const q = query(collection(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas"), orderBy(order, 'desc'));
-    const q_filter = query(collection(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas"), where('level', '==', filter));
-    return onSnapshot((filter >= 0 ? q_filter : q), snapshot => {
+  const listenToIdeas = (stackId, setIdeas, sort = "created", filter = { key: "level", value: -1 }) => {
+    const path = query(
+      collection(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas"),
+      filter.value >= 0
+        ? where(filter.key, "==", filter.value)
+        : (orderBy(sort, "desc"), where("checked", "==", false))
+    );
+    return onSnapshot(path, (snapshot) => {
       const ideas = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setIdeas(ideas);
-    })
+    });
   };
 
   const getStacks = () => {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import { useDB } from "../context/dbProvider";
 import { useAuth } from "../context/authProvider";
 import Idea from "../idea/Idea";
@@ -6,19 +6,29 @@ import Detail from "../idea/Detail";
 import StackActions from "./StackActions";
 import { AnimatePresence } from "framer-motion";
 
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'FILTER':
+      return {...state, filter: {key: action.value.key, value: action.value.value}}
+    case 'SORT':
+      return {...state, sort: action.value}
+    default:
+      return state
+  }
+}
+
 function IdeaSection({ stackId, repoUrl }) {
+  const [state, dispatch] = useReducer(reducer, {});
   const [addIdea, setAddIdea] = useState(false);
-  const [order, setOrder] = useState("created");
-  const [filter, setFilter] = useState(-1);
   const [ideas, setIdeas] = useState(null);
   const { listenToIdeas } = useDB();
   const { user } = useAuth();
 
   useEffect(() => {
     if (!user) return;
-    const unsub = listenToIdeas(stackId, setIdeas, order, filter);
+    const unsub = listenToIdeas(stackId, setIdeas, state.sort, state.filter);
     return unsub;
-  }, [user, order, filter]);
+  }, [user, state.filter, state.sort]);
 
   return (
     <section className="mt-6 max-w-[50rem] overflow-hidden sm:mt-12 lg:mt-0 lg:w-8/12">
@@ -29,8 +39,7 @@ function IdeaSection({ stackId, repoUrl }) {
       <StackActions
         stackId={stackId}
         setAddIdea={setAddIdea}
-        setOrder={setOrder}
-        setFilter={setFilter}
+        dispatch={dispatch}
       />
 
       <ul className="min-h-[7.5rem]">
