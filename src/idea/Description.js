@@ -1,10 +1,10 @@
-import Iconify from "../utility/Iconify";
-
+import { Icon } from "@iconify/react";
 function Description({ value, rename, Ref, handleRename, handleChange, handleKeyDown }) {
-
   return (
-    <div className="relative group">
-      <label className="font-exo font-semibold text-t-md sm:text-t-lg text-gray-300 tracking-wide mr-3">Description: </label>
+    <div className="group relative">
+      <label className="mr-3 font-exo text-t-md font-semibold tracking-wide text-gray-300 sm:text-t-lg">
+        Description:{" "}
+      </label>
       <hr />
       <textarea
         onKeyDown={handleKeyDown}
@@ -13,14 +13,16 @@ function Description({ value, rename, Ref, handleRename, handleChange, handleKey
         disabled={!rename}
         ref={Ref}
         placeholder="description"
-        className={`${rename ? 'bg-white text-black' : 'bg-transparent'} leading-5 sm:leading-6 text-t-md sm:text-[1.1rem] font-light block mt-2 sm:mt-3 w-full h-auto rounded-sm px-1 outline-none`}
+        className={`${
+          rename ? "bg-white text-black" : "bg-transparent"
+        } mt-2 block h-auto w-full rounded-sm px-1 text-t-md font-light leading-5 outline-none sm:text-[1.1rem] sm:leading-6 md:font-normal`}
       />
       <button
-          onClick={handleRename}
-          className="absolute sm:-top-[2px] top-0 -left-4 sm:-left-5 sm:opacity-0 sm:group-hover:opacity-100"
-        >
-          <Iconify data-width={13} data-icon="fa6-solid:pencil" />
-        </button>
+        onClick={handleRename}
+        className="absolute top-0 -left-4 sm:top-1 sm:-left-5 sm:opacity-0 sm:group-hover:opacity-100"
+      >
+        <Icon width={13} icon="fa6-solid:pencil" />
+      </button>
     </div>
   );
 }

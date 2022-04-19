@@ -4,7 +4,7 @@ import { useDB } from "../context/dbProvider";
 import { useAuth } from "../context/authProvider";
 import Repo from "../stack/Repo";
 import Button from "../utility/Button";
-import Iconify from "../utility/Iconify";
+import { Icon } from "@iconify/react";
 import BrowseRepo from "./BrowseRepo";
 
 function Home() {
@@ -20,17 +20,17 @@ function Home() {
     const unsub = listenToStacks(setStacks);
     return unsub;
   }, [user]);
-  
+
   return (
-    <main className='mb-8 overflow-hidden'>
+    <main className="mb-8 mt-[3vw] overflow-hidden">
       <ul className="flex gap-4">
         <li className="relative">
           <Button onClick={() => setBrowseRepo((prev) => !prev)}>
             Browse Repo
-            <Iconify
-              data-icon="fe:search"
+            <Icon
+              icon="fe:search"
               // data-width="20"
-              data-flip="horizontal"
+              flip="horizontal"
               style={{ marginLeft: ".5rem" }}
             />
           </Button>
@@ -39,15 +39,15 @@ function Home() {
         <li>
           <Button onClick={() => setShrink((prev) => !prev)}>
             Shrink all
-            <Iconify
-              data-icon="lucide:shrink"
+            <Icon
+              icon="lucide:shrink"
               // data-width="20"
               style={{ marginLeft: ".5rem" }}
             />
           </Button>
         </li>
       </ul>
-      <section className="mt-8 lg:mt-14 grid grid-cols-1 sm:grid-cols-2 sm:gap-6 md:gap-[5vw] lg:gap-6 lg:grid-cols-3 xl:grid-cols-4 gap-y-8 pb-8 text-white overflow-x-auto">
+      <section className="mt-8 grid grid-cols-1 gap-y-8 overflow-x-auto pb-8 text-white sm:grid-cols-2 sm:gap-6 md:gap-[5vw] lg:mt-14 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
         {!stacks?.length && "** no stack has been created **"}
         {stacks?.map(({ id, name }) => {
           return (

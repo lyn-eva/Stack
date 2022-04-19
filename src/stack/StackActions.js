@@ -4,13 +4,13 @@ import { useNavigate } from "react-router";
 import { useDB } from "../context/dbProvider";
 import useRepo from "../custom-hook/useRepo";
 import Button from "../utility/Button";
-import Iconify from "../utility/Iconify";
+import { Icon } from "@iconify/react";
 import Modal from "../utility/Modal";
 
-const iconifyStyle = { "data-width": "14", style: { marginLeft: ".5rem" } };
+const iconifyStyle = { "width": "14", style: { marginLeft: ".5rem" } };
 
 const btnStyle = {
-  padding: "2px 8px",
+  padding: ".05em 8px",
   borderRadius: "4px",
   letterSpacing: "1px",
 };
@@ -75,19 +75,19 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
             style={btnStyle}
           >
             go to repo
-            <Iconify data-icon="ri:git-repository-line" {...iconifyStyle} />
+            <Icon icon="ri:git-repository-line" {...iconifyStyle} />
           </a>
         </li>
         <li className="shrink-0">
           <Button onClick={() => setAddIdea((prev) => !prev)} style={btnStyle}>
             new idea
-            <Iconify data-icon="ant-design:plus-outlined" {...iconifyStyle} />
+            <Icon icon="ant-design:plus-outlined" {...iconifyStyle} />
           </Button>
         </li>
         <li className="relative shrink-0">
           <Button onClick={() => dispatchToggle({type: 'FILTER', })} style={btnStyle}>
             filter
-            <Iconify data-icon="bytesize:filter" {...iconifyStyle} />
+            <Icon icon="bytesize:filter" {...iconifyStyle} />
           </Button>
           <motion.ul
             variants={variant}
@@ -116,7 +116,7 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
         <li className="relative shrink-0">
           <Button onClick={() => dispatchToggle({type: 'SORT'})} style={btnStyle}>
             sort
-            <Iconify data-icon="cil:sort-descending" {...iconifyStyle} />
+            <Icon icon="cil:sort-descending" {...iconifyStyle} />
           </Button>
           <motion.ul
             variants={variant}
@@ -142,7 +142,7 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
             style={{ ...btnStyle, backgroundColor: "#f00", color: "#fff" }}
           >
             <span className="hidden sm:inline">Delete</span>{" "}
-            <Iconify style={{ marginTop: "-1px" }} data-icon="ion:trash-outline" />
+            <Icon style={{ marginTop: "-1px" }} icon="ion:trash-outline" />
           </Button>
         </li>
       </ul>

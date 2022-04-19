@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router";
 import { useAuth } from "../context/authProvider";
 import Button from "../utility/Button";
-import Iconify from "../utility/Iconify";
+import { Icon } from "@iconify/react";
 import logo from "../asset/logo.svg"
 
 function Header({ loggedIn }) {
@@ -23,7 +23,7 @@ function Header({ loggedIn }) {
         {loggedIn && (
           <Button onClick={handleSingOut}>
             Go to Login{" "}
-            <Iconify data-width={20} data-icon="bi:arrow-right-short" />
+            <Icon width={20} icon="bi:arrow-right-short" />
           </Button>
         )}
       </header>

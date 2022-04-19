@@ -1,8 +1,6 @@
 import { createContext, useContext } from "react";
-import app from "../firebaseConfig";
 import { useAuth } from "./authProvider";
 import {
-  getFirestore,
   serverTimestamp,
   onSnapshot,
   doc,

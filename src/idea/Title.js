@@ -1,4 +1,4 @@
-import Iconify from "../utility/Iconify";
+import { Icon } from "@iconify/react";
 
 function Title({ value, rename, Ref, handleChange, handleRename }) {
   return (
@@ -20,13 +20,13 @@ function Title({ value, rename, Ref, handleChange, handleRename }) {
         rows="1"
         className={`${
           rename ? "bg-white text-black" : "bg-transparent"
-        } w-full rounded-sm px-2 text-t-md font-light leading-5 tracking-wide outline-none sm:text-lg sm:font-normal sm:leading-6`}
+        } w-full rounded-sm px-2 text-t-md font-normal leading-5 tracking-wide outline-none sm:text-lg sm:leading-6 md:leading-7`}
       />
       <button
         onClick={handleRename}
-        className="absolute -left-8 ml-4 text-t-sm  sm:-left-9  sm:opacity-0 sm:group-hover:opacity-100"
+        className="absolute top-[1px] -left-8 ml-4 text-t-sm  sm:-left-9  sm:opacity-0 sm:group-hover:opacity-100"
       >
-        <Iconify data-width={13} data-icon="fa6-solid:pencil" />
+        <Icon width={13} icon="fa6-solid:pencil" />
       </button>
     </div>
   );

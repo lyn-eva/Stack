@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import RepoFrame from "./RepoFrame";
-import Iconify from "../utility/Iconify";
+import { Icon } from "@iconify/react";
 
 export function RepoCard({ repoName, variant, expand }) {
   return (
@@ -19,9 +19,11 @@ export function RepoCard({ repoName, variant, expand }) {
         <RepoFrame name={repoName} />
       </motion.div>
       <button
-        className={`absolute bottom-2 right-4 text-white ${expand ? "" : "sm:bottom-4"}`}
+        className={`absolute bottom-2 right-4 text-white ${
+          expand ? "icomoon-free:shrink2" : "fa:expand"
+        }`}
       >
-        <Iconify data-icon={"icomoon-free:shrink2"} />
+        <Icon icon={"icomoon-free:shrink2"} />
       </button>
     </>
   );

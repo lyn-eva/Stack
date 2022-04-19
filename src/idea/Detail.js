@@ -7,7 +7,7 @@ import Title from "./Title";
 import Levels from "./Levels";
 import Location from "./Location";
 import EnhancedFormField from "../hoc/EnhancedFormField";
-import Iconify from "../utility/Iconify";
+import { Icon } from "@iconify/react";
 import Modal from "../utility/Modal";
 
 const variant = {
@@ -116,9 +116,9 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
           <div className="flex gap-5 sm:text-t-lg mt-2 sm:mt-0">
             <button onClick={handleSave} className="text-green-500">
               save changes{" "}
-              <Iconify
+              <Icon
                 style={{ marginTop: "-2px" }}
-                data-icon="ant-design:check-outlined"
+                icon="ant-design:check-outlined"
               />
             </button>
             <button
@@ -126,10 +126,10 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
               className="text-red-500"
             >
               cancel{" "}
-              <Iconify style={{ marginTop: "-1px" }} data-icon="akar-icons:cross" />
+              <Icon style={{ marginTop: "-1px" }} icon="akar-icons:cross" />
             </button>
           </div>
-          <div className="sm:flex gap-5 text-[13px] font-light">
+          <div className="flex justify-between flex-wrap gap-x-5 text-[13px] font-light">
             <p>
               last modified: <span className="font-medium">{modified}</span>
             </p>
@@ -138,7 +138,7 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
             </p>
           </div>
         </div>
-        <button onClick={handleDelete} className='absolute top-3 right-5 text-[#f00]'><Iconify data-icon='fa6-solid:trash-can'/></button>
+        <button onClick={handleDelete} className='absolute top-3 right-5 text-[#f00]'><Icon icon='fa6-solid:trash-can'/></button>
       </motion.div>
     </>
   );

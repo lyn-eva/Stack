@@ -1,4 +1,4 @@
-import Iconify from "../utility/Iconify";
+import { Icon } from "@iconify/react";
 
 function Location({ editable, value, rename, Ref, handleChange, handleRename }) {
   return (
@@ -12,7 +12,7 @@ function Location({ editable, value, rename, Ref, handleChange, handleRename }) 
           onClick={handleRename}
           className="absolute top-0 -left-4 sm:left-0 sm:opacity-0 sm:group-hover:opacity-100"
         >
-          <Iconify data-width={13} data-icon="fa6-solid:pencil" />
+          <Icon width={13} icon="fa6-solid:pencil" />
         </button>
       )}
       {rename ? (

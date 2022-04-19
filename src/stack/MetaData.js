@@ -1,12 +1,14 @@
 import { motion } from "framer-motion";
+import {Icon} from "@iconify/react"
 import { getLastModified } from "../utility/datetime";
-import Iconify from "../utility/Iconify";
 
 function MetaData({ hdr, createdAt, updatedAt, pushedAt, expand, variant }) {
+  console.log('rerenderd', expand)
+
   return (
     <>
       <button className="absolute right-5 top-1 ml-4 opacity-0 group-hover:opacity-100 sm:top-4">
-        <Iconify data-icon={expand ? "icomoon-free:shrink2" : "fa:expand"} />
+        <Icon icon={expand ? "icomoon-free:shrink2" : "fa:expand"} />
       </button>
       <h3 className="mb-2 text-center font-open-sans text-t-md font-medium tracking-wide sm:text-left sm:font-semibold">
         {hdr}
