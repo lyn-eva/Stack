@@ -47,6 +47,7 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
     description: idea?.description ?? "",
     level: idea?.level ?? 0,
     location: idea?.location ?? {},
+    checked: idea?.checked ?? false
   };
 
   const [formState, dispatch] = useReducer(reducer, initialForm);

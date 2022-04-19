@@ -2,6 +2,7 @@ import { useReducer } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router";
 import { useDB } from "../context/dbProvider";
+import useRepo from "../custom-hook/useRepo";
 import Button from "../utility/Button";
 import Iconify from "../utility/Iconify";
 import Modal from "../utility/Modal";
@@ -38,10 +39,11 @@ const reducer = (state, action) => {
   }
 };
 
-function StackActions({ repoUrl, stackId, setAddIdea, setOrder, setFilter }) {
+function StackActions({ stackId, setAddIdea, setOrder, setFilter }) {
   const [state, dispatch] = useReducer(reducer, {});
   const navigate = useNavigate();
   const { deleteStack } = useDB();
+  const {repoUrl} = useRepo(); //
 
   const handleDelete = async () => {
     await deleteStack(stackId);

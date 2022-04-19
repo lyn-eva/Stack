@@ -6,7 +6,7 @@ import Detail from "../idea/Detail";
 import StackActions from "./StackActions";
 import { AnimatePresence } from "framer-motion";
 
-function StackIdea({ stackId, repoUrl }) {
+function IdeaSection({ stackId, repoUrl }) {
   const [addIdea, setAddIdea] = useState(false);
   const [order, setOrder] = useState("created");
   const [filter, setFilter] = useState(-1);
@@ -21,24 +21,23 @@ function StackIdea({ stackId, repoUrl }) {
   }, [user, order, filter]);
 
   return (
-    <section className="mt-6 sm:mt-12 lg:mt-0 lg:w-8/12 max-w-[50rem] overflow-hidden">
-      <h2 className="mb-2 font-lato text-t-xl sm:text-2xl font-medium leading-5 text-white">
+    <section className="mt-6 max-w-[50rem] overflow-hidden sm:mt-12 lg:mt-0 lg:w-8/12">
+      <h2 className="mb-2 font-lato text-t-xl font-medium leading-5 text-white sm:text-2xl">
         Your stack
       </h2>
       <hr />
       <StackActions
-        repoUrl={repoUrl}
         stackId={stackId}
         setAddIdea={setAddIdea}
         setOrder={setOrder}
         setFilter={setFilter}
       />
 
-      <ul className='min-h-[7.5rem]'>
+      <ul className="min-h-[7.5rem]">
         <AnimatePresence>
-        {addIdea && (
-          <Detail isForm stackId={stackId} handleExpand={() => setAddIdea(false)} />
-        )}
+          {addIdea && (
+            <Detail isForm stackId={stackId} handleExpand={() => setAddIdea(false)} />
+          )}
           {ideas?.map((idea, i) => (
             <Idea key={idea.id} idx={i} stackId={stackId} idea={idea} />
           ))}
@@ -48,4 +47,4 @@ function StackIdea({ stackId, repoUrl }) {
   );
 }
 
-export default StackIdea;
+export default IdeaSection;

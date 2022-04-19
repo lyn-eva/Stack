@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useDB } from "../context/dbProvider";
 import Location from "./Location";
 import Detail from "./Detail";
 
@@ -7,10 +8,15 @@ const options = ["bg-green-600", "bg-blue-700", "bg-red-700"];
 
 function Idea({ idx, idea, stackId }) {
   const [expand, setExpand] = useState(false);
+  const { updateIdea } = useDB();
 
   const handleClick = (e) => {
     if (e.target.type === "checkbox") return;
     setExpand((prev) => !prev);
+  };
+
+  const handleCheck = (e) => {
+    updateIdea(stackId, idea.id, {checked : !idea.checked})
   };
 
   return (
@@ -34,8 +40,10 @@ function Idea({ idx, idea, stackId }) {
         </p>
         <Location value={idea.location} />
         <input
+          checked={!!idea.checked}
+          onChange={handleCheck}
           type="checkbox"
-          className='cursor-pointer after-w-2 ml-auto aspect-square w-3 rounded-sm bg-white after:ml-[5px] after:mt-[2px] after:block after:h-[6px] after:w-[3px] after:rotate-45 after:border-b-2 after:border-r-2 after:border-white after:content-[""] checked:bg-blue-600 sm:w-5 after:sm:ml-[6px] after:sm:mt-[1px] after:sm:h-3 after:sm:w-[6px] after:sm:border-b-[3px] after:sm:border-r-[3px]'
+          className='after-w-2 ml-auto aspect-square w-3 cursor-pointer rounded-sm bg-white after:ml-[5px] after:mt-[2px] after:block after:h-[6px] after:w-[3px] after:rotate-45 after:border-b-2 after:border-r-2 after:border-white after:content-[""] checked:bg-blue-600 sm:w-5 after:sm:ml-[6px] after:sm:mt-[1px] after:sm:h-3 after:sm:w-[6px] after:sm:border-b-[3px] after:sm:border-r-[3px]'
         />
         <span
           className={`${

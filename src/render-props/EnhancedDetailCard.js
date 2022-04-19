@@ -13,7 +13,7 @@ const variant = {
 
 const shouldExpand = (device) => (device === "mobile" ? false : true);
 
-function EnhancedDetailCard({ Render, className }) {
+function EnhancedDetailCard({ Render, className, props }) {
   const device = useDevice();
   const [expand, setExpand] = useState(shouldExpand(device));
 
@@ -26,7 +26,7 @@ function EnhancedDetailCard({ Render, className }) {
       onClick={() => setExpand((prev) => !prev)}
       className={className || `${expand ? "pb-3" : ""} group relative mb-3 px-4 pt-2 font-lato text-white shadow-l2 sm:mb-5 sm:p-4 sm:pb-2`}
     >
-      {<Render variant={variant} expand={expand} />}
+      <Render expand={expand} variant={variant} {...props}/>
     </Wrapper>
   );
 }

@@ -26,3 +26,4 @@ export function RepoCard({ repoName, variant, expand }) {
     </>
   );
 }
+export default RepoCard;
