@@ -11,8 +11,8 @@ const iconifyStyle = { width: "14", style: { marginLeft: ".5rem" } };
 
 const btnStyle = {
   padding: ".05em 8px",
-  borderRadius: "4px",
-  letterSpacing: "1px",
+  borderRadius: ".2em",
+  letterSpacing: "0px",
 };
 
 const variant = {
@@ -20,11 +20,18 @@ const variant = {
   expand: { scaleY: 1, opacity: 1, zIndex: 20, originY: 0 },
 };
 
-const optionProps = {
-  tabIndex: 1,
-  className:
-    "cursor-pointer px-3 text-t-md py-[2px] sm:py-1 sm:text-t-lg sm:font-normal outline-1 hover:bg-blue-100 focus:outline",
-};
+const SORT_OPTIONS = [
+  { value: "level", option: "level" },
+  { value: "created", option: "created" },
+  { value: "titleUC", option: "title" },
+];
+const FILTER_OPTIONS = [
+  { value: { key: "level", value: 2 }, option: "urgent" },
+  { value: { key: "level", value: 1 }, option: "moderate" },
+  { value: { key: "level", value: 0 }, option: "trival" },
+  { value: { key: "checked", value: true }, option: "completed" },
+  { value: { key: "checked", value: false }, option: "remove filter" },
+];
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -43,23 +50,16 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
   const [toggleStates, dispatchToggle] = useReducer(reducer, {});
   const navigate = useNavigate();
   const { deleteStack } = useDB();
-  const { repoUrl } = useRepo(); //
+  // const { repoUrl } = useRepo(); //
 
   const handleDelete = async () => {
     await deleteStack(stackId);
     navigate(-1);
   };
 
-  const addSort = (value) => {
+  const handleDispatch = (type, value) => {
     return () => {
-      dispatch({ type: "SORT", value: value });
-    };
-  };
-
-  const addFilter = (value, type = "level") => {
-    return () => {
-      console.log(type, value);
-      dispatch({ type: "FILTER", value: { key: type, value: value } });
+      dispatch({ type: type, value: value });
     };
   };
 
@@ -70,8 +70,8 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
           <a
             target="_blank"
             rel="noreferrer"
-            href={repoUrl}
-            className="flex items-center bg-white font-roboto text-t-sm font-medium sm:text-t-md lg:text-t-lg"
+            href=""
+            className="flex items-center bg-white font-roboto text-t-sm font-normal sm:text-t-md lg:text-t-lg"
             style={btnStyle}
           >
             go to repo
@@ -96,21 +96,11 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
             onClick={() => dispatchToggle({ type: "FILTER" })}
             className="absolute top-8 whitespace-nowrap rounded-sm bg-white py-1  shadow-md"
           >
-            <li onClick={addFilter(2)} {...optionProps}>
-              urgent
-            </li>
-            <li onClick={addFilter(1)} {...optionProps}>
-              moderate
-            </li>
-            <li onClick={addFilter(0)} {...optionProps}>
-              trivial
-            </li>
-            <li onClick={addFilter(true, "checked")} {...optionProps}>
-              completed
-            </li>
-            <li onClick={addFilter(false, 'checked')} {...optionProps}>
-              remove filter
-            </li>
+            {FILTER_OPTIONS.map(({ option,  value}) => (
+              <li onClick={handleDispatch('FILTER', value)} key={option} tabIndex='1' className='stack-dropdown'>
+                {option}
+              </li>
+            ))}
           </motion.ul>
         </li>
         <li className="relative shrink-0">
@@ -124,16 +114,12 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
             animate={toggleStates.sortIsActive ? "expand" : "shrink"}
             onClick={() => dispatchToggle({ type: "SORT" })}
             className="absolute top-8 rounded-sm bg-white py-1 shadow-md"
-          >
-            <li onClick={addSort("level")} {...optionProps}>
-              level
-            </li>
-            <li onClick={addSort("created")} {...optionProps}>
-              latest
-            </li>
-            <li onClick={addSort("title_cap")} {...optionProps}>
-              alphabetically
-            </li>
+            >
+            {SORT_OPTIONS.map(({ option, value }) => (
+              <li onClick={handleDispatch('SORT', value)} key={option} tabIndex='1' className='stack-dropdown'>
+                {option}
+              </li>
+            ))}
           </motion.ul>
         </li>
         <li className="shrink-0  sm:ml-auto">
@@ -142,7 +128,7 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
             style={{ ...btnStyle, backgroundColor: "#f00", color: "#fff" }}
           >
             <span className="hidden sm:inline">Delete</span>
-            <Icon style={{ marginTop: "-1px" }} icon="ion:trash-outline" />
+            <Icon className="my-[3px]" icon="ion:trash-outline" />
           </Button>
         </li>
       </ul>

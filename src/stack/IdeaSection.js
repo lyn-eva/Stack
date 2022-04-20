@@ -9,7 +9,7 @@ import { AnimatePresence } from "framer-motion";
 const reducer = (state, action) => {
   switch (action.type) {
     case "FILTER":
-      return { ...state, filterBy: { key: action.value.key, value: action.value.value } };
+      return { ...state, filterBy: action.value };
     case "SORT":
       return { ...state, sortBy: action.value };
     default:

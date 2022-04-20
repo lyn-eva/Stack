@@ -43,7 +43,7 @@ const reducer = (state, action) => {
 function Detail({ idea, handleExpand, stackId, isForm = false }) {
   const initialForm = {
     title: idea?.title ?? "",
-    title_cap: idea?.title.toUpperCase() ?? "",
+    titleUC: idea?.title.toUpperCase() ?? "",
     description: idea?.description ?? "",
     level: idea?.level ?? 0,
     location: idea?.location ?? {},

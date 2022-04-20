@@ -19,6 +19,8 @@ import {
 const dbCtx = createContext({});
 export const useDB = () => useContext(dbCtx);
 
+
+const DEFAULT_FILTER ={ key: 'checked', value: false}
 const metadata = () => ({ created: serverTimestamp(), modified: serverTimestamp() });
 
 function DbProvider({ children }) {
@@ -40,7 +42,7 @@ function DbProvider({ children }) {
     });
   };
 
-  const listenToIdeas = (stackId, setIdeas, sortBy, filterBy) => {
+  const listenToIdeas = (stackId, setIdeas, sortBy = 'created', filterBy = DEFAULT_FILTER) => {
     const path = query(
       collection(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas"),
       where(filterBy.key, "==", filterBy.value),

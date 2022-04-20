@@ -31,7 +31,6 @@ function BrowseRepo({ stackId, setBrowseRepo }) {
     })();
   }, []);
 
-  console.log(repos)
   const handleAddRepo = (repo, url) => {
     return async () => {
       await createStack(repo, url);
