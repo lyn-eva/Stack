@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 const identify = (width) => {
   return width < 640
-    ? "mobile"
-    : width > 640 && width < 768
-    ? "tablet"
+    ? 'mobile'
+    : width >= 640 && width < 768
+    ? 'tablet'
     : width > 768 && width < 1024
-    ? "laptop"
-    : "desktop";
+    ? 'laptop'
+    : 'desktop';
 };
 
 function useDevice() {
@@ -15,8 +15,8 @@ function useDevice() {
 
   useEffect(() => {
     const unsub = () => setDevice(identify(window.outerWidth));
-    window.addEventListener("resize", unsub);
-    return () => window.removeEventListener("resize", unsub);
+    window.addEventListener('resize', unsub);
+    return () => window.removeEventListener('resize', unsub);
   }, []);
 
   return device;

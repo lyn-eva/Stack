@@ -40,7 +40,7 @@ function Repo({name, stackId, shrink, onClick}) {
   useEffect(() => {
     const unsub = listenToIdeas(stackId, setIdeas);
     return unsub;
-  }, [user])
+  }, [user, stackId, listenToIdeas])
 
   return (
     <div className=" bg-bg-dark rounded-md w-full max-w-[21.5rem] sm:max-w-[23.5rem] lg:max-w-[21.5rem] mx-auto self-start">

@@ -33,7 +33,7 @@ function IdeaSection({ stackId, repoUrl }) {
     if (!user) return;
     const unsub = listenToIdeas(stackId, setIdeas, state.sortBy, state.filterBy);
     return unsub;
-  }, [user, state.filterBy, state.sortBy]);
+  }, [user, state.filterBy, state.sortBy, stackId, listenToIdeas]);
 
   return (
     <section className="mt-6 max-w-[50rem] overflow-hidden sm:mt-12 lg:mt-0 lg:w-8/12">
