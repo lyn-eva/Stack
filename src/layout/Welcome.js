@@ -61,12 +61,12 @@ function Welcome() {
           initial={{ x: -500, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.7 }}
-          className="mt-12 items-center gap-6 sm:mt-16 sm:flex lg:mt-24"
+          className="mt-12 sm:items-center gap-6 sm:mt-16 sm:flex lg:mt-24"
         >
           <motion.p className="text-gradient bg-gradient-to-b font-roboto text-xl font-medium">
             Start from today
           </motion.p>
-          <div className="mt-4 sm:mt-0">
+          <div className="mt-4 sm:mt-0 flex items-center">
             <motion.span
               animate={{ x: [5, -5, 5] }}
               transition={{ repeat: Infinity, repeatDelay: 0.3, duration: 1 }}

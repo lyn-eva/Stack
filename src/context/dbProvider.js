@@ -21,7 +21,6 @@ export const useDB = () => useContext(dbCtx);
 
 const metadata = () => ({ created: serverTimestamp(), modified: serverTimestamp() });
 
-
 function DbProvider({ children }) {
   const { getUser, user, db } = useAuth();
 
@@ -41,13 +40,13 @@ function DbProvider({ children }) {
     });
   };
 
-  const listenToIdeas = (stackId, setIdeas, sort = "created", filter = { key: "level", value: -1 }) => {
+  const listenToIdeas = (stackId, setIdeas, sortBy, filterBy) => {
     const path = query(
       collection(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas"),
-      filter.value >= 0
-        ? where(filter.key, "==", filter.value)
-        : (orderBy(sort, "desc"), where("checked", "==", false))
+      where(filterBy.key, "==", filterBy.value),
+      orderBy(sortBy, "desc")
     );
+
     return onSnapshot(path, (snapshot) => {
       const ideas = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setIdeas(ideas);

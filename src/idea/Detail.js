@@ -43,7 +43,7 @@ const reducer = (state, action) => {
 function Detail({ idea, handleExpand, stackId, isForm = false }) {
   const initialForm = {
     title: idea?.title ?? "",
-    title_uppercase: idea?.title.toUpperCase() ?? "",
+    title_cap: idea?.title.toUpperCase() ?? "",
     description: idea?.description ?? "",
     level: idea?.level ?? 0,
     location: idea?.location ?? {},
@@ -114,8 +114,8 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
         <hr />
         <div className='flex flex-col-reverse sm:flex-row justify-between sm:items-center mt-2'>
           <div className="flex gap-5 sm:text-t-lg mt-2 sm:mt-0">
-            <button onClick={handleSave} className="text-green-500">
-              save changes{" "}
+            <button onClick={handleSave} className="text-green-500 flex items-center">
+              save changes
               <Icon
                 style={{ marginTop: "-2px" }}
                 icon="ant-design:check-outlined"
@@ -123,9 +123,9 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
             </button>
             <button
               onClick={handleExpand}
-              className="text-red-500"
+              className="text-red-500 flex gap-1 items-center"
             >
-              cancel{" "}
+              cancel
               <Icon style={{ marginTop: "-1px" }} icon="akar-icons:cross" />
             </button>
           </div>

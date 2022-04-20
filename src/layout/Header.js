@@ -22,7 +22,7 @@ function Header({ loggedIn }) {
         </div>
         {loggedIn && (
           <Button onClick={handleSingOut}>
-            Go to Login{" "}
+            Go to Login
             <Icon width={20} icon="bi:arrow-right-short" />
           </Button>
         )}

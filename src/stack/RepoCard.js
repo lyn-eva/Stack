@@ -20,10 +20,10 @@ export function RepoCard({ repoName, variant, expand }) {
       </motion.div>
       <button
         className={`absolute bottom-2 right-4 text-white ${
-          expand ? "icomoon-free:shrink2" : "fa:expand"
+          expand ? "" : "bottom-4"
         }`}
       >
-        <Icon icon={"icomoon-free:shrink2"} />
+        <Icon icon={expand ? "icomoon-free:shrink2" : "fa:expand"} />
       </button>
     </>
   );

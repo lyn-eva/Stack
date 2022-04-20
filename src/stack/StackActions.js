@@ -7,7 +7,7 @@ import Button from "../utility/Button";
 import { Icon } from "@iconify/react";
 import Modal from "../utility/Modal";
 
-const iconifyStyle = { "width": "14", style: { marginLeft: ".5rem" } };
+const iconifyStyle = { width: "14", style: { marginLeft: ".5rem" } };
 
 const btnStyle = {
   padding: ".05em 8px",
@@ -33,7 +33,7 @@ const reducer = (state, action) => {
     case "FILTER":
       return { ...state, sortIsActive: false, filterIsActive: !state.filterIsActive };
     case "DELETE":
-      return { ...state, deleteIsActive: !state.deleteIsActive }; 
+      return { ...state, deleteIsActive: !state.deleteIsActive };
     default:
       return state;
   }
@@ -43,7 +43,7 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
   const [toggleStates, dispatchToggle] = useReducer(reducer, {});
   const navigate = useNavigate();
   const { deleteStack } = useDB();
-  const {repoUrl} = useRepo(); //
+  const { repoUrl } = useRepo(); //
 
   const handleDelete = async () => {
     await deleteStack(stackId);
@@ -52,16 +52,16 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
 
   const addSort = (value) => {
     return () => {
-      dispatch({type: 'SORT', value: value})
-    }
-  }
+      dispatch({ type: "SORT", value: value });
+    };
+  };
 
-  const addFilter = (value, type='level') => {
+  const addFilter = (value, type = "level") => {
     return () => {
-      console.log(type, value)
-      dispatch({type: 'FILTER', value: {key: type, value: value}})
-    }
-  }
+      console.log(type, value);
+      dispatch({ type: "FILTER", value: { key: type, value: value } });
+    };
+  };
 
   return (
     <>
@@ -71,7 +71,7 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
             target="_blank"
             rel="noreferrer"
             href={repoUrl}
-            className="inline-block bg-white font-roboto text-t-sm font-medium sm:text-t-md lg:text-t-lg"
+            className="flex items-center bg-white font-roboto text-t-sm font-medium sm:text-t-md lg:text-t-lg"
             style={btnStyle}
           >
             go to repo
@@ -85,7 +85,7 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
           </Button>
         </li>
         <li className="relative shrink-0">
-          <Button onClick={() => dispatchToggle({type: 'FILTER', })} style={btnStyle}>
+          <Button onClick={() => dispatchToggle({ type: "FILTER" })} style={btnStyle}>
             filter
             <Icon icon="bytesize:filter" {...iconifyStyle} />
           </Button>
@@ -93,7 +93,7 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
             variants={variant}
             initial="shrink"
             animate={toggleStates.filterIsActive ? "expand" : "shrink"}
-            onClick={() => dispatchToggle({type: 'FILTER'})}
+            onClick={() => dispatchToggle({ type: "FILTER" })}
             className="absolute top-8 whitespace-nowrap rounded-sm bg-white py-1  shadow-md"
           >
             <li onClick={addFilter(2)} {...optionProps}>
@@ -105,16 +105,16 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
             <li onClick={addFilter(0)} {...optionProps}>
               trivial
             </li>
-            <li onClick={addFilter(true, 'checked')} {...optionProps}>
+            <li onClick={addFilter(true, "checked")} {...optionProps}>
               completed
             </li>
-            <li onClick={addFilter(-1)} {...optionProps}>
+            <li onClick={addFilter(false, 'checked')} {...optionProps}>
               remove filter
             </li>
           </motion.ul>
         </li>
         <li className="relative shrink-0">
-          <Button onClick={() => dispatchToggle({type: 'SORT'})} style={btnStyle}>
+          <Button onClick={() => dispatchToggle({ type: "SORT" })} style={btnStyle}>
             sort
             <Icon icon="cil:sort-descending" {...iconifyStyle} />
           </Button>
@@ -122,7 +122,7 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
             variants={variant}
             initial="shrink"
             animate={toggleStates.sortIsActive ? "expand" : "shrink"}
-            onClick={() => dispatchToggle({type: 'SORT'})}
+            onClick={() => dispatchToggle({ type: "SORT" })}
             className="absolute top-8 rounded-sm bg-white py-1 shadow-md"
           >
             <li onClick={addSort("level")} {...optionProps}>
@@ -131,17 +131,17 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
             <li onClick={addSort("created")} {...optionProps}>
               latest
             </li>
-            <li onClick={addSort("title_uppercase")} {...optionProps}>
+            <li onClick={addSort("title_cap")} {...optionProps}>
               alphabetically
             </li>
           </motion.ul>
         </li>
         <li className="shrink-0  sm:ml-auto">
           <Button
-            onClick={() =>  dispatchToggle({type: 'DELETE'})}
+            onClick={() => dispatchToggle({ type: "DELETE" })}
             style={{ ...btnStyle, backgroundColor: "#f00", color: "#fff" }}
           >
-            <span className="hidden sm:inline">Delete</span>{" "}
+            <span className="hidden sm:inline">Delete</span>
             <Icon style={{ marginTop: "-1px" }} icon="ion:trash-outline" />
           </Button>
         </li>
@@ -150,7 +150,7 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
         {toggleStates.deleteIsActive && (
           <Modal
             handleDelete={handleDelete}
-            handleToggle={() =>  dispatchToggle({type: 'DELETE'})}
+            handleToggle={() => dispatchToggle({ type: "DELETE" })}
           />
         )}
       </AnimatePresence>

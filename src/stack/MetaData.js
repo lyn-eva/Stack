@@ -3,8 +3,6 @@ import {Icon} from "@iconify/react"
 import { getLastModified } from "../utility/datetime";
 
 function MetaData({ hdr, createdAt, updatedAt, pushedAt, expand, variant }) {
-  console.log('rerenderd', expand)
-
   return (
     <>
       <button className="absolute right-5 top-1 ml-4 opacity-0 group-hover:opacity-100 sm:top-4">
@@ -22,17 +20,17 @@ function MetaData({ hdr, createdAt, updatedAt, pushedAt, expand, variant }) {
       >
         <hr />
         <p className="my-2 mt-4 font-semibold">
-          created at :{" "}
-          <span className="ml-1 font-normal">{getLastModified(createdAt)}</span>
+          created at :
+          <span className="ml-2 font-normal">{getLastModified(createdAt)}</span>
         </p>
         <p className="my-2 font-semibold">
-          updated at :{" "}
-          <span className="ml-1 font-normal">{getLastModified(updatedAt)}</span>
+          updated at :
+          <span className="ml-2 font-normal">{getLastModified(updatedAt)}</span>
         </p>
         {pushedAt && (
           <p className="font-semibold">
-            pushed at :{" "}
-            <span className="ml-1 font-normal">{getLastModified(pushedAt)}</span>
+            pushed at :
+            <span className="ml-2 font-normal">{getLastModified(pushedAt)}</span>
           </p>
         )}
       </motion.div>

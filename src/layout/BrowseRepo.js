@@ -31,6 +31,7 @@ function BrowseRepo({ stackId, setBrowseRepo }) {
     })();
   }, []);
 
+  console.log(repos)
   const handleAddRepo = (repo, url) => {
     return async () => {
       await createStack(repo, url);
@@ -45,7 +46,7 @@ function BrowseRepo({ stackId, setBrowseRepo }) {
       </h3>
       <hr />
       {!repos.length && <LoadingSpinner />}
-      <ul className="list relative list-outside list-decimal">
+      <ul className="list relative">
         {repos.length > 0 &&
           repos.map((repo, idx) => (
             <RepoItem
