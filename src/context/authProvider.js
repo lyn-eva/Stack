@@ -30,9 +30,7 @@ function AuthProvider({ children }) {
   const PopupSignIn = async () => {
     const result = await signInWithPopup(auth, provider);
     const credential = GithubAuthProvider.credentialFromResult(result);
-    return updateDoc(doc(db, "users", result.user.reloadUserInfo.screenName), {
-      token: credential.accessToken,
-    }); // update github access token
+    return {token: credential.accessToken, userdata: result.user};
   };
 
   const SignOut = () => {

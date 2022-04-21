@@ -118,12 +118,12 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
           <div className='mt-2 mb-2 flex gap-5 text-t-md sm:mb-0 sm:mt-0 sm:text-t-lg'>
             <button
               onClick={handleSave}
-              className='flex items-center gap-1 whitespace-nowrap text-green-500'
+              className='flex items-center gap-1 whitespace-nowrap text-green-500 hover:text-u-green'
             >
               save changes
               <Icon className='mt-1' icon='ant-design:check-outlined' />
             </button>
-            <button onClick={handleExpand} className='flex items-center gap-1 text-red-500'>
+            <button onClick={handleExpand} className='flex items-center gap-1 text-red-500 hover:text-u-red'>
               cancel
               <Icon className='mt-1' icon='akar-icons:cross' />
             </button>
@@ -137,8 +137,8 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
             </p>
           </div>
         </div>
-        <button onClick={handleDelete} className='absolute top-3 right-5'>
-          <Icon className='h-4 w-4 text-[#f00] 2xl:h-5 2xl:w-5' icon='fa6-solid:trash-can' />
+        <button onClick={handleDelete} className='absolute top-4 right-5'>
+          <Icon className='h-4 w-4 text-red-600 hover:text-u-red 2xl:h-5 2xl:w-5' icon='fa6-solid:trash-can' />
         </button>
       </motion.div>
     </>

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 const options = [
   { color: "bg-green-600", level: "trivial" },
   { color: "bg-blue-700", level: "moderate" },
-  { color: "bg-red-700", level: "urgent" },
+  { color: "bg-red-600", level: "urgent" },
 ];
 
 function Levels({ initial, dispatchForm }) {

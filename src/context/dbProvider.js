@@ -14,7 +14,8 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
-  writeBatch
+  writeBatch,
+  arrayUnion
 } from "firebase/firestore";
 const dbCtx = createContext({});
 export const useDB = () => useContext(dbCtx);
@@ -59,22 +60,37 @@ function DbProvider({ children }) {
     return getDocs(collection(db, 'users', user.reloadUserInfo.screenName, 'stacks'));
   }
 
-  const createUser = async () => {
-    const user = getUser(); //
-    const path = doc(db, "users", user.reloadUserInfo.screenName);
-    const alreadyExist = await getDoc(path);
-    if (alreadyExist.exists()) return;
-    return setDoc(doc(db, path), {
-      username: user.displayName,
-      ...metadata(),
+  const createUser = async ({ token, userdata }) => {
+    const path = doc(db, 'users', userdata.uid);
+    const data = { token: token, name: userdata.displayName, username: userdata.reloadUserInfo.screenName };
+    if (await userExists(userdata.uid)) {
+      return updateUserInfo(path, data)
+    }
+    const create_user = setDoc(path, {...data, ...metadata()});
+    return Promise.all([ create_user, updateUserList(userdata.uid)]);
+  };
+  
+  const userExists = async (uid) => {
+    const users = await getDoc(doc(db, 'metadata', 'existing_users'));
+    return users.data().user_ids.includes(uid);
+  };
+  
+  const updateUserList = async (uid) => {
+    return await updateDoc(doc(db, 'metadata', 'existing_users'), {
+      user_ids: arrayUnion(uid),
     });
   };
 
+  const updateUserInfo = async (path, userData) => {
+    return updateDoc(path, {...userData, modified: serverTimestamp()});
+  }
+  
   const getUserInfo = () => {
     const path = doc(db, 'users', user.reloadUserInfo.screenName);
     return getDoc(path)
   }
 
+ 
   const createStack = async (repo, url) => {
     const path = collection(db, "users", user.reloadUserInfo.screenName, "stacks");
     return addDoc(path, { name: repo, url: url, ...metadata() });

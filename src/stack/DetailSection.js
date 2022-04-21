@@ -19,7 +19,7 @@ function DetailSection({ stackId }) {
   }, [user]);
 
   return (
-    <section className="sm:flex sm:gap-6 lg:block lg:max-w-[21.5rem]">
+    <section className="sm:flex sm:gap-6 lg:block lg:max-w-[21.5rem] lg:sticky top-4 h-fit">
       <EnhancedDetailCard
         Render={RepoCard}
         props={{ repoName: stack.name }}

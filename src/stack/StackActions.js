@@ -7,8 +7,6 @@ import Button from '../utility/Button';
 import { Icon } from '@iconify/react';
 import Modal from '../utility/Modal';
 
-const iconifyStyle = { width: '14', style: { marginLeft: '.5rem' } };
-
 const btnStyle = {
   padding: '.05em 8px',
   borderRadius: '.2em',
@@ -65,7 +63,7 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
 
   return (
     <>
-      <ul id='stack-actions' className='mb-6 mt-4 flex flex-wrap gap-1 sm:mb-8 sm:gap-4'>
+      <ul id='stack-actions' className='mb-6 mt-4 flex items-center flex-wrap gap-1 sm:mb-8 sm:gap-4'>
         <li className='shrink-0'>
           <a
             target='_blank'
@@ -75,19 +73,19 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
             style={btnStyle}
           >
             go to repo
-            <Icon icon='ri:git-repository-line' {...iconifyStyle} />
+            <Icon icon='ri:git-repository-line' className='w-4 ml-2' />
           </a>
         </li>
         <li className='shrink-0'>
           <Button onClick={() => setAddIdea((prev) => !prev)} style={btnStyle}>
             new idea
-            <Icon icon='ant-design:plus-outlined' {...iconifyStyle} />
+            <Icon icon='ant-design:plus-outlined' className='w-4' />
           </Button>
         </li>
         <li className='relative shrink-0'>
           <Button onClick={() => dispatchToggle({ type: 'FILTER' })} style={btnStyle}>
             filter
-            <Icon icon='bytesize:filter' {...iconifyStyle} />
+            <Icon icon='bytesize:filter' className='w-4' />
           </Button>
           <motion.ul
             variants={variant}
@@ -111,7 +109,7 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
         <li className='relative shrink-0'>
           <Button onClick={() => dispatchToggle({ type: 'SORT' })} style={btnStyle}>
             sort
-            <Icon icon='cil:sort-descending' {...iconifyStyle} />
+            <Icon icon='cil:sort-descending' className='w-4' />
           </Button>
           <motion.ul
             variants={variant}
@@ -132,13 +130,13 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
             ))}
           </motion.ul>
         </li>
-        <li className='shrink-0  sm:ml-auto'>
+        <li className='shrink-0 sm:ml-auto'>
           <Button
             onClick={() => dispatchToggle({ type: 'DELETE' })}
             style={{ ...btnStyle, backgroundColor: '#f00', color: '#fff' }}
           >
             <span className='hidden sm:inline'>Delete</span>
-            <Icon className='my-[3px] sm:ml-1' icon='ion:trash-outline' />
+            <Icon className='my-[3px]' icon='lucide:trash-2' />
           </Button>
         </li>
       </ul>

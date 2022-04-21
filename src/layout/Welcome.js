@@ -11,13 +11,13 @@ const middle = {
 };
 
 function Welcome() {
-  const { createUser } = useDB();
+  const { createUser, updateUserInfo } = useDB();
   const { PopupSignIn } = useAuth();
   const navigate = useNavigate();
 
   const handleGithubSignIn = async () => {
-    await PopupSignIn();
-    await createUser();
+    const result = await PopupSignIn();
+    await createUser(result);
     navigate("../home");
   };
 
@@ -72,10 +72,10 @@ function Welcome() {
               transition={{ repeat: Infinity, repeatDelay: 0.3, duration: 1 }}
               className="mr-6 inline-block"
             >
-              <Icon icon="bi:arrow-right" width={26} style={{ color: "#fff" }} />
+              <Icon icon="bi:arrow-right" className='w-8 h-8 text-white' />
             </motion.span>
             <Button onClick={handleGithubSignIn}>
-              <Icon icon="akar-icons:github-fill" style={{ marginRight: "1rem" }} />
+              <Icon icon="akar-icons:github-fill" className='mr-2 lg:w-5 lg:h-5 lg:my-1' />
               Login with GITHUB
             </Button>
           </div>

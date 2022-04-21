@@ -16,6 +16,9 @@ module.exports = {
         "g-pale-green": "#39DBAA",
         "g-light-green": "#00FF29",
         "text-gray": "#a6a6a6",
+        "u-red": "#f00",
+        "u-green": "#0f0",
+        "u-blue": "#00f",
       },
       fontFamily: {
         "open-sans": ["Open Sans", "Roboto", "sans-serif"],

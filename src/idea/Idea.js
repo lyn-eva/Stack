@@ -4,7 +4,7 @@ import { useDB } from '../context/dbProvider';
 import Location from './Location';
 import Detail from './Detail';
 
-const options = ['bg-green-600', 'bg-blue-700', 'bg-red-700'];
+const options = ["bg-green-500", "bg-u-blue", "bg-u-red"];
 
 function Idea({ idx, idea, stackId }) {
   const [expand, setExpand] = useState(false);

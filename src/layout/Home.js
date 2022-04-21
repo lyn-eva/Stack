@@ -19,7 +19,7 @@ function Home() {
     if (!user) return;
     const unsub = listenToStacks(setStacks);
     return unsub;
-  }, [user]);
+  }, [user, listenToStacks]);
 
   return (
     <main className="mb-8 mt-[3vw]">
@@ -29,9 +29,8 @@ function Home() {
             Browse Repo
             <Icon
               icon="fe:search"
-              // data-width="20"
               flip="horizontal"
-              style={{ marginLeft: ".5rem" }}
+              className='ml-2'
             />
           </Button>
           {browseRepo && <BrowseRepo setBrowseRepo={setBrowseRepo} />}
@@ -40,9 +39,8 @@ function Home() {
           <Button onClick={() => setShrink((prev) => !prev)}>
             Shrink all
             <Icon
-              icon="lucide:shrink"
-              // data-width="20"
-              style={{ marginLeft: ".5rem" }}
+              icon={shrink ? "lucide:expand" : "lucide:shrink"}
+              className='ml-2'
             />
           </Button>
         </li>
