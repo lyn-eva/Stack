@@ -26,7 +26,7 @@ const metadata = () => ({ created: serverTimestamp(), modified: serverTimestamp(
 
 function DbProvider({ children }) {
   const { getUser, user, db } = useAuth();
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
     if (!user) return;
@@ -75,7 +75,8 @@ function DbProvider({ children }) {
 
   const createUser = async ({ token, userdata }) => {
     const path = doc(db, 'users', userdata.uid);
-    const data = { token: token, name: userdata.displayName, username: userdata.reloadUserInfo.screenName };
+    console.log(userdata)
+    const data = { token: token, name: userdata.displayName, username: userdata.reloadUserInfo.screenName, photoURL: userdata.photoURL };
     if (await userExists(userdata.uid)) {
       return updateUserInfo(path, data)
     }

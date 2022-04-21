@@ -1,7 +1,7 @@
 const options = ['bg-green-600', 'bg-u-blue', 'bg-[#fa0505]'];
 
 function Dues({ dues }) {
-  <ul className='mt-3 text-black'>
+  return <ul className='mt-3 text-black'>
     {!dues?.length && <p className='mt-5 text-center text-text-gray'>there's no due :)</p>}
     {dues?.map(({ id, level, title }) => (
       <div

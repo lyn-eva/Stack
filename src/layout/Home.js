@@ -19,7 +19,7 @@ function Home() {
     if (!user) return;
     const unsub = listenToStacks(setStacks);
     return unsub;
-  }, [user?.uid, user, listenToStacks]);
+  }, [user, listenToStacks]);
 
   return (
     <main className="mb-8 mt-[3vw]">
