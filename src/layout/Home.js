@@ -19,7 +19,7 @@ function Home() {
     if (!user) return;
     const unsub = listenToStacks(setStacks);
     return unsub;
-  }, [user, listenToStacks]);
+  }, [user?.uid, user, listenToStacks]);
 
   return (
     <main className="mb-8 mt-[3vw]">
@@ -30,7 +30,7 @@ function Home() {
             <Icon
               icon="fe:search"
               flip="horizontal"
-              className='ml-2'
+              className='lg:ml-2'
             />
           </Button>
           {browseRepo && <BrowseRepo setBrowseRepo={setBrowseRepo} />}
@@ -40,7 +40,7 @@ function Home() {
             Shrink all
             <Icon
               icon={shrink ? "lucide:expand" : "lucide:shrink"}
-              className='ml-2'
+              className='lg:ml-2'
             />
           </Button>
         </li>

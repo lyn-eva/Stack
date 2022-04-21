@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "./authProvider";
 import {
   serverTimestamp,
@@ -26,9 +26,20 @@ const metadata = () => ({ created: serverTimestamp(), modified: serverTimestamp(
 
 function DbProvider({ children }) {
   const { getUser, user, db } = useAuth();
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+    if (!user) return;
+    const unsub = onSnapshot(doc(db, 'users', user.uid), snapshot => {
+      setUserInfo(snapshot.data())
+    });
+  
+    return unsub
+  }, [user])
+  
 
   const listenToStacks = (setStacks) => {
-    const q = query(collection(db, "users", user.reloadUserInfo.screenName, "stacks"), orderBy("created"));
+    const q = query(collection(db, "users", user.uid, "stacks"), orderBy("created"));
     return onSnapshot(q, snapshot => {
       const ideas = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setStacks(ideas);
@@ -36,16 +47,18 @@ function DbProvider({ children }) {
   };
   
   const listenToStack = (stackId, setStack) => {
-    const q = doc(db, "users", user.reloadUserInfo.screenName, "stacks", stackId);
+    console.log(user.uid)
+    const q = doc(db, "users", user.uid, "stacks", stackId);
     return onSnapshot(q, (snapshot) => {
       const stack = { id: snapshot.id, ...snapshot.data() };
+      console.log(stack)
       setStack(stack);
     });
   };
 
   const listenToIdeas = (stackId, setIdeas, sortBy = 'created', filterBy = DEFAULT_FILTER) => {
     const path = query(
-      collection(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas"),
+      collection(db, "users", user.uid, "stacks", stackId, "ideas"),
       where(filterBy.key, "==", filterBy.value),
       orderBy(sortBy, "desc")
     );
@@ -57,7 +70,7 @@ function DbProvider({ children }) {
   };
 
   const getStacks = () => {
-    return getDocs(collection(db, 'users', user.reloadUserInfo.screenName, 'stacks'));
+    return getDocs(collection(db, 'users', user.uid, 'stacks'));
   }
 
   const createUser = async ({ token, userdata }) => {
@@ -85,58 +98,57 @@ function DbProvider({ children }) {
     return updateDoc(path, {...userData, modified: serverTimestamp()});
   }
   
-  const getUserInfo = () => {
-    const path = doc(db, 'users', user.reloadUserInfo.screenName);
-    return getDoc(path)
-  }
+  // const getUserInfo = () => {
+  //   const path = doc(db, 'users', user.uid);
+  //   return getDoc(path)
+  // }
 
- 
   const createStack = async (repo, url) => {
-    const path = collection(db, "users", user.reloadUserInfo.screenName, "stacks");
+    const path = collection(db, "users", user.uid, "stacks");
     return addDoc(path, { name: repo, url: url, ...metadata() });
   };
 
   const updateStack = (stackId, new_data) => {
-    const path = doc(db, "users", user.reloadUserInfo.screenName, "stacks", stackId);
+    const path = doc(db, "users", user.uid, "stacks", stackId);
     return updateDoc(path, new_data);
   };
   
   const createIdea = (stackId, new_data) => {
-    const path = collection(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas");
+    const path = collection(db, "users", user.uid, "stacks", stackId, "ideas");
     return addDoc(path, { ...new_data, ...metadata() });
   };
   
   const updateIdea = async (stackId, id, new_data) => {
-    const path = doc(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas", id);
+    const path = doc(db, "users", user.uid, "stacks", stackId, "ideas", id);
     const updated_idea = updateDoc(path, { ...new_data, modified: serverTimestamp() });
     await updateStack(stackId, { modified: serverTimestamp() })
     return updated_idea;
   };
   
   const deleteIdea = async (stackId, id) => {
-    const path = doc(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas", id);
+    const path = doc(db, "users", user.uid, "stacks", stackId, "ideas", id);
     await updateStack(stackId, { modified: serverTimestamp() })
     return deleteDoc(path);
   }
   
   const deleteStack = async (stackId, rootBatch) => {
     const batch = rootBatch ?? writeBatch(db);
-    const ideas = await getDocs(collection(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas"));
-    ideas.forEach(idea => batch.delete(doc(db, "users", user.reloadUserInfo.screenName, "stacks", stackId, "ideas", idea.id))); //delete nested ideas
-    batch.delete(doc(db, "users", user.reloadUserInfo.screenName, "stacks", stackId)) // delete stack root path
+    const ideas = await getDocs(collection(db, "users", user.uid, "stacks", stackId, "ideas"));
+    ideas.forEach(idea => batch.delete(doc(db, "users", user.uid, "stacks", stackId, "ideas", idea.id))); //delete nested ideas
+    batch.delete(doc(db, "users", user.uid, "stacks", stackId)) // delete stack root path
     await updateStack(stackId, { modified: serverTimestamp() })
     return rootBatch ? null : batch.commit();
   }
   
   const deleteUser = async () => {
     const batch = writeBatch(db);
-    const stacks = await getDocs(collection(db, "users" + user.reloadUserInfo.screenName + "stacks"));
+    const stacks = await getDocs(collection(db, "users" + user.uid + "stacks"));
     await Promise.all(stacks.map(stack => deleteStack(stack.id, batch))) // delete nested stacks
-    batch.delete(doc(db, "users", user.reloadUserInfo.screenName)); // delete user root path
+    batch.delete(doc(db, "users", user.uid)); // delete user root path
     return batch.commit();
   }
 
-  const value = { createUser, getUserInfo, createStack, createIdea, updateIdea, deleteIdea, listenToStacks, listenToIdeas, listenToStack, deleteStack, deleteUser, getStacks };
+  const value = { createUser, userInfo, createStack, createIdea, updateIdea, deleteIdea, listenToStacks, listenToIdeas, listenToStack, deleteStack, deleteUser, getStacks };
   return <dbCtx.Provider value={value}>{children}</dbCtx.Provider>;
 }
 

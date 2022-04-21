@@ -24,7 +24,7 @@ function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (res) => setUser(res));
-    return unsub();
+    return unsub;
   }, []);
 
   const PopupSignIn = async () => {

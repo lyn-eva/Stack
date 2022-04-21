@@ -36,7 +36,7 @@ function RepoFrame({ name, onClick }) {
           <img
             onClick={onClick}
             className="w-full rounded-md cursor-pointer"
-            src={`https://opengraph.githubassets.com/${name}/${username}/${name}`}
+            src={`https://opengraph.githubassets.com/${Math.round(Math.random()*100000)}/${username}/${name}`}
             alt={name}
           />
           <Tags langs={langs} />

@@ -1,11 +1,13 @@
 import { useNavigate, useLocation } from "react-router";
-import { useAuth } from "../context/authProvider";
-import Button from "../utility/Button";
 import { Icon } from "@iconify/react";
+import { useAuth } from "../context/authProvider";
+import { useDB } from '../context/dbProvider';
+import Button from "../utility/Button";
 import logo from "../asset/logo.svg"
 
 function Header({ loggedIn }) {
   const { SignOut } = useAuth();
+  const { userInfo } = useDB();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -23,13 +25,13 @@ function Header({ loggedIn }) {
         {loggedIn && (
           <Button onClick={handleSingOut}>
             Go to Login
-            <Icon className='w-6 h-6' icon="bi:arrow-right" />
+            <Icon className='w-5 h-5' icon="bi:arrow-right" />
           </Button>
         )}
       </header>
       {loggedIn && /\/home$/.test(location.pathname) && (
         <section className="text-2xl sm:text-3xl my-6 sm:my-8 sm:mb-10 lg:my-8 lg:mb-12 font-open-sans lg:text-5xl text-center text-gradient">
-          Good Evening, Naomi!!
+          Good Evening, {userInfo?.name}
         </section>
       )}
     </>

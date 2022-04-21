@@ -7,7 +7,7 @@ function RepoItem({ id, name, url, idx, added, handleAddRepo }) {
     <li className="mt-1 flex list-outside list-decimal items-center justify-between gap-3 border-b-[1px] border-[#ffffff70] pt-2 pb-1">
       <p className="truncate flex items-center">
         <span className="mr-2 text-lg">{idx + 1}.</span>
-        <Icon style={{ marginRight: ".8rem" }} width={23} icon="ri:git-repository-line" />
+        <Icon className='h-5 w-5 mr-3' icon="ri:git-repository-line" />
         {name}
       </p>
       {added ? (
