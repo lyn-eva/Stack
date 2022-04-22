@@ -31,7 +31,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         title: action.value,
-        title_uppercase: action.value.toUpperCase(),
+        titleUC: action.value.toUpperCase(),
       };
     case 'DESCRIPTION':
       return { ...state, description: action.value };
@@ -62,8 +62,8 @@ function Detail({ idea, handleExpand, stackId, isForm = false }) {
   const created = getLastModified(idea?.created.toMillis());
 
   const handleSave = () => {
+    handleExpand();
     isForm ? createIdea(stackId, formState) : updateIdea(stackId, idea.id, formState);
-    handleExpand(); // set to false
   };
 
   const handleDelete = () => {

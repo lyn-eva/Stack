@@ -1,45 +1,42 @@
-import { useEffect, useState } from "react";
-import { useAuth } from "../context/authProvider";
-import Wrapper from "../utility/Wrapper";
-
-const Tags = ({ langs }) => (
-  <div className="p-2 flex gap-3 items-center text-black">
-    {langs?.map((lang) => (
-      <span key={lang} className="text-t-sm sm:text-t-md bg-white px-2 rounded-sm">
-        {lang}
-      </span>
-    ))}
-  </div>
-);
+import { useEffect, useState } from 'react';
+import { useDB } from '../context/dbProvider';
+import Wrapper from '../utility/Wrapper';
 
 function RepoFrame({ name, onClick }) {
   const [langs, setLangs] = useState([]);
-  const { user } = useAuth();
-  const username = user?.reloadUserInfo.screenName;
-
+  const { userInfo } = useDB();
+  
   useEffect(() => {
-    if (!name || !username) return;
+    if (!name || !userInfo.username) return;
     (async () => {
       //IIFE
       const raw = await fetch(
-        `https://api.github.com/repos/${username}/${name}/languages`
+        `https://api.github.com/repos/${userInfo.username}/${name}/languages`
       );
       const languages = await raw.json();
       setLangs(Object.keys(languages));
     })();
-  }, [username, name]);
+  }, [userInfo, name]);
 
   return (
     <>
-      {name && username && (
-        <Wrapper className="shadow-l2 max-w-[24.5rem]">
+      {name && userInfo.username && (
+        <Wrapper className='max-w-[24.5rem] shadow-l2'>
           <img
             onClick={onClick}
-            className="w-full rounded-md cursor-pointer"
-            src={`https://opengraph.githubassets.com/${Math.round(Math.random()*100000)}/${username}/${name}`}
+            className='w-full cursor-pointer rounded-md'
+            src={`https://opengraph.githubassets.com/${Math.round(Math.random() * 100000)}/${
+              userInfo.username
+            }/${name}`}
             alt={name}
           />
-          <Tags langs={langs} />
+          <div className='flex items-center gap-3 p-2 text-black'>
+            {langs?.map((lang) => (
+              <span key={lang} className='rounded-sm bg-white px-2 text-t-sm sm:text-t-md'>
+                {lang}
+              </span>
+            ))}
+          </div>
         </Wrapper>
       )}
     </>

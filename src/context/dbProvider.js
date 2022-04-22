@@ -15,7 +15,8 @@ import {
   updateDoc,
   deleteDoc,
   writeBatch,
-  arrayUnion
+  arrayUnion,
+  increment,
 } from "firebase/firestore";
 const dbCtx = createContext({});
 export const useDB = () => useContext(dbCtx);
@@ -25,7 +26,7 @@ const DEFAULT_FILTER ={ key: 'checked', value: false}
 const metadata = () => ({ created: serverTimestamp(), modified: serverTimestamp() });
 
 function DbProvider({ children }) {
-  const { getUser, user, db } = useAuth();
+  const { user, db } = useAuth();
   const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
@@ -35,8 +36,7 @@ function DbProvider({ children }) {
     });
   
     return unsub
-  }, [user])
-  
+  }, [user, db]);
 
   const listenToStacks = (setStacks) => {
     const q = query(collection(db, "users", user.uid, "stacks"), orderBy("created"));
@@ -47,11 +47,9 @@ function DbProvider({ children }) {
   };
   
   const listenToStack = (stackId, setStack) => {
-    console.log(user.uid)
     const q = doc(db, "users", user.uid, "stacks", stackId);
     return onSnapshot(q, (snapshot) => {
       const stack = { id: snapshot.id, ...snapshot.data() };
-      console.log(stack)
       setStack(stack);
     });
   };
@@ -75,13 +73,17 @@ function DbProvider({ children }) {
 
   const createUser = async ({ token, userdata }) => {
     const path = doc(db, 'users', userdata.uid);
-    console.log(userdata)
-    const data = { token: token, name: userdata.displayName, username: userdata.reloadUserInfo.screenName, photoURL: userdata.photoURL };
+    const data = {
+      token: token,
+      name: userdata.displayName,
+      username: userdata.reloadUserInfo.screenName,
+      photoURL: userdata.photoURL,
+    };
     if (await userExists(userdata.uid)) {
-      return updateUserInfo(path, data)
+      return updateUserInfo(userdata.uid, data);
     }
-    const create_user = setDoc(path, {...data, ...metadata()});
-    return Promise.all([ create_user, updateUserList(userdata.uid)]);
+    const create_user = setDoc(path, { ...data, ...metadata(), stackCount: 0, ideaCounts: 0 });
+    return await Promise.all([create_user, updateUserList(userdata.uid)]);
   };
   
   const userExists = async (uid) => {
@@ -90,56 +92,68 @@ function DbProvider({ children }) {
   };
   
   const updateUserList = async (uid) => {
-    return await updateDoc(doc(db, 'metadata', 'existing_users'), {
+    return updateDoc(doc(db, 'metadata', 'existing_users'), {
       user_ids: arrayUnion(uid),
     });
   };
-
-  const updateUserInfo = async (path, userData) => {
-    return updateDoc(path, {...userData, modified: serverTimestamp()});
-  }
   
-  // const getUserInfo = () => {
-  //   const path = doc(db, 'users', user.uid);
-  //   return getDoc(path)
-  // }
+  const updateUserInfo = async (uid, userData) => {
+    return updateDoc(doc(db, 'users', uid), {...userData, modified: serverTimestamp()});
+  }
 
   const createStack = async (repo, url) => {
-    const path = collection(db, "users", user.uid, "stacks");
-    return addDoc(path, { name: repo, url: url, ...metadata() });
-  };
-
-  const updateStack = (stackId, new_data) => {
-    const path = doc(db, "users", user.uid, "stacks", stackId);
-    return updateDoc(path, new_data);
+    const path = collection(db, 'users', user.uid, 'stacks');
+    return await Promise.all([
+      updateUserInfo(user.uid, { ...metadata(), stackCount: increment(1) }),
+      addDoc(path, { name: repo, url: url, ...metadata() }),
+    ]);
   };
   
-  const createIdea = (stackId, new_data) => {
-    const path = collection(db, "users", user.uid, "stacks", stackId, "ideas");
-    return addDoc(path, { ...new_data, ...metadata() });
+  const updateStack = async (stackId, new_data) => {
+    const path = doc(db, 'users', user.uid, 'stacks', stackId);
+    return await Promise.all([
+      updateUserInfo(user.uid, { modified: serverTimestamp() }),
+      updateDoc(path, new_data),
+    ]);
+  };
+  
+  const createIdea = async (stackId, new_data) => {
+    const path = collection(db, 'users', user.uid, 'stacks', stackId, 'ideas');
+    return await Promise.all([
+      updateUserInfo(user.uid, { modified: serverTimestamp(), ideaCount: increment(1) }),
+      updateStack(stackId, { modified: serverTimestamp() }),
+      addDoc(path, { ...new_data, ...metadata() }),
+    ]);
   };
   
   const updateIdea = async (stackId, id, new_data) => {
-    const path = doc(db, "users", user.uid, "stacks", stackId, "ideas", id);
-    const updated_idea = updateDoc(path, { ...new_data, modified: serverTimestamp() });
-    await updateStack(stackId, { modified: serverTimestamp() })
-    return updated_idea;
+    const path = doc(db, 'users', user.uid, 'stacks', stackId, 'ideas', id);
+    return await Promise.all([
+      updateStack(stackId, { modified: serverTimestamp() }),
+      updateDoc(path, { ...new_data, modified: serverTimestamp() }),
+    ]);
   };
   
   const deleteIdea = async (stackId, id) => {
-    const path = doc(db, "users", user.uid, "stacks", stackId, "ideas", id);
-    await updateStack(stackId, { modified: serverTimestamp() })
-    return deleteDoc(path);
+    const path = doc(db, 'users', user.uid, 'stacks', stackId, 'ideas', id);
+    return await Promise.all([
+      updateUserInfo(user.uid, { ...metadata(), ideaCount: increment(-1) }),
+      updateStack(stackId, { modified: serverTimestamp() }),
+      deleteDoc(path),
+    ]);
   }
   
   const deleteStack = async (stackId, rootBatch) => {
     const batch = rootBatch ?? writeBatch(db);
-    const ideas = await getDocs(collection(db, "users", user.uid, "stacks", stackId, "ideas"));
-    ideas.forEach(idea => batch.delete(doc(db, "users", user.uid, "stacks", stackId, "ideas", idea.id))); //delete nested ideas
-    batch.delete(doc(db, "users", user.uid, "stacks", stackId)) // delete stack root path
-    await updateStack(stackId, { modified: serverTimestamp() })
+    const ideas = await getDocs(collection(db, 'users', user.uid, 'stacks', stackId, 'ideas'));
+    ideas.forEach((idea) => batch.delete(doc(db, 'users', user.uid, 'stacks', stackId, 'ideas', idea.id))); //delete nested ideas
+    batch.delete(doc(db, 'users', user.uid, 'stacks', stackId)); // delete stack root path
+    await Promise.all([
+      updateUserInfo(user.uid, { ...metadata(), stackCount: increment(-1), ideaCount: increment(-ideas.docs.length) }),
+      updateStack(stackId, { modified: serverTimestamp() }),
+    ]);
     return rootBatch ? null : batch.commit();
-  }
+  };
   
   const deleteUser = async () => {
     const batch = writeBatch(db);

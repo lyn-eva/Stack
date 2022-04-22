@@ -8,18 +8,17 @@ import RepoItem from "./RepoItem";
 function BrowseRepo({ stackId, setBrowseRepo }) {
   const [repos, setRepos] = useState([]);
   const [existingStacks, setExistingStacks] = useState([]);
-  const { user, token } = useAuth();
-  const { createStack, getStacks, getUserInfo } = useDB();
+  const { user } = useAuth();
+  const { createStack, getStacks, userInfo } = useDB();
   
   useEffect(() => {
     if (!user) return;
     (async () => {
-      const userInfo = await getUserInfo();
       const fetchRepo = fetch(
         `https://api.github.com/user/repos`,
         {
           headers: {
-            authorization: `token ${userInfo.data().token}`,
+            authorization: `token ${userInfo.token}`,
             Accept: "application/vnd.github.v3+json"
           },
         }

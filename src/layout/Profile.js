@@ -8,13 +8,13 @@ import Wrapper from '../utility/Wrapper';
 function Profile() {
   const { avatar_url, login: username, name, bio, followers, following } = useGithub();
   const {
-    userInfo: { created },
+    userInfo: { stackCount, ideaCount, modified },
   } = useDB();
+
   const { user } = useAuth();
-  // console.log(user);
 
   return (
-    <main className='mt-[5vw] md:flex md:justify-between'>
+    <main className='mt-[5vw] md:flex md:justify-between gap-8'>
       <Wrapper className='w-80 p-6 text-white'>
         <div>
           <img className='rounded-md' src={avatar_url} alt={username} />
@@ -37,19 +37,25 @@ function Profile() {
           <div>
             <p>
               <span className='font-open-sans font-semibold tracking-wide text-white mr-2'>joined :</span>
-              {getMMDDYY(user.metadata.createdAt)}
+              {getMMDDYY(user?.metadata.createdAt)}
             </p>
             <p className='mt-4'>
               <span className='font-open-sans font-semibold tracking-wide text-white mr-2'>last logged in :</span>
-              {getLastModified(user.metadata.lastLoginAt)}
+              {getLastModified(user?.metadata.lastLoginAt)}
+            </p>
+            <p className='mt-4'>
+              <span className='font-open-sans font-semibold tracking-wide text-white mr-2'>last modified :</span>
+              {getLastModified(modified?.toMillis())}
             </p>
           </div>
           <div>
             <p>
               <span className='font-open-sans font-semibold tracking-wide text-white mr-2'>number of stacks :</span>
+              {stackCount ?? 0}
             </p>
             <p className='mt-4'>
               <span className='font-open-sans font-semibold tracking-wide text-white mr-2'>number of ideas :</span>
+              {ideaCount ?? 0}
             </p>
           </div>
         </div>
