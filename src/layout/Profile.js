@@ -1,26 +1,61 @@
+import { useReducer } from 'react';
 import { Icon } from '@iconify/react';
+import { AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/authProvider';
 import { useDB } from '../context/dbProvider';
 import useGithub from '../custom-hook/useGithub';
 import { getMMDDYY, getLastModified } from '../utility/datetime';
 import Wrapper from '../utility/Wrapper';
 import Button from '../utility/Button';
+import Modal from '../utility/Modal';
+import DeleteConfirmModal from '../utility/DeleteConfirmModal';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'PROMPT':
+      return { confirm: false, prompt: action.value };
+    case 'CONFIRM':
+      return { prompt: false, confirm: action.value };
+    default:
+      return state;
+  }
+};
 
 function Profile() {
+  const [deletionState, dispatch] = useReducer(reducer, {});
   const { avatar_url, login: username, name, bio, followers, following } = useGithub();
-  const {
-    deleteUser,
-    userInfo: { stackCount, ideaCount, modified },
-  } = useDB();
+  const { deleteUserDb, userInfo } = useDB();
 
-  const { user } = useAuth();
+  const { user, DeleteUserAcc } = useAuth();
 
-  const handleAccDeletion = () => {
-    console.log(deleteUser);
+  const navigate = useNavigate();
+  const handleAccDeletion = async () => {
+    // no async
+    await deleteUserDb();
+    await DeleteUserAcc();
+    navigate('../../login');
   };
 
   return (
-    <main className='mt-[5vw] mb-10 gap-8 lg:flex lg:justify-between lg:w-10/12 lg:mx-auto'>
+    <main className='mt-[5vw] mb-10 gap-8 lg:mx-auto lg:flex lg:w-10/12 lg:justify-between'>
+      <AnimatePresence>
+        {deletionState.prompt && (
+          <Modal
+            handleToggle={() => dispatch({ type: 'PROMPT', value: false })}
+            handleDelete={() => dispatch({ type: 'CONFIRM', value: true })}
+          />
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {deletionState.confirm && (
+          <DeleteConfirmModal
+            username={username}
+            handleToggle={() => dispatch({ type: 'CONFIRM', value: false })}
+            handleDelete={handleAccDeletion}
+          />
+        )}
+      </AnimatePresence>
       <Wrapper className='p-4 text-white sm:flex sm:items-center sm:justify-between sm:gap-x-4 sm:p-6 lg:block lg:w-80'>
         <div className='sm:w-1/2 sm:max-w-[12rem] md:max-w-[15rem] lg:w-full lg:max-w-none'>
           <img className='w-full rounded-md' src={avatar_url} alt={username} />
@@ -41,7 +76,7 @@ function Profile() {
           </div>
         </div>
       </Wrapper>
-      <section className='mt-4 self-start lg:w-7/12 lg:mt-0'>
+      <section className='mt-4 self-start lg:mt-0 lg:w-7/12'>
         <Wrapper className='p-4 sm:p-6'>
           <div className='text-t-md tracking-wider text-blue-500 sm:flex sm:justify-between sm:text-t-lg'>
             <div>
@@ -61,7 +96,7 @@ function Profile() {
                 <span className='mr-2 font-open-sans font-semibold tracking-wide text-white'>
                   last modified :
                 </span>
-                {getLastModified(modified?.toMillis())}
+                {getLastModified(userInfo?.modified?.toMillis())}
               </p>
             </div>
             <div className='mt-4 sm:mt-0'>
@@ -69,19 +104,22 @@ function Profile() {
                 <span className='mr-2 font-open-sans font-semibold tracking-wide text-white'>
                   number of stacks :
                 </span>
-                {stackCount ?? 0}
+                {userInfo?.stackCount ?? 0}
               </p>
               <p className='mt-4'>
                 <span className='mr-2 font-open-sans font-semibold tracking-wide text-white'>
                   number of ideas :
                 </span>
-                {ideaCount ?? 0}
+                {userInfo?.ideaCount ?? 0}
               </p>
             </div>
           </div>
         </Wrapper>
         <div className='mt-3 flex justify-end'>
-          <Button onClick={handleAccDeletion} style={{ backgroundColor: '#f00', color: '#fff' }}>
+          <Button
+            onClick={() => dispatch({ type: 'PROMPT', value: true })}
+            style={{ backgroundColor: '#f00', color: '#fff' }}
+          >
             Delete Account
           </Button>
         </div>

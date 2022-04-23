@@ -6,9 +6,9 @@ function useGithub() {
   const { userInfo } = useDB();
 
   useEffect(() => {
-    if (!userInfo.username) return;
+    if (!userInfo?.username) return;
     (async () => {
-      const raw = await fetch(`https://api.github.com/users/${userInfo.username}`);
+      const raw = await fetch(`https://api.github.com/users/${userInfo?.username}`);
       const data = await raw.json();
       setProfileData(data);
     })();

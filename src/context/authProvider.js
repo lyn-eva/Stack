@@ -5,6 +5,7 @@ import {
   signInWithPopup,
   signOut,
   onAuthStateChanged,
+  deleteUser
 } from "firebase/auth";
 import { getFirestore, updateDoc, doc } from "@firebase/firestore";
 import app from "../firebaseConfig";
@@ -37,7 +38,11 @@ function AuthProvider({ children }) {
     return signOut(auth);
   };
 
-  const value = { PopupSignIn, SignOut, auth, getUser, user, db };
+  const DeleteUserAcc = async () => {
+    deleteUser(user);
+  }
+
+  const value = { PopupSignIn, SignOut, auth, getUser, DeleteUserAcc, user, db };
 
   return <authCtx.Provider value={value}>{children}</authCtx.Provider>;
 }

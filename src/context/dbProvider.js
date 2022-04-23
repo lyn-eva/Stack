@@ -16,6 +16,7 @@ import {
   deleteDoc,
   writeBatch,
   arrayUnion,
+  arrayRemove,
   increment,
 } from "firebase/firestore";
 const dbCtx = createContext({});
@@ -80,10 +81,11 @@ function DbProvider({ children }) {
       photoURL: userdata.photoURL,
     };
     if (await userExists(userdata.uid)) {
+      console.log('exists')
       return updateUserInfo(userdata.uid, data);
     }
     const create_user = setDoc(path, { ...data, ...metadata(), stackCount: 0, ideaCounts: 0 });
-    return await Promise.all([create_user, updateUserList(userdata.uid)]);
+    return await Promise.all([create_user, updateUserList('ADD', userdata.uid)]);
   };
   
   const userExists = async (uid) => {
@@ -91,9 +93,9 @@ function DbProvider({ children }) {
     return users.data().user_ids.includes(uid);
   };
   
-  const updateUserList = async (uid) => {
+  const updateUserList = async (type, uid) => {
     return updateDoc(doc(db, 'metadata', 'existing_users'), {
-      user_ids: arrayUnion(uid),
+      user_ids: type === 'ADD' ? arrayUnion(uid) : arrayRemove(uid),
     });
   };
   
@@ -154,16 +156,17 @@ function DbProvider({ children }) {
     ]);
     return rootBatch ? null : batch.commit();
   };
-  
-  const deleteUser = async () => {
+
+  const deleteUserDb = async () => {
     const batch = writeBatch(db);
-    const stacks = await getDocs(collection(db, "users" + user.uid + "stacks"));
-    await Promise.all(stacks.map(stack => deleteStack(stack.id, batch))) // delete nested stacks
+    const stacks = await getDocs(collection(db, "users", user.uid, "stacks"));
+    await Promise.all(stacks.docs.map(stack => deleteStack(stack.id, batch))) // delete nested stacks
     batch.delete(doc(db, "users", user.uid)); // delete user root path
+    await updateUserList('REMOVE', user.uid);
     return batch.commit();
   }
 
-  const value = { createUser, userInfo, createStack, createIdea, updateIdea, deleteIdea, listenToStacks, listenToIdeas, listenToStack, deleteStack, deleteUser, getStacks };
+  const value = { createUser, userInfo, createStack, createIdea, updateIdea, deleteIdea, listenToStacks, listenToIdeas, listenToStack, deleteStack, deleteUserDb, getStacks };
   return <dbCtx.Provider value={value}>{children}</dbCtx.Provider>;
 }
 
