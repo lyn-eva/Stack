@@ -10,7 +10,7 @@ const DeleteConfirmModal = ({ username, handleToggle, handleDelete }) => {
     if (inputRef.current.value.trim() !== username) return setIsValid(false);
     setIsValid(true);
     handleDelete();
-  }
+  };
 
   return (
     <>
@@ -23,17 +23,28 @@ const DeleteConfirmModal = ({ username, handleToggle, handleDelete }) => {
         animate={{ scale: 1, translateY: '-50%', translateX: '-55%' }}
         exit={{ scale: 0, translateY: '-50%', translateX: '-55%' }}
         transition={{ duration: 0.3 }}
-        className='fixed top-1/2 left-1/2 z-20 rounded-md bg-white px-6 py-4 sm:px-12 sm:py-8 text-black mx-4 w-11/12 max-w-[20rem]'
+        className='fixed top-1/2 left-1/2 z-20 mx-4 w-11/12 max-w-[15rem] sm:max-w-[20rem] rounded-md bg-white px-6 py-4 text-black sm:px-12 sm:py-8'
       >
-        Please type <span className='font-bold text-blue-500'>{username}</span> to delete your account.
+        Please type <span className='font-bold text-blue-500'>{username}</span> to delete your
+        account.
         <form onSubmit={proceedDeletion}>
-          <input ref={inputRef} type='text' className='mt-3 block w-full rounded outline outline-2 outline-blue-400 pl-1' />
+          <input
+            ref={inputRef}
+            type='text'
+            className='mt-3 block w-full rounded pl-1 outline outline-2 outline-blue-400'
+          />
           {isValid || <span className='text-t-md'>username are not match</span>}
           <div className='mt-5 flex justify-between gap-4 text-white'>
-            <Button type='submit' style={{ backgroundColor: '#f00', fontSize: 15, padding: '4px 10px' }}>
+            <Button
+              type='submit'
+              style={{ backgroundColor: '#f00', fontSize: 15, padding: '4px 10px' }}
+            >
               Delete
             </Button>
-            <Button onClick={handleToggle} style={{ backgroundColor: '#00f', fontSize: 15, padding: '4px 10px' }}>
+            <Button
+              onClick={handleToggle}
+              style={{ backgroundColor: '#00f', fontSize: 15, padding: '4px 10px' }}
+            >
               Cancel
             </Button>
           </div>

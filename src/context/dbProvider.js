@@ -150,10 +150,7 @@ function DbProvider({ children }) {
     const ideas = await getDocs(collection(db, 'users', user.uid, 'stacks', stackId, 'ideas'));
     ideas.forEach((idea) => batch.delete(doc(db, 'users', user.uid, 'stacks', stackId, 'ideas', idea.id))); //delete nested ideas
     batch.delete(doc(db, 'users', user.uid, 'stacks', stackId)); // delete stack root path
-    await Promise.all([
-      updateUserInfo(user.uid, { ...metadata(), stackCount: increment(-1), ideaCount: increment(-ideas.docs.length) }),
-      updateStack(stackId, { modified: serverTimestamp() }),
-    ]);
+    await updateUserInfo(user.uid, { ...metadata(), stackCount: increment(-1), ideaCount: increment(-ideas.docs.length) });
     return rootBatch ? null : batch.commit();
   };
 

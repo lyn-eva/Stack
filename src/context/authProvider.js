@@ -3,6 +3,8 @@ import {
   GithubAuthProvider,
   getAuth,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   signOut,
   onAuthStateChanged,
   deleteUser
@@ -34,6 +36,13 @@ function AuthProvider({ children }) {
     return {token: credential.accessToken, userdata: result.user};
   };
 
+  const RedirectSignIn = async () => { // aborted
+    // await signInWithRedirect(auth, provider);
+    // const result = await getRedirectResult(auth);
+    // const credential = GithubAuthProvider.credentialFromResult(result);
+    // return {token: credential.accessToken, userdata: result.user};
+  };
+
   const SignOut = () => {
     return signOut(auth);
   };
@@ -42,7 +51,7 @@ function AuthProvider({ children }) {
     deleteUser(user);
   }
 
-  const value = { PopupSignIn, SignOut, auth, getUser, DeleteUserAcc, user, db };
+  const value = { PopupSignIn, RedirectSignIn, SignOut, auth, getUser, DeleteUserAcc, user, db };
 
   return <authCtx.Provider value={value}>{children}</authCtx.Provider>;
 }
