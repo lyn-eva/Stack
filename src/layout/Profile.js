@@ -56,7 +56,7 @@ function Profile() {
           />
         )}
       </AnimatePresence>
-      <section className='mx-auto w-11/12 max-w-[24rem] sm:max-w-[48rem] lg:mx-auto lg:flex lg:w-10/12 lg:max-w-[90rem] lg:justify-between'>
+      <section className='mx-auto w-11/12 max-w-[24rem] sm:max-w-[48rem] lg:mx-auto lg:flex lg:w-9/12 lg:max-w-[90rem] lg:justify-between'>
         <Wrapper className='p-4 text-white sm:flex sm:items-center sm:justify-between sm:gap-x-4 sm:p-6 lg:block lg:w-80'>
           <div className='sm:w-1/2 sm:max-w-[12rem] md:max-w-[15rem] lg:w-full lg:max-w-none'>
             <img className='w-full rounded-md' src={avatar_url} alt={username} />

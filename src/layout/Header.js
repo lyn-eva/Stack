@@ -33,13 +33,10 @@ function Header({ loggedIn }) {
             <nav>
               <ul className='hidden sm:flex sm:items-center sm:gap-x-4 md:gap-x-6'>
                 <li>
-                  <NavLink to={`../u/${userInfo?.name}`}>
-                    <img
-                      className='h-9 w-9 rounded-full ring-2 md:h-10 md:w-10'
-                      src={userInfo?.photoURL}
-                      alt={userInfo?.username}
-                    />
-                  </NavLink>
+                  <Button onClick={() => navigate(`../u/${userInfo?.name}`)}>
+                    Profile
+                    <Icon className='w-6 h-6' icon="carbon:user-avatar-filled-alt" />
+                  </Button>
                 </li>
                 <li className='hidden sm:block'>
                   <Button onClick={handleSingOut}>
