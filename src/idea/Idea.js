@@ -30,7 +30,7 @@ function Idea({ idx, idea, stackId }) {
     >
       <div
         onClick={handleClick}
-        className='relative flex cursor-pointer items-center justify-between rounded-md bg-bg-darker px-3 py-2 font-lato shadow-l2 sm:py-3'
+        className='relative flex cursor-pointer items-center justify-between rounded-md bg-bg-darker px-3 py-3 font-lato shadow-l2 sm:py-4'
       >
         <span className='text-t-sm font-medium tracking-wider sm:mx-4 sm:text-t-lg sm:font-bold'>
           {idx}.

@@ -39,10 +39,3 @@ input[type=number] {
   border-radius: 1rem;
 }
 
-#stack-actions::-webkit-scrollbar {
-  height: .2rem;
-}
-
-input[type='checkbox'] {
-  /* -webkit-appearance: none; */
-}

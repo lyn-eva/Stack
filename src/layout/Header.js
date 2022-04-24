@@ -21,8 +21,8 @@ function Header({ loggedIn }) {
 
   return (
     <>
-      <header className='relative'>
-        <div className='mx-auto flex w-11/12 max-w-[24rem] items-center justify-between pt-[clamp(1.3rem,5vw,4rem)] sm:max-w-[48rem] lg:max-w-[90rem]'>
+      <header>
+        <div className='relative mx-auto flex w-11/12 max-w-[24rem] items-center justify-between pt-[clamp(1.3rem,5vw,4rem)] sm:max-w-[48rem] lg:max-w-[90rem]'>
           <div
             onClick={() => navigate('../')}
             className='flex cursor-pointer items-center gap-4 text-sm text-white lg:text-xl'
@@ -35,7 +35,7 @@ function Header({ loggedIn }) {
                 <li>
                   <Button onClick={() => navigate(`../u/${userInfo?.name}`)}>
                     Profile
-                    <Icon className='w-6 h-6' icon="carbon:user-avatar-filled-alt" />
+                    <Icon className='h-6 w-6' icon='carbon:user-avatar-filled-alt' />
                   </Button>
                 </li>
                 <li className='hidden sm:block'>
@@ -48,17 +48,27 @@ function Header({ loggedIn }) {
               <ul
                 className={`${
                   navOn ? 'scale-y-100' : 'scale-y-0'
-                } duration-300 origin-top absolute top-[clamp(4rem,20vw,6rem)] left-0 z-10 flex w-full flex-col rounded-sm bg-bg-soft-gray text-center text-white shadow-md sm:static sm:hidden sm:text-black`}
+                } absolute top-[clamp(4rem,20vw,6rem)] left-0 z-10 flex w-full origin-top flex-col rounded-md bg-bg-soft-gray text-center text-white shadow-md duration-300 sm:static sm:hidden sm:text-black`}
               >
-                <li className='border-b-[1px] py-[2vw]'>
-                  <NavLink to={`../u/${userInfo?.name}`}>profile</NavLink>
+                <li>
+                  <NavLink
+                    className='inline-block text-lg w-full border-b-[1px] py-[3vw] active:bg-black'
+                    to={`../u/${userInfo?.name}`}
+                  >
+                    profile
+                  </NavLink>
                 </li>
-                <li className='py-[2vw]'>
-                  <button onClick={handleSingOut}>login</button>
+                <li>
+                  <button className='w-full py-[3vw] text-lg active:bg-black' onClick={handleSingOut}>
+                    login
+                  </button>
                 </li>
               </ul>
-              <button className='sm:hidden' onClick={() => setNavOn(prev => !prev)}>
-                <Icon className='h-7 w-7 text-white' icon='pepicons:menu' />
+              <button className='sm:hidden' onClick={() => setNavOn((prev) => !prev)}>
+                <Icon
+                  className='h-7 w-7 text-white'
+                  icon={navOn ? 'akar-icons:cross' : 'pepicons:menu'}
+                />
               </button>
             </nav>
           )}

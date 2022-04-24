@@ -8,7 +8,7 @@ import { Icon } from '@iconify/react';
 import Modal from '../utility/Modal';
 
 const btnStyle = {
-  padding: '.05em 8px',
+  padding: '.1em 8px',
   borderRadius: '.2em',
   letterSpacing: '0px',
 };
@@ -63,18 +63,12 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
 
   return (
     <>
-      <ul id='stack-actions' className='mb-6 mt-4 flex items-center flex-wrap gap-1 sm:mb-8 sm:gap-4'>
+      <ul className='mb-6 mt-4 flex flex-wrap items-center gap-1 sm:mb-8 sm:gap-4'>
         <li className='shrink-0'>
-          <a
-            target='_blank'
-            rel='noreferrer'
-            href=''
-            className='flex items-center bg-white font-roboto text-t-sm font-normal sm:text-t-md lg:text-t-lg'
-            style={btnStyle}
-          >
+          <Button style={{ ...btnStyle }}>
             go to repo
-            <Icon icon='ri:git-repository-line' className='w-4 ml-2' />
-          </a>
+            <Icon icon='ri:git-repository-line' className='ml-2 w-4' />
+          </Button>
         </li>
         <li className='shrink-0'>
           <Button onClick={() => setAddIdea((prev) => !prev)} style={btnStyle}>

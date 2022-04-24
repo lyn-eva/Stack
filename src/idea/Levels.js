@@ -23,7 +23,7 @@ function Levels({ initial, dispatchForm }) {
             id={option.level}
             onClick={() => setLevel(i)}
             className={
-              "font-light sm:font-normal pb-[2px] text-t-sm sm:text-t-md tracking-wide underline underline-offset-1 px-1 sm:px-2 rounded-sm " +
+              "font-light sm:font-normal pt-[1px] pb-[3px] text-t-sm sm:text-t-md tracking-wide underline underline-offset-1 px-1 sm:px-2 rounded-sm " +
               (i === level ? option.color : "")
             }
           >

@@ -5,7 +5,7 @@ function Title({ value, rename, Ref, handleChange, handleRename }) {
     <div className='group relative mb-2 flex items-center pr-6'>
       <label
         className={
-          'mr-1 self-start pt-[2px] font-exo text-t-md font-semibold tracking-wide text-gray-300 sm:mr-3 sm:pt-[3px] sm:text-t-lg'
+          'mr-1 self-start pt-[1px] font-exo text-t-md font-semibold tracking-wide text-gray-300 sm:mr-3 sm:pt-[3px] sm:text-t-lg'
         }
       >
         Title:
