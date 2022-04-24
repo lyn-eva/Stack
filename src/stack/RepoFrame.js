@@ -30,7 +30,7 @@ function RepoFrame({ name, onClick }) {
             }/${name}`}
             alt={name}
           />
-          <div className='flex items-center gap-3 p-2 text-black'>
+          <div className='flex items-center gap-3 p-2 text-black overflow-x-auto'>
             {langs?.map((lang) => (
               <span key={lang} className='rounded-sm bg-white px-2 text-t-sm sm:text-t-md'>
                 {lang}

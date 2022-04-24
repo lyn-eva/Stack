@@ -12,7 +12,7 @@ const Modal = ({ handleToggle, handleDelete }) => {
         animate={{ scale: 1, translateY: '-50%', translateX: '-55%' }}
         exit={{ scale: 0, translateY: '-50%', translateX: '-55%' }}
         transition={{ duration: 0.3 }}
-        className='fixed top-1/2 left-1/2 z-20 mx-4 w-8/12 max-w-[15rem] sm:max-w-[20rem] rounded-md bg-white px-6 py-4 text-black sm:px-12 sm:py-8'
+        className='fixed top-1/2 left-1/2 z-20 mx-4 w-8/12 max-w-[15rem] rounded-md bg-white px-6 py-4 text-black sm:max-w-[18rem] sm:px-12 sm:py-8'
       >
         Are you sure to delete?
         <div className='mt-8 flex justify-between gap-4 text-white'>

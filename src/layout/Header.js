@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react';
 import { useAuth } from '../context/authProvider';
 import { useDB } from '../context/dbProvider';
 import Button from '../utility/Button';
-import logo from '../asset/logo.svg';
+import logo from '../asset/SUTAKKU.svg';
 
 function Header({ loggedIn }) {
   const [navOn, setNavOn] = useState(false);
@@ -27,7 +27,7 @@ function Header({ loggedIn }) {
             onClick={() => navigate('../')}
             className='flex cursor-pointer items-center gap-4 text-sm text-white lg:text-xl'
           >
-            <img className='w-24 sm:w-28' src={logo} alt='stack' />
+            <img className='w-24 sm:w-28 lg:w-36' src={logo} alt='stack' />
           </div>
           {loggedIn && (
             <nav>

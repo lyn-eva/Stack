@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
 import { useDB } from '../context/dbProvider';
 import { useAuth } from '../context/authProvider';
 import Repo from '../stack/Repo';
@@ -13,7 +12,6 @@ function Home() {
   const [shrink, setShrink] = useState(false);
   const { listenToStacks } = useDB();
   const { user } = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) return;
@@ -44,7 +42,6 @@ function Home() {
           {stacks?.map(({ id, name }) => {
             return (
               <Repo
-                onClick={() => navigate('../' + id)}
                 key={id}
                 stackId={id}
                 name={name}

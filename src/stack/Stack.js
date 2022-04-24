@@ -8,7 +8,7 @@ function Stack() {
 
   return (
     <main className='mb-8 mt-10 sm:mt-16 lg:mt-[5vw]'>
-      <div className='mx-auto lg:flex lg:justify-between lg:gap-6 w-11/12 max-w-[24rem] sm:max-w-[48rem] lg:max-w-[90rem]'>
+      <div className='mx-auto w-11/12 max-w-[24rem] sm:max-w-[48rem] lg:flex lg:w-10/12 lg:max-w-[90rem] lg:justify-between lg:gap-6'>
         <DetailSection stackId={stackId} />
         <IdeaSection stackId={stackId} />
       </div>

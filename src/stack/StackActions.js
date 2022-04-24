@@ -51,6 +51,7 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
   // const { repoUrl } = useRepo(); //
 
   const handleDelete = async () => {
+    dispatchToggle({ type: 'DELETE' });
     await deleteStack(stackId);
     navigate(-1);
   };
