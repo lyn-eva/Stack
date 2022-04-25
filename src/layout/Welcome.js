@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { onAuthStateChanged, getRedirectResult, GithubAuthProvider } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/authProvider';
 import { useDB } from '../context/dbProvider';

@@ -35,7 +35,7 @@ module.exports = {
       fontSize: {
         't-u-sm': '10px',
         't-sm': '12px',
-        't-md': '14px',
+        't-md': '15px',
         't-lg': '16px',
         't-ultra' : '18px',
         't-xl': '20px',

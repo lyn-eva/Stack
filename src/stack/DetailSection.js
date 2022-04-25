@@ -16,7 +16,7 @@ function DetailSection({ stackId }) {
     if (!user) return;
     const unsub = listenToStack(stackId, setStack);
     return unsub;
-  }, [user]);
+  }, [user, stackId, listenToStack]);
 
   return (
     <section className="sm:flex sm:gap-6 lg:block lg:max-w-[21.5rem] lg:sticky top-4 h-fit">

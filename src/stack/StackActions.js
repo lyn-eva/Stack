@@ -64,7 +64,7 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
 
   return (
     <>
-      <ul className='mb-6 mt-4 flex flex-wrap items-center gap-1 sm:mb-8 sm:gap-4'>
+      <ul className='mb-6 mt-4 flex flex-wrap items-center gap-2 sm:mb-8 sm:gap-4'>
         <li className='shrink-0'>
           <Button style={{ ...btnStyle }}>
             go to repo

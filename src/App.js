@@ -16,8 +16,9 @@ function App() {
       <Routes>
         <Route path="/home" element={<Private><Home /></Private>} />
         <Route path="/u/:username" element={<Private><Profile /></Private>} />
-        <Route path="/:stack" element={<Private><Stack /></Private>} />
+        <Route path="/s/:stack" element={<Private><Stack /></Private>} />
         <Route path="/" element={<Welcome />} />
+        <Route path="*" element={<Private><Home /></Private>} />
       </Routes>
       </Suspense>
     </>

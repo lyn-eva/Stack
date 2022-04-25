@@ -30,12 +30,12 @@ function Idea({ idx, idea, stackId }) {
     >
       <div
         onClick={handleClick}
-        className='relative flex cursor-pointer items-center justify-between rounded-md bg-bg-darker px-3 py-3 font-lato shadow-l2 sm:py-4'
+        className='relative flex cursor-pointer items-center justify-between rounded-md bg-bg-darker px-3 py-3 font-lato shadow-l2'
       >
         <span className='text-t-sm font-medium tracking-wider sm:mx-4 sm:text-t-lg sm:font-bold'>
           {idx}.
         </span>
-        <p className='ml-2 mr-auto w-6/12 truncate font-roboto text-t-md font-light tracking-wide sm:ml-4 sm:w-8/12 sm:text-lg'>
+        <p className='ml-2 mr-auto w-6/12 truncate font-roboto text-[14px] font-light tracking-wide sm:ml-4 sm:w-8/12 sm:text-lg'>
           {idea.title}
         </p>
         <Location value={idea.location} />

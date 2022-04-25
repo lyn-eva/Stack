@@ -32,7 +32,7 @@ function Repo({ name, stackId, shrink }) {
 
   return (
     <div className=' mx-auto w-full max-w-[21.5rem] self-start rounded-md bg-bg-dark sm:max-w-[23.5rem] lg:max-w-[21.5rem]'>
-      <RepoFrame onClick={() => navigate(`../${stackId}`)} name={name} />
+      <RepoFrame onClick={() => navigate(`../s/${stackId}`)} name={name} />
       <motion.div
         variants={variant}
         animate={shrink ? 'shrink' : 'expand'}
