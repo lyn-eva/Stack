@@ -1,9 +1,6 @@
 module.exports = {
   content: ["./src/.js", "./src/**/*.js", "./public/*.html"],
   theme: {
-    // screens: {
-    //   sm: '430px'
-    // },
     extend: {
       backgroundColor: {
         "bg-primary": "#202020",
@@ -42,7 +39,7 @@ module.exports = {
         't-2xl': '22px',
         't-3xl': '28px',
         't-4xl': '48px',
-      }
+      },
     },
   },
   plugins: [],

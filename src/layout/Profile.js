@@ -38,7 +38,7 @@ function Profile() {
   };
 
   return (
-    <main className='mt-[max(2rem,5vw)] mb-10 gap-8'>
+    <main className='mt-[max(3rem,5vw)] mb-10 gap-8'>
       <AnimatePresence>
         {deletionState.prompt && (
           <Modal

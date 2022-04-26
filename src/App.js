@@ -1,5 +1,6 @@
 import {lazy, Suspense} from 'react';
 import { Routes, Route, useLocation } from "react-router";
+import ScaleLoading from './utility/ScaleLoading';
 const Header = lazy(() => import('./layout/Header'));
 const Welcome = lazy(() => import('./layout/Welcome'));
 const Home = lazy(() => import('./layout/Home'));
@@ -12,7 +13,7 @@ function App() {
   return (
     <>
       <Header loggedIn={location.pathname !== '/'}/>
-      <Suspense fallback={<p>... loading ...</p>}>
+      <Suspense fallback={<ScaleLoading />}>
       <Routes>
         <Route path="/home" element={<Private><Home /></Private>} />
         <Route path="/u/:username" element={<Private><Profile /></Private>} />

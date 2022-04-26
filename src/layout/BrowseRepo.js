@@ -1,16 +1,17 @@
-import { useEffect, useState } from "react";
-import { useAuth } from "../context/authProvider";
-import { useDB } from "../context/dbProvider";
-import LoadingSpinner from "../utility/LoadingSpinner";
-import Wrapper from "../utility/Wrapper";
-import RepoItem from "./RepoItem";
+import { useEffect, useState } from 'react';
+import { useAuth } from '../context/authProvider';
+import { useDB } from '../context/dbProvider';
+import LoadingSpinner from '../utility/LoadingSpinner';
+import Wrapper from '../utility/Wrapper';
+import RepoItem from './RepoItem';
+import ScaleLoading from '../utility/ScaleLoading';
 
 function BrowseRepo({ stackId, setBrowseRepo }) {
   const [repos, setRepos] = useState([]);
   const [existingStacks, setExistingStacks] = useState([]);
   const { user } = useAuth();
   const { createStack, getStacks, userInfo } = useDB();
-  
+
   useEffect(() => {
     if (!user) return;
     (async () => {
@@ -38,13 +39,11 @@ function BrowseRepo({ stackId, setBrowseRepo }) {
   };
 
   return (
-    <Wrapper className="absolute top-14 z-10 h-[21rem] w-[90vw] max-w-[30rem] overflow-y-scroll p-5 text-white">
-      <h3 className="mb-1 font-lato text-lg font-semibold leading-6 tracking-wide">
-        repositories
-      </h3>
-      <hr />
-      {!repos.length && <LoadingSpinner />}
-      <ul className="list relative">
+    <Wrapper className='absolute top-14 z-10 left-0  w-[90vw] max-w-[30rem] p-5 text-white'>
+      <h3 className='mb-1 font-lato text-lg font-semibold leading-6 tracking-wide'>repositories</h3>
+      <hr className='shadow-md'/>
+      <ul className='list relative h-72 overflow-y-scroll pr-2'>
+        {!repos.length && <ScaleLoading />}
         {repos.length > 0 &&
           repos.map((repo, idx) => (
             <RepoItem

@@ -5,6 +5,7 @@ import Repo from '../stack/Repo';
 import Button from '../utility/Button';
 import { Icon } from '@iconify/react';
 import BrowseRepo from './BrowseRepo';
+import ScaleLoading from '../utility/ScaleLoading';
 
 function Home() {
   const [browseRepo, setBrowseRepo] = useState(false);
@@ -37,8 +38,9 @@ function Home() {
             </Button>
           </li>
         </ul>
+        
         <section className='mt-8 grid grid-cols-1 gap-y-8 overflow-x-auto pb-8 text-white sm:grid-cols-2 sm:gap-6 md:gap-[5vw] lg:mt-14 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4'>
-          {!stacks?.length && <p className='mt-[8vw] text-center'>* no stack has been created *</p>}
+          {!stacks?.length && <ScaleLoading />}
           {stacks?.map(({ id, name }) => {
             return (
               <Repo

@@ -67,7 +67,7 @@ function DbProvider({ children }) {
       setIdeas(ideas);
     });
   };
-
+  
   const getStacks = () => {
     return getDocs(collection(db, 'users', user.uid, 'stacks'));
   }
