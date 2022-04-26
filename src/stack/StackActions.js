@@ -2,7 +2,6 @@ import { useReducer } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useNavigate } from 'react-router';
 import { useDB } from '../context/dbProvider';
-import useRepo from '../custom-hook/useRepo';
 import Button from '../utility/Button';
 import { Icon } from '@iconify/react';
 import Modal from '../utility/Modal';
@@ -44,11 +43,10 @@ const reducer = (state, action) => {
   }
 };
 
-function StackActions({ stackId, setAddIdea, dispatch }) {
+function StackActions({ stackId, setAddIdea, dispatch, stack }) {
   const [toggleStates, dispatchToggle] = useReducer(reducer, {});
   const navigate = useNavigate();
   const { deleteStack } = useDB();
-  // const { repoUrl } = useRepo(); //
 
   const handleDelete = async () => {
     dispatchToggle({ type: 'DELETE' });
@@ -66,7 +64,7 @@ function StackActions({ stackId, setAddIdea, dispatch }) {
     <>
       <ul className='mb-6 mt-4 flex flex-wrap items-center gap-2 sm:mb-8 sm:gap-4'>
         <li className='shrink-0'>
-          <Button style={{ ...btnStyle }}>
+          <Button onClick={() => window.open(stack.url, '_blank')} style={{ ...btnStyle }}>
             go to repo
             <Icon icon='ri:git-repository-line' className='ml-2 w-4' />
           </Button>

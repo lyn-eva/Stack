@@ -22,7 +22,7 @@ const initial = {
   filterBy: { key: "checked", value: false },
 };
 
-function IdeaSection({ stackId, repoUrl }) {
+function IdeaSection({ stackId, stack }) {
   const [state, dispatch] = useReducer(reducer, initial);
   const [addIdea, setAddIdea] = useState(false);
   const [ideas, setIdeas] = useState(null);
@@ -33,7 +33,7 @@ function IdeaSection({ stackId, repoUrl }) {
     if (!user) return;
     const unsub = listenToIdeas(stackId, setIdeas, state.sortBy, state.filterBy);
     return unsub;
-  }, [user, state.filterBy, state.sortBy, stackId, listenToIdeas]);
+  }, [user, state, stackId, listenToIdeas]);
 
   return (
     <section className="mt-6 max-w-[50rem] overflow-hidden sm:mt-12 lg:mt-0 lg:w-8/12">
@@ -41,7 +41,7 @@ function IdeaSection({ stackId, repoUrl }) {
         Your stack
       </h2>
       <hr />
-      <StackActions stackId={stackId} setAddIdea={setAddIdea} dispatch={dispatch} />
+      <StackActions stack={stack} stackId={stackId} setAddIdea={setAddIdea} dispatch={dispatch} />
 
       <ul className="min-h-[9.5rem]">
         <AnimatePresence>

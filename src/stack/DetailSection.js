@@ -1,22 +1,10 @@
-import { useEffect, useState } from "react";
 import EnhancedDetailCard from "../render-props/EnhancedDetailCard";
-import { useAuth } from "../context/authProvider";
-import { useDB } from "../context/dbProvider";
 import useRepo from "../custom-hook/useRepo";
 import RepoCard from "./RepoCard";
 import MetaData from "./MetaData";
 
-function DetailSection({ stackId }) {
-  const [stack, setStack] = useState({});
-  const { listenToStack } = useDB();
-  const { user } = useAuth();
+function DetailSection({ stack }) {
   const repoDetails = useRepo(stack.name);
-
-  useEffect(() => {
-    if (!user) return;
-    const unsub = listenToStack(stackId, setStack);
-    return unsub;
-  }, [user, stackId, listenToStack]);
 
   return (
     <section className="sm:flex sm:gap-6 lg:block lg:max-w-[21.5rem] lg:sticky top-4 h-fit">
