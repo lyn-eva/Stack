@@ -16,6 +16,6 @@ Sutakku let you create a stack per repository by simply clicking the add button 
 - [x] create, read, update and delete (CRUD) idea seamlessly
 - [x] filter ideas with 5 options
 - [x] sort ideas with 3 options
-- [x] clean and neat card representing your GitHub repository and a brief of your repository, stack detail
+- [x] clean and neat card representation your GitHub repository and a brief of your repository, stack detail
 - [x] simple profile page with a brief of your GitHub profile and Sutakku profile
 - [x] delete the Sutakku account
