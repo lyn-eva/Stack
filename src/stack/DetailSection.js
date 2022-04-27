@@ -11,7 +11,7 @@ function DetailSection({ stack }) {
       <EnhancedDetailCard
         Render={RepoCard}
         props={{ repoName: stack.name }}
-        className="relative self-start sm:w-1/2 lg:w-full"
+        className="relative self-start sm:w-1/2 lg:w-full group cursor-pointer"
       />
       <div className="mt-3 sm:mt-0 sm:w-1/2 lg:mt-6 lg:w-full">
         <EnhancedDetailCard

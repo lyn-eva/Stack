@@ -19,7 +19,7 @@ export function RepoCard({ repoName, variant, expand }) {
         <RepoFrame name={repoName} />
       </motion.div>
       <button
-        className={`absolute  right-4 text-white ${
+        className={`absolute sm:opacity-0 sm:group-hover:opacity-100 right-4 text-white ${
           expand ? "bottom-2" : "bottom-3 sm:bottom-4"
         }`}
       >
