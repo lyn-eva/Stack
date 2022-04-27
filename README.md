@@ -1,4 +1,4 @@
-![image info](./src/asset/OAUTH_LOGO.png)
+![Sutakku logo](./src/asset/OAUTH_LOGO.png)
 
 ## Sutakku
 Sutakku is a productivity app for developers working with GitHub to efficiently refactor or plan the project.
