@@ -19,6 +19,7 @@ function Home() {
     const unsub = listenToStacks(setStacks);
     return unsub;
   }, [user, listenToStacks]);
+  console.log(stacks)
 
   return (
     <main className='mb-8 mt-[5vw]'>
@@ -41,11 +42,12 @@ function Home() {
         
         <section className='mt-8 grid grid-cols-1 gap-y-8 overflow-x-auto pb-8 text-white sm:grid-cols-2 sm:gap-6 md:gap-[5vw] lg:mt-14 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4'>
           {!stacks?.length && <ScaleLoading />}
-          {stacks?.map(({ id, name }) => {
+          {stacks?.map(({ id, repo_id, name }) => {
             return (
               <Repo
                 key={id}
                 stackId={id}
+                repo_id={repo_id}
                 name={name}
                 shrink={shrink}
               />

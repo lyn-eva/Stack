@@ -14,8 +14,7 @@ function useRepo(repoName) {
       setDetails({
         createdAt: new Date(details.created_at).getTime(),
         updatedAt: new Date(details.updated_at).getTime(),
-        pushedAt: new Date(details.pushed_at).getTime(),
-        repoUrl: details.html_url,
+        pushedAt: new Date(details.pushed_at).getTime()
       });
     })(); //IIFE
   }, [user, repoName]);

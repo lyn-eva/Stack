@@ -18,7 +18,7 @@ const variant = {
   },
 };
 
-function Repo({ name, stackId, shrink }) {
+function Repo({ stackId, repo_id, name, shrink }) {
   const [expand, setExpand] = useState(false);
   const [ideas, setIdeas] = useState(null);
   const { listenToIdeas } = useDB();
@@ -32,7 +32,7 @@ function Repo({ name, stackId, shrink }) {
 
   return (
     <div className=' mx-auto w-full max-w-[21.5rem] self-start rounded-md bg-bg-dark sm:max-w-[23.5rem] lg:max-w-[21.5rem]'>
-      <RepoFrame onClick={() => navigate(`../s/${stackId}`)} name={name} />
+      <RepoFrame onClick={() => navigate(`../s/${stackId}`)} repo_id={repo_id}/>
       <motion.div
         variants={variant}
         animate={shrink ? 'shrink' : 'expand'}

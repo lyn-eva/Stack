@@ -23,7 +23,7 @@ export function RepoCard({ repoName, variant, expand }) {
           expand ? "bottom-2" : "bottom-3 sm:bottom-4"
         }`}
       >
-        <Icon width={16} icon={expand ? "icomoon-free:shrink2" : "fa:expand"} />
+        <Icon className='w-4' icon={expand ? "icomoon-free:shrink2" : "fa:expand"} />
       </button>
     </>
   );

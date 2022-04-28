@@ -16,7 +16,7 @@ function Title({ value, rename, Ref, handleChange, handleRename }) {
         rows='1'
         className={`${
           rename ? 'bg-white text-black' : 'bg-transparent'
-        } w-full rounded-sm px-2 text-t-md font-normal leading-5 tracking-wide outline-none sm:text-lg sm:leading-6 md:leading-7`}
+        } w-full rounded-sm px-2 text-t-md font-normal leading-6 tracking-wide outline-none sm:text-lg md:leading-7`}
       />
       <button
         onClick={handleRename}

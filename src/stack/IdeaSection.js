@@ -49,7 +49,7 @@ function IdeaSection({ stackId, stack }) {
             <Detail isForm stackId={stackId} handleExpand={() => setAddIdea(false)} />
           )}
           {ideas?.map((idea, i) => (
-            <Idea key={idea.id} idx={i} stackId={stackId} idea={idea} />
+            <Idea key={idea.id} idx={i+1} stackId={stackId} idea={idea} />
           ))}
         </AnimatePresence>
       </ul>

@@ -36,7 +36,7 @@ function Welcome() {
       initial={{ opacity: 0 }}
       transition={{ duration: 1 }}
       animate={{ opacity: 1 }}
-      className='flex grow mt-[5vw] items-center overflow-hidden bg-logo-watermark bg-[length:400px] bg-[right_center] bg-no-repeat py-10 sm:mb-10'
+      className='flex grow mt-[5vw] sm:mt-[max(5vw,15vh)] items-center overflow-hidden bg-logo-watermark bg-[length:400px] bg-[right_5vw_center] bg-no-repeat py-10 sm:mb-10'
     >
       <section className='mx-auto w-11/12 max-w-[24rem] sm:max-w-[48rem] lg:max-w-[90rem]'>
         <motion.h1

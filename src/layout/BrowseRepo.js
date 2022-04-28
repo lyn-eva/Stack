@@ -26,14 +26,14 @@ function BrowseRepo({ stackId, setBrowseRepo }) {
       );
       const [raw_repo, added_stacks] = await Promise.all([fetchRepo, getStacks()]);
       const repoList = await raw_repo.json();
-      setRepos(repoList.map(({ id, name, html_url }) => ({ id, name, html_url })));
+      setRepos(repoList.map(({ id }) => ({ repo_id :id })));
       setExistingStacks(added_stacks.docs.map((stack) => stack.data().name));
     })();
   }, []);
 
-  const handleAddRepo = (repo, url) => {
+  const handleAddRepo = (repoDetail) => {
     return async () => {
-      await createStack(repo, url);
+      await createStack(repoDetail);
       setBrowseRepo(false);
     };
   };
@@ -47,11 +47,11 @@ function BrowseRepo({ stackId, setBrowseRepo }) {
         {repos.length > 0 &&
           repos.map((repo, idx) => (
             <RepoItem
-              key={repo.id}
+              key={repo.Repo_id}
               {...repo}
               idx={idx}
               added={existingStacks.indexOf(repo.name) !== -1}
-              handleAddRepo={handleAddRepo(repo.name, repo.html_url)}
+              handleAddRepo={handleAddRepo(repo)}
             />
           ))}
       </ul>

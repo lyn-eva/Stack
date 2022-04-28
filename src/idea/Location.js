@@ -27,7 +27,7 @@ function Location({ editable, value, rename, Ref, handleChange, handleRename }) 
               maxLength='5'
               type='number'
               placeholder='69'
-              className='text-md w-8 rounded-sm px-1 text-center lg:text-t-lg leading-4 text-black outline-none sm:w-14 sm:leading-5 md:leading-6'
+              className='text-md w-8 rounded-sm px-1 text-center lg:text-t-lg text-black outline-none sm:w-14 leading-5 md:leading-6'
             />
           </div>
           <div className='mt-3 ml-2 inline sm:mt-0 sm:block'>
@@ -39,7 +39,7 @@ function Location({ editable, value, rename, Ref, handleChange, handleRename }) 
               maxLength='34'
               type='text'
               placeholder='CustomForm.js'
-              className='text-md w-5/12 rounded-sm px-1 text-center lg:text-t-lg leading-4 text-black outline-none sm:w-[72%] sm:max-w-[17rem] sm:leading-5 md:leading-6'
+              className='text-md w-5/12 rounded-sm px-1 text-center lg:text-t-lg text-black outline-none sm:w-[72%] sm:max-w-[17rem] leading-5 md:leading-6'
             />
           </div>
         </>

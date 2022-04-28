@@ -4,7 +4,8 @@ import RepoCard from "./RepoCard";
 import MetaData from "./MetaData";
 
 function DetailSection({ stack }) {
-  const repoDetails = useRepo(stack.name);
+  const repoDetails = useRepo(stack.id);
+  console.log(stack)
 
   return (
     <section className="sm:flex sm:gap-6 lg:block lg:max-w-[21.5rem] lg:sticky top-4 h-fit">

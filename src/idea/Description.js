@@ -15,7 +15,7 @@ function Description({ value, rename, Ref, handleRename, handleChange, handleKey
         placeholder='description'
         className={`${
           rename ? 'bg-white text-black' : 'bg-transparent'
-        } mt-2 block h-auto w-full rounded-sm px-1 text-t-md font-light leading-5 outline-none sm:text-[1.1rem] sm:leading-6 md:font-normal`}
+        } mt-2 block h-auto w-full rounded-sm px-1 text-t-md font-light outline-none sm:text-[1.1rem] leading-6 md:font-normal`}
       />
       <button
         onClick={handleRename}

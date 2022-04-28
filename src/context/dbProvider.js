@@ -30,6 +30,8 @@ function DbProvider({ children }) {
   const { user, db } = useAuth();
   const [userInfo, setUserInfo] = useState({});
 
+  useEffect(() => console.log('rerendered'), []);
+
   useEffect(() => {
     if (!user) return;
     const unsub = onSnapshot(doc(db, 'users', user.uid), snapshot => {
@@ -103,11 +105,11 @@ function DbProvider({ children }) {
     return updateDoc(doc(db, 'users', uid), {...userData, modified: serverTimestamp()});
   }
 
-  const createStack = async (repo, url) => {
+  const createStack = async (repoDetail) => {
     const path = collection(db, 'users', user.uid, 'stacks');
     return await Promise.all([
       updateUserInfo(user.uid, { ...metadata(), stackCount: increment(1) }),
-      addDoc(path, { name: repo, url: url, ...metadata() }),
+      addDoc(path, { ...repoDetail, ...metadata() }),
     ]);
   };
   
