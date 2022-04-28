@@ -73,15 +73,15 @@ function Header({ loggedIn }) {
               >
                 <li onClick={handleRouteChange}>
                   <NavLink
-                    className='inline-block text-lg w-full border-b-[1px] py-[3vw] active:bg-black'
+                    className='inline-block text-lg w-full border-b-[1px] py-[max(2vw,.5rem)] active:bg-black'
                     to={`../u/${userInfo?.name}`}
                   >
                     profile
                   </NavLink>
                 </li>
                 <li  onClick={handleRouteChange}>
-                  <button className='w-full py-[3vw] text-lg active:bg-black' onClick={handleSingOut}>
-                    login
+                  <button className='w-full py-[max(2vw,.5rem)] text-lg active:bg-black' onClick={handleSingOut}>
+                    log out
                   </button>
                 </li>
               </ul>

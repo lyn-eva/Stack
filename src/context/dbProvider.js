@@ -35,7 +35,7 @@ function DbProvider({ children }) {
   const { user, db } = useAuth();
   const [userInfo, setUserInfo] = useState({});
   
-  useEffect(() => {
+  useEffect(() => { // can be merged
       if (!user) return;
       syncWithGitHub();
   }, [user]);
@@ -51,11 +51,11 @@ function DbProvider({ children }) {
 
   const syncWithGitHub = async () => {
     const stacks = await getStacks();
-    stacks.docs.forEach(async(doc) => {
+    await Promise.all(stacks.docs.map(async(doc) => {
       const {repo_id} = doc.data();
       const repo = await fetchRepo(repo_id);
       updateStack(doc.id, {name: repo.name, isPrivate: repo.private, repo_url: repo.html_url, tags_url: repo.tags_url, langs_url: repo.languages_url, created_at: repo.created_at, updated_at: repo.updated_at, pushed_at: repo.pushed_at})
-    });
+    }));
   };
 
   const listenToStacks = (setStacks) => {

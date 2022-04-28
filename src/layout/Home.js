@@ -22,7 +22,7 @@ function Home() {
 
   return (
     <main className='mb-8 mt-[5vw]'>
-      <div className='mx-auto w-11/12 lg:w-10/12 max-w-[24rem] sm:max-w-[48rem] lg:max-w-[90rem]'>
+      <div className='mx-auto w-[90%] lg:w-10/12 max-w-[24rem] sm:max-w-[48rem] lg:max-w-[90rem]'>
         <ul className='flex gap-4'>
           <li className='relative'>
             <Button onClick={() => setBrowseRepo((prev) => !prev)}>

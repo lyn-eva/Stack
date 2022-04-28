@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { onAuthStateChanged } from 'firebase/auth';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/authProvider';
 import { useDB } from '../context/dbProvider';
@@ -13,30 +12,26 @@ const middle = {
 };
 
 function Welcome() {
-  const [isLoggedIn, setIsLoggedIn] = useState('unknown');
+  // const [isLoggedIn, setIsLoggedIn] = useState('unknown');
   const { createUser } = useDB();
-  const { auth, PopupSignIn } = useAuth();
+  const { auth, user, PopupSignIn } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async (res) => {
-      setIsLoggedIn(res);
-      if (res !== null) navigate('../home');
-    });
-    return unsub;
-  }, [auth, navigate]);
+      if (user !== null) navigate('../home');
+  }, [user, navigate]);
 
   const handleGithubSignIn = async () => {
     const result = await PopupSignIn();
     await createUser(result);
   };
 
-  return isLoggedIn === 'unknown' ? null : (
+  return (
     <motion.main
       initial={{ opacity: 0 }}
       transition={{ duration: 1 }}
       animate={{ opacity: 1 }}
-      className='flex grow mt-[5vw] sm:mt-[max(5vw,15vh)] items-center overflow-hidden bg-logo-watermark bg-[length:400px] bg-[right_5vw_center] bg-no-repeat py-10 sm:mb-10'
+      className='flex grow mt-[5vw] sm:mt-[max(5vw,15vh)] items-center overflow-hidden bg-logo-watermark bg-[length:400px] bg-center sm:bg-[right_5vw_center] bg-no-repeat py-10 sm:mb-10'
     >
       <section className='mx-auto w-11/12 max-w-[24rem] sm:max-w-[48rem] lg:max-w-[90rem]'>
         <motion.h1

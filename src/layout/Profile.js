@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer, useRef } from 'react';
 import { Icon } from '@iconify/react';
 import { AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ import Wrapper from '../utility/Wrapper';
 import Button from '../utility/Button';
 import Modal from '../utility/Modal';
 import DeleteConfirmModal from '../utility/DeleteConfirmModal';
+import ScaleLoading from '../utility/ScaleLoading';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -26,15 +27,14 @@ function Profile() {
   const [deletionState, dispatch] = useReducer(reducer, {});
   const { avatar_url, login: username, name, bio, followers, following } = useGithub();
   const { deleteUserDb, userInfo } = useDB();
-
   const { user, DeleteUserAcc } = useAuth();
-
   const navigate = useNavigate();
+  const pfpRef = useRef();
+
   const handleAccDeletion = async () => {
-    // no async
     await deleteUserDb();
     await DeleteUserAcc();
-    navigate('../../login');
+    navigate('../../');
   };
 
   return (
@@ -58,8 +58,9 @@ function Profile() {
       </AnimatePresence>
       <section className='mx-auto w-11/12 max-w-[24rem] sm:max-w-[48rem] lg:mx-auto lg:flex lg:w-9/12 lg:max-w-[90rem] lg:justify-between'>
         <Wrapper className='p-4 text-white sm:flex sm:items-center sm:justify-between sm:gap-x-4 sm:p-6 lg:block lg:w-80'>
-          <div className='sm:w-1/2 sm:max-w-[12rem] md:max-w-[15rem] lg:w-full lg:max-w-none'>
-            <img className='w-full rounded-md' src={avatar_url} alt={username} />
+          <div className='relative aspect-square sm:w-1/2 sm:max-w-[12rem] md:max-w-[15rem] lg:w-full lg:max-w-none'>
+            {!pfpRef?.current?.naturalHeight && <ScaleLoading />}
+            <img ref={pfpRef} className='w-full rounded-md' src={avatar_url} alt={username} />
           </div>
           <div className='mt-8 sm:mt-0 sm:w-1/2 lg:w-full'>
             <h1 className='font-open-sans text-t-ultra sm:lg:text-t-xl'> {name} </h1>
