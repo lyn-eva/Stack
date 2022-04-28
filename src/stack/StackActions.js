@@ -64,7 +64,7 @@ function StackActions({ stackId, setAddIdea, dispatch, stack }) {
     <>
       <ul className='mb-6 mt-4 flex flex-wrap items-center gap-2 sm:mb-8 sm:gap-4'>
         <li className='shrink-0'>
-          <Button onClick={() => window.open(stack.html_url, '_blank')} style={{ ...btnStyle }}>
+          <Button onClick={() => window.open(stack.repo_url, '_blank')} style={{ ...btnStyle }}>
             go to repo
             <Icon icon='ri:git-repository-line' className='ml-2 w-4' />
           </Button>
