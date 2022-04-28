@@ -12,6 +12,7 @@ Sutakku let you create a stack per repository by simply clicking the add button 
 
 ### features
 - [x] fast and easy login, logout
+- [x] easy sync with GitHub account on refresh
 - [x] browse, create and delete stack for both public and private repositories 
 - [x] create, read, update and delete (CRUD) idea seamlessly
 - [x] filter ideas with 5 options
