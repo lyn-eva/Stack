@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../utility/Button";
 import { Icon } from "@iconify/react";
 
-function RepoItem({ name, url, idx, added, handleAddRepo }) {
+function RepoItem({ name, idx, added, handleAddRepo }) {
   return (
     <li className="mt-1 flex list-outside list-decimal items-center justify-between gap-3 border-b-[1px] border-[#ffffff70] pt-2 pb-1">
       <div className="truncate flex items-center">
@@ -16,7 +16,7 @@ function RepoItem({ name, url, idx, added, handleAddRepo }) {
         </span>
       ) : (
         <Button
-          onClick={() => handleAddRepo(name, url)}
+          onClick={handleAddRepo}
           style={{ color: "#000", paddingBlock: "0", borderRadius: "4px" }}
         >
           add

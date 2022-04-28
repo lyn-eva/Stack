@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/authProvider';
 import { useDB } from '../context/dbProvider';
-import LoadingSpinner from '../utility/LoadingSpinner';
 import Wrapper from '../utility/Wrapper';
 import RepoItem from './RepoItem';
 import ScaleLoading from '../utility/ScaleLoading';
@@ -26,7 +25,7 @@ function BrowseRepo({ stackId, setBrowseRepo }) {
       );
       const [raw_repo, added_stacks] = await Promise.all([fetchRepo, getStacks()]);
       const repoList = await raw_repo.json();
-      setRepos(repoList.map(({ id }) => ({ repo_id :id })));
+      setRepos(repoList.map((repo) => ({ ...repo })));
       setExistingStacks(added_stacks.docs.map((stack) => stack.data().name));
     })();
   }, []);
@@ -47,11 +46,11 @@ function BrowseRepo({ stackId, setBrowseRepo }) {
         {repos.length > 0 &&
           repos.map((repo, idx) => (
             <RepoItem
-              key={repo.Repo_id}
-              {...repo}
+              key={repo.id}
+              name={repo.name}
               idx={idx}
               added={existingStacks.indexOf(repo.name) !== -1}
-              handleAddRepo={handleAddRepo(repo)}
+              handleAddRepo={handleAddRepo({name: repo.name, repo_id: repo.id, isPrivate: repo.private, langs_url: repo.languages_url, tags_url: repo.tags_url, repo_url: repo.html_url, created_at: repo.created_at, updated_at: repo.updated_at, pushed_at: repo.pushed_at})}
             />
           ))}
       </ul>

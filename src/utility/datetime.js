@@ -19,8 +19,10 @@ const getLastModified = (milli) => {
   }
 };
 
+const stringToMilli = (str) => new Date(str).getTime();
+
 const formatMsg = (time, unit) => {
   return `${time} ${unit}${time === 1 ? '' : 's'} ago`;
 };
 
-export { getLastModified, getMMDDYY };
+export { getLastModified, getMMDDYY, stringToMilli };

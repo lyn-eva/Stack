@@ -26,11 +26,19 @@ export const useDB = () => useContext(dbCtx);
 const DEFAULT_FILTER ={ key: 'checked', value: false}
 const metadata = () => ({ created: serverTimestamp(), modified: serverTimestamp() });
 
+const fetchRepo = async (id) => {
+  const raw = await fetch(`https://api.github.com/repositories/${id}`);
+  return await raw.json();
+};
+
 function DbProvider({ children }) {
   const { user, db } = useAuth();
   const [userInfo, setUserInfo] = useState({});
-
-  useEffect(() => console.log('rerendered'), []);
+  
+  useEffect(() => {
+      if (!user) return;
+      syncWithGitHub();
+  }, [user]);
 
   useEffect(() => {
     if (!user) return;
@@ -40,6 +48,15 @@ function DbProvider({ children }) {
   
     return unsub
   }, [user, db]);
+
+  const syncWithGitHub = async () => {
+    const stacks = await getStacks();
+    stacks.docs.forEach(async(doc) => {
+      const {repo_id} = doc.data();
+      const repo = await fetchRepo(repo_id);
+      updateStack(doc.id, {name: repo.name, isPrivate: repo.private, repo_url: repo.html_url, tags_url: repo.tags_url, langs_url: repo.languages_url, created_at: repo.created_at, updated_at: repo.updated_at, pushed_at: repo.pushed_at})
+    });
+  };
 
   const listenToStacks = (setStacks) => {
     const q = query(collection(db, "users", user.uid, "stacks"), orderBy("created"));
@@ -83,7 +100,6 @@ function DbProvider({ children }) {
       photoURL: userdata.photoURL,
     };
     if (await userExists(userdata.uid)) {
-      console.log('exists')
       return updateUserInfo(userdata.uid, data);
     }
     const create_user = setDoc(path, { ...data, ...metadata(), stackCount: 0, ideaCounts: 0 });

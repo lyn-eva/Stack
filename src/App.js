@@ -11,8 +11,8 @@ const Private = lazy(() => import('./utility/Private'));
 function App() {
   const location = useLocation();
   return (
-    <><p className='fixed top-1/2 left-1/2 -translate-x-1/2 text-white text-3xl'>Currently Under Maintainance</p>
-      {/* <Header loggedIn={location.pathname !== '/'}/>
+    <>
+      <Header loggedIn={location.pathname !== '/'}/>
       <Suspense fallback={<ScaleLoading />}>
       <Routes>
         <Route path="/home" element={<Private><Home /></Private>} />
@@ -21,7 +21,7 @@ function App() {
         <Route path="/" element={<Welcome />} />
         <Route path="*" element={<Private><Home /></Private>} />
       </Routes>
-      </Suspense> */}
+      </Suspense>
     </>
   );
 }

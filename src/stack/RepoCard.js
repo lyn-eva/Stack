@@ -2,12 +2,12 @@ import { motion } from "framer-motion";
 import RepoFrame from "./RepoFrame";
 import { Icon } from "@iconify/react";
 
-export function RepoCard({ repoName, variant, expand }) {
+export function RepoCard({ repo_name, langs_url, variant, expand }) {
   return (
     <>
       {expand || (
         <motion.h1 className="truncate pl-7 pr-9 py-2 text-center text-white sm:py-3 sm:text-lg">
-          {repoName}
+          {repo_name}
         </motion.h1>
       )}
       <motion.div
@@ -16,7 +16,7 @@ export function RepoCard({ repoName, variant, expand }) {
         animate={expand ? "expand" : "shrink"}
         className="overflow-hidden"
       >
-        <RepoFrame name={repoName} />
+        <RepoFrame repo_name={repo_name} langs_url={langs_url} />
       </motion.div>
       <button
         className={`absolute sm:opacity-0 sm:group-hover:opacity-100 right-4 text-white ${
