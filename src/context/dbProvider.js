@@ -102,8 +102,7 @@ function DbProvider({ children }) {
     if (await userExists(userdata.uid)) {
       return updateUserInfo(userdata.uid, data);
     }
-    const create_user = setDoc(path, { ...data, ...metadata(), stackCount: 0, ideaCount: 0 });
-    return await Promise.all([create_user, updateUserList('ADD', userdata.uid)]);
+    await Promise.all([setDoc(path, { ...data, ...metadata(), stackCount: 0, ideaCount: 0 }), updateUserList('ADD', userdata.uid)]);
   };
   
   const userExists = async (uid) => {

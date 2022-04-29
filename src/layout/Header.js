@@ -56,7 +56,7 @@ function Header({ loggedIn }) {
                 <li>
                   <Button onClick={() => navigate(`../u/${userInfo?.name}`)}>
                     Profile
-                    <img className='w-5 h-5 rounded-md' src={userInfo?.photoURL} alt={userInfo.username} />
+                    <img className='w-5 h-5 rounded-md' src={userInfo?.photoURL} alt={userInfo?.username} />
                   </Button>
                 </li>
                 <li className='hidden sm:block'>

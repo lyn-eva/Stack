@@ -40,8 +40,8 @@ function Home() {
         </ul>
         
         <section className='mt-8 grid grid-cols-1 gap-y-8 overflow-x-auto pb-8 text-white sm:grid-cols-2 sm:gap-6 md:gap-[5vw] lg:mt-14 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4'>
-          {!stacks?.length && <ScaleLoading />}
-          {stacks?.map(({ id, repo_id, name, langs_url }) => {
+          {!stacks && <ScaleLoading />}
+          {stacks?.map(({ id, name, langs_url }) => {
             return (
               <Repo
                 key={id}
