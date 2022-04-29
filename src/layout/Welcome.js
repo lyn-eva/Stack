@@ -14,6 +14,7 @@ const middle = {
 };
 
 function Welcome() {
+  const [loading, setLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState('unknown');
   const { createUser } = useDB();
   const { auth, PopupSignIn } = useAuth();
@@ -28,11 +29,13 @@ function Welcome() {
   }, [auth, navigate]);
 
   const handleGithubSignIn = async () => {
+    setLoading(true);
     const result = await PopupSignIn();
     await createUser(result);
+    setLoading(false);
   };
 
-  return isLoggedIn === 'unknown' ? <ScaleLoading />  : (
+  return (isLoggedIn === 'unknown' || !loading) ? <><ScaleLoading /><p className='fixed top-[calc(50%+1.5rem)] left-1/2 -translate-x-1/2 text-gray-200'>Logging In</p></>  : (
     <motion.main
       initial={{ opacity: 0 }}
       transition={{ duration: 1 }}

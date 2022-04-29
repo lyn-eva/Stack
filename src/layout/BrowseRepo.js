@@ -49,6 +49,7 @@ function BrowseRepo({ stackId, setBrowseRepo }) {
               key={repo.id}
               name={repo.name}
               idx={idx}
+              isPrivate={repo.private}
               added={existingStacks.indexOf(repo.name) !== -1}
               handleAddRepo={handleAddRepo({name: repo.name, repo_id: repo.id, isPrivate: repo.private, langs_url: repo.languages_url, tags_url: repo.tags_url, repo_url: repo.html_url, created_at: repo.created_at, updated_at: repo.updated_at, pushed_at: repo.pushed_at})}
             />
