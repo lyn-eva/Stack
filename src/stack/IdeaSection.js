@@ -43,7 +43,8 @@ function IdeaSection({ stackId, stack }) {
       <hr />
       <StackActions stack={stack} stackId={stackId} setAddIdea={setAddIdea} dispatch={dispatch} />
 
-      <ul className="min-h-[9.5rem]">
+      <ul className="min-h-[9.5rem] relative">
+      {!ideas?.length && <p className='top-[7vh] left-1/2 -translate-x-1/2 absolute text-gray-300 text-center'> You haven't created any idea yet</p>}
         <AnimatePresence>
           {addIdea && (
             <Detail isForm stackId={stackId} handleExpand={() => setAddIdea(false)} />

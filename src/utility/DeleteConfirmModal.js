@@ -33,7 +33,7 @@ const DeleteConfirmModal = ({ username, handleToggle, handleDelete }) => {
             type='text'
             className='mt-3 block w-full rounded pl-1 outline outline-2 outline-blue-400'
           />
-          {isValid || <span className='text-t-md'>username are not match</span>}
+          {isValid || <span className='text-t-md'>usernames are not match</span>}
           <div className='mt-5 flex justify-between gap-4 text-white'>
             <Button
               type='submit'

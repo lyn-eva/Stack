@@ -41,6 +41,7 @@ function Home() {
         
         <section className='mt-8 grid grid-cols-1 gap-y-8 overflow-x-auto pb-8 text-white sm:grid-cols-2 sm:gap-6 md:gap-[5vw] lg:mt-14 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4'>
           {!stacks && <ScaleLoading />}
+          {!stacks?.length && <p className='mt-[5vh] text-gray-300 text-center'> You haven't created any stack yet</p>}
           {stacks?.map(({ id, name, langs_url }) => {
             return (
               <Repo
