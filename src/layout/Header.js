@@ -38,7 +38,7 @@ function Header({ loggedIn }) {
   return (
     <>
       <header>
-        <div className='relative mx-auto flex w-11/12 max-w-[24rem] items-center justify-between pt-[clamp(1.3rem,5vw,4rem)] sm:max-w-[48rem] lg:max-w-[90rem]'>
+        <div className='relative mx-auto flex w-11/12 max-w-[24rem] items-center justify-between pt-[clamp(1.3rem,6vw,4rem)] sm:max-w-[48rem] lg:max-w-[90rem]'>
           <div
             onClick={() => navigate('../')}
             className='flex cursor-pointer items-center gap-4 text-sm text-white lg:text-xl'

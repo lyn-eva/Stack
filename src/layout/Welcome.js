@@ -1,10 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { motion } from 'framer-motion';
+import { onAuthStateChanged } from 'firebase/auth';
 import { useAuth } from '../context/authProvider';
 import { useDB } from '../context/dbProvider';
 import Button from '../utility/Button';
 import { Icon } from '@iconify/react';
+import ScaleLoading from '../utility/ScaleLoading';
 
 const middle = {
   initial: { y: 500 },
@@ -12,26 +14,30 @@ const middle = {
 };
 
 function Welcome() {
-  // const [isLoggedIn, setIsLoggedIn] = useState('unknown');
+  const [isLoggedIn, setIsLoggedIn] = useState('unknown');
   const { createUser } = useDB();
-  const { auth, user, PopupSignIn } = useAuth();
+  const { auth, PopupSignIn } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-      if (user !== null) navigate('../home');
-  }, [user, navigate]);
+    const unsub = onAuthStateChanged(auth, user => {
+      if (user) navigate('home');
+      setIsLoggedIn(user);
+    });
+    return unsub;
+  }, [auth, navigate]);
 
   const handleGithubSignIn = async () => {
     const result = await PopupSignIn();
     await createUser(result);
   };
 
-  return (
+  return isLoggedIn === 'unknown' ? <ScaleLoading />  : (
     <motion.main
       initial={{ opacity: 0 }}
       transition={{ duration: 1 }}
       animate={{ opacity: 1 }}
-      className='flex grow mt-[5vw] sm:mt-[max(5vw,15vh)] items-center overflow-hidden bg-logo-watermark bg-[length:400px] bg-center sm:bg-[right_5vw_center] bg-no-repeat py-10 sm:mb-10'
+      className='mt-[5vw] flex grow items-center overflow-hidden bg-logo-watermark bg-[length:400px] bg-center bg-no-repeat py-10 sm:mt-[max(5vw,13vh)] sm:mb-10 sm:bg-[right_5vw_center]'
     >
       <section className='mx-auto w-11/12 max-w-[24rem] sm:max-w-[48rem] lg:max-w-[90rem]'>
         <motion.h1

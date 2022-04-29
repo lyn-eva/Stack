@@ -1,5 +1,5 @@
 import {lazy, Suspense} from 'react';
-import { Routes, Route, useLocation } from "react-router";
+import { Routes, Route, useLocation, Navigate } from "react-router";
 import ScaleLoading from './utility/ScaleLoading';
 const Header = lazy(() => import('./layout/Header'));
 const Welcome = lazy(() => import('./layout/Welcome'));
@@ -19,7 +19,7 @@ function App() {
         <Route path="/u/:username" element={<Private><Profile /></Private>} />
         <Route path="/s/:stack" element={<Private><Stack /></Private>} />
         <Route path="/" element={<Welcome />} />
-        <Route path="*" element={<Private><Home /></Private>} />
+        <Route path="*" element={<Navigate to='home'/>} />
       </Routes>
       </Suspense>
     </>
