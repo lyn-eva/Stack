@@ -35,7 +35,7 @@ function Welcome() {
     setLoading(false);
   };
 
-  return (isLoggedIn === 'unknown' || !loading) ? <><ScaleLoading /><p className='fixed top-[calc(50%+1.5rem)] left-1/2 -translate-x-1/2 text-gray-200'>Logging In</p></>  : (
+  return (isLoggedIn === 'unknown' || loading) ? <><ScaleLoading /><p className='fixed top-[calc(50%+1.5rem)] left-1/2 -translate-x-1/2 text-gray-200'>authenticating</p></>  : (
     <motion.main
       initial={{ opacity: 0 }}
       transition={{ duration: 1 }}
