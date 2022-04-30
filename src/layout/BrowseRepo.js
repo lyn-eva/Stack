@@ -14,7 +14,7 @@ function BrowseRepo({ stackId, setBrowseRepo }) {
   useEffect(() => {
     if (!user) return;
     (async () => {
-      const fetchRepo = fetch(`https://api.github.com/user/repos`, {
+      const fetchRepo = fetch(`https://api.github.com/user/repos?type=owner`, {
         mode: 'cors',
         headers: {
           authorization: `token ${userInfo.token}`,
