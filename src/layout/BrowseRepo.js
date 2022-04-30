@@ -19,7 +19,6 @@ function BrowseRepo({ stackId, setBrowseRepo }) {
         headers: {
           authorization: `token ${userInfo.token}`,
           Accept: 'application/vnd.github.v3+json',
-          type: 'owner',
         },
       });
       const [raw_repo, added_stacks] = await Promise.all([fetchRepo, getStacks()]);
