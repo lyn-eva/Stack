@@ -43,7 +43,7 @@ function Idea({ idx, idea, stackId }) {
           checked={!!idea.checked}
           onChange={handleCheck}
           type='checkbox'
-          className='md:h-5 md:w-5 cursor-pointer'
+          className='sm:h-5 sm:w-5 cursor-pointer'
         />
         <span
           className={`${
