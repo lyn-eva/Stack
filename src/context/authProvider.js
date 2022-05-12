@@ -33,13 +33,12 @@ function AuthProvider({ children }) {
     const credential = GithubAuthProvider.credentialFromResult(result);
     return {token: credential.accessToken, userdata: result.user};
   };
-
   const SignOut = () => {
     return signOut(auth);
   };
 
   const DeleteUserAcc = async () => {
-    deleteUser(user);
+    await deleteUser(user);
   }
 
   const value = { PopupSignIn, SignOut, auth, getUser, DeleteUserAcc, user, db };

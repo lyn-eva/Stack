@@ -4,7 +4,7 @@ import { useDB } from '../context/dbProvider';
 import Location from './Location';
 import Detail from './Detail';
 
-const options = ["bg-green-500", "bg-u-blue", "bg-u-red"];
+const options = ['bg-green-500', 'bg-u-blue', 'bg-u-red'];
 
 function Idea({ idx, idea, stackId }) {
   const [expand, setExpand] = useState(false);
@@ -43,7 +43,7 @@ function Idea({ idx, idea, stackId }) {
           checked={!!idea.checked}
           onChange={handleCheck}
           type='checkbox'
-          className='sm:h-5 sm:w-5 cursor-pointer'
+          className='cursor-pointer sm:h-5 sm:w-5'
         />
         <span
           className={`${

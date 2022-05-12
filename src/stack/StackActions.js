@@ -5,6 +5,7 @@ import { useDB } from '../context/dbProvider';
 import Button from '../utility/Button';
 import { Icon } from '@iconify/react';
 import Modal from '../utility/Modal';
+import DeleteConfirmModal from '../utility/DeleteConfirmModal';
 
 const btnStyle = {
   padding: '.1em 8px',
@@ -36,8 +37,10 @@ const reducer = (state, action) => {
       return { ...state, filterIsActive: false, sortIsActive: !state.sortIsActive };
     case 'FILTER':
       return { ...state, sortIsActive: false, filterIsActive: !state.filterIsActive };
-    case 'DELETE':
-      return { ...state, deleteIsActive: !state.deleteIsActive };
+    case 'PROMPT':
+      return { ...state, prompt: action.value};
+    case 'CONFIRM':
+      return { ...state, prompt: false, confirm: action.value };
     default:
       return state;
   }
@@ -49,7 +52,7 @@ function StackActions({ stackId, setAddIdea, dispatch, stack }) {
   const { deleteStack } = useDB();
 
   const handleDelete = async () => {
-    dispatchToggle({ type: 'DELETE' });
+    dispatchToggle({ type: 'CONFIRM' });
     await deleteStack(stackId);
     navigate(-1);
   };
@@ -125,7 +128,7 @@ function StackActions({ stackId, setAddIdea, dispatch, stack }) {
         </li>
         <li className='shrink-0 sm:ml-auto'>
           <Button
-            onClick={() => dispatchToggle({ type: 'DELETE' })}
+            onClick={() => dispatchToggle({ type: 'PROMPT', value: true })}
             style={{ ...btnStyle, backgroundColor: '#f00', color: '#fff' }}
           >
             <span className='hidden sm:inline'>Delete</span>
@@ -134,10 +137,17 @@ function StackActions({ stackId, setAddIdea, dispatch, stack }) {
         </li>
       </ul>
       <AnimatePresence>
-        {toggleStates.deleteIsActive && (
+        {toggleStates.prompt && (
           <Modal
+            handleDelete={() => dispatchToggle({ type: 'CONFIRM', value: true })}
+            handleToggle={() => dispatchToggle({ type: 'PROMPT', value: false })}
+          />
+        )}
+        {toggleStates.confirm && (
+          <DeleteConfirmModal
+            name={stack.name}
+            handleToggle={() => dispatchToggle({ type: 'CONFIRM', value: false })}
             handleDelete={handleDelete}
-            handleToggle={() => dispatchToggle({ type: 'DELETE' })}
           />
         )}
       </AnimatePresence>

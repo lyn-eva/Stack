@@ -12,7 +12,7 @@ function App() {
   const location = useLocation();
   return (
     <>
-      <Header loggedIn={location.pathname !== '/'}/>
+      <Header isWelcome={location.pathname !== '/'}/>
       <Suspense fallback={<ScaleLoading />}>
       <Routes>
         <Route path="/home" element={<Private><Home /></Private>} />

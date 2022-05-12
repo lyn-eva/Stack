@@ -15,7 +15,7 @@ import ScaleLoading from '../utility/ScaleLoading';
 const reducer = (state, action) => {
   switch (action.type) {
     case 'PROMPT':
-      return { confirm: false, prompt: action.value };
+      return { prompt: action.value };
     case 'CONFIRM':
       return { prompt: false, confirm: action.value };
     default:
@@ -50,7 +50,7 @@ function Profile() {
       <AnimatePresence>
         {deletionState.confirm && (
           <DeleteConfirmModal
-            username={username}
+            name={name}
             handleToggle={() => dispatch({ type: 'CONFIRM', value: false })}
             handleDelete={handleAccDeletion}
           />
